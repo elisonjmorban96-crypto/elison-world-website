@@ -48,10 +48,10 @@ const Navigation = () => {
           isScrolled
             ? 'h-16 bg-black/80 backdrop-blur-xl border-b border-[var(--accent-bronze)]/10'
             : 'h-20 bg-transparent'
-        }`}
+        } safe-top`}
         style={{ transitionTimingFunction: 'var(--ease-expo-out)' }}
       >
-        <div className="max-w-[1400px] mx-auto px-6 h-full flex items-center justify-between">
+        <div className="max-w-[1400px] mx-auto px-5 sm:px-6 h-full flex items-center justify-between">
           <a
             href="#home"
             onClick={(e) => { e.preventDefault(); scrollTo('#home'); }}
@@ -100,7 +100,7 @@ const Navigation = () => {
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
-          className={`absolute right-0 top-0 h-full w-[80%] max-w-[360px] bg-[var(--bg-primary)] border-l border-[var(--accent-bronze)]/10 flex flex-col pt-24 px-8 transition-transform duration-500 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          className={`absolute right-0 top-0 h-full w-full max-w-[360px] bg-[var(--bg-primary)] border-l border-[var(--accent-bronze)]/10 flex flex-col pt-24 px-6 sm:px-8 safe-top safe-bottom transition-transform duration-500 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
         >
           {navLinks.map((link) => (
             <a

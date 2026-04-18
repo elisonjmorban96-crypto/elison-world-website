@@ -42,8 +42,8 @@ const Story = () => {
   }, []);
 
   return (
-    <section id="story" ref={sectionRef} className="relative w-full py-28 md:py-40 overflow-hidden" style={{ background: '#050505' }}>
-      <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-20">
+    <section id="story" ref={sectionRef} className="relative w-full py-20 md:py-40 overflow-hidden" style={{ background: '#050505' }}>
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-6 md:px-12 lg:px-20">
         <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
           {/* Portrait — left column, sticky */}
           <div className="lg:col-span-2 lg:sticky lg:top-24 lg:self-start">
@@ -52,7 +52,7 @@ const Story = () => {
                 <img src="/about-elison.jpg" alt="Elison portrait in shadow" className="w-full h-full object-cover" style={{ filter: 'brightness(0.85)' }} />
               </div>
               {/* Quote card overlapping the image edge */}
-              <div className="absolute -bottom-4 -right-2 md:bottom-6 md:-right-6 max-w-[210px] p-4 border" style={{ background: 'rgba(8,8,8,0.92)', borderColor: 'rgba(184,134,11,0.15)' }}>
+              <div className="relative mt-4 ml-auto max-w-[220px] p-4 border md:absolute md:mt-0 md:-bottom-4 md:-right-2 lg:bottom-6 lg:-right-6" style={{ background: 'rgba(8,8,8,0.92)', borderColor: 'rgba(184,134,11,0.15)' }}>
                 <p className="font-inter text-[10px] leading-relaxed italic" style={{ color: '#9a8a6a' }}>
                   "Every version of me had to go quiet so this one could sing."
                 </p>
@@ -65,16 +65,16 @@ const Story = () => {
             <span className="story-pull font-inter text-[10px] font-medium uppercase tracking-[0.3em] block mb-12" style={{ color: '#5a4a2a' }}>2015 - La Banda</span>
 
             <div className="story-pull mb-14">
-              <p className="font-inter text-lg md:text-xl leading-[1.7] font-light" style={{ color: '#b8a88a' }}>
+              <p className="font-inter text-base sm:text-lg md:text-xl leading-[1.7] font-light" style={{ color: '#b8a88a' }}>
                 I stood in front of Ricky Martin, Laura Pausini, and Alejandro Sanz.
               </p>
-              <p className="font-inter text-lg md:text-xl leading-[1.7] mt-3 font-light" style={{ color: '#e8e0d0' }}>
+              <p className="font-inter text-base sm:text-lg md:text-xl leading-[1.7] mt-3 font-light" style={{ color: '#e8e0d0' }}>
                 I sang to a room that believed in me.
               </p>
-              <p className="font-inter text-lg md:text-xl leading-[1.7] mt-3 font-light" style={{ color: '#b8a88a' }}>
+              <p className="font-inter text-base sm:text-lg md:text-xl leading-[1.7] mt-3 font-light" style={{ color: '#b8a88a' }}>
                 Out of thousands, I made Top 20.
               </p>
-              <p className="font-inter text-lg md:text-xl leading-[1.7] mt-3 font-light" style={{ color: '#e8e0d0' }}>
+              <p className="font-inter text-base sm:text-lg md:text-xl leading-[1.7] mt-3 font-light" style={{ color: '#e8e0d0' }}>
                 I did not make Top 12.
               </p>
             </div>
@@ -111,10 +111,10 @@ const Story = () => {
             </div>
 
             <div className="story-pull mb-14">
-              <p className="font-inter text-lg md:text-xl leading-[1.7] font-light" style={{ color: '#e8e0d0' }}>
+              <p className="font-inter text-base sm:text-lg md:text-xl leading-[1.7] font-light" style={{ color: '#e8e0d0' }}>
                 For nearly a decade, the industry forgot my name.
               </p>
-              <p className="font-inter text-lg md:text-xl leading-[1.7] mt-3 font-light" style={{ color: '#e8e0d0' }}>
+              <p className="font-inter text-base sm:text-lg md:text-xl leading-[1.7] mt-3 font-light" style={{ color: '#e8e0d0' }}>
                 My voice did not forget me.
               </p>
             </div>
@@ -128,7 +128,7 @@ const Story = () => {
             <span className="story-pull font-inter text-[10px] font-medium uppercase tracking-[0.3em] block mb-10" style={{ color: '#b8860b' }}>2025</span>
 
             <div className="story-pull mb-16">
-              <p className="font-inter text-xl md:text-2xl leading-[1.6] font-light" style={{ color: '#e8e0d0' }}>
+              <p className="font-inter text-lg sm:text-xl md:text-2xl leading-[1.6] font-light" style={{ color: '#e8e0d0' }}>
                 <em style={{ color: '#b8860b' }}>"LA PRIMERA"</em> drops. Ten years later. Still singing. Still between Miami and New York. Still making the sound the silence could not take from me.
               </p>
             </div>

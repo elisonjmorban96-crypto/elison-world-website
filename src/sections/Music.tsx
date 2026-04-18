@@ -79,15 +79,15 @@ const Music = () => {
   }, []);
 
   return (
-    <section id="music" ref={sectionRef} className="relative w-full py-24 md:py-32 lg:py-40 overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full blur-3xl" style={{ background: 'var(--accent-gold)', opacity: 0.04 }} />
+    <section id="music" ref={sectionRef} className="relative w-full py-20 md:py-32 lg:py-40 overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
+      <div className="absolute top-0 right-0 hidden sm:block w-[400px] h-[400px] rounded-full blur-3xl" style={{ background: 'var(--accent-gold)', opacity: 0.04 }} />
 
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20">
+      <div className="max-w-[1400px] mx-auto px-5 sm:px-6 md:px-12 lg:px-20">
         <span className="scene-label block mb-4">What Survived</span>
         <h2 className="music-header font-oswald text-4xl md:text-5xl lg:text-6xl font-bold tracking-[0.06em] mb-4" style={{ color: 'var(--text-primary)' }}>
           THE SOUND
         </h2>
-        <p className="music-sub font-inter text-base mb-16" style={{ color: 'var(--text-secondary)' }}>
+        <p className="music-sub font-inter text-sm sm:text-base mb-12 md:mb-16 max-w-[24rem]" style={{ color: 'var(--text-secondary)' }}>
           Two releases. Ten years apart. Same wound. Same fire.
         </p>
 
@@ -137,7 +137,7 @@ const Music = () => {
               </p>
 
               {/* Links */}
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 {track.links.map((link) => (
                   <a
                     key={link.name}
@@ -159,7 +159,7 @@ const Music = () => {
         {/* All platforms */}
         <div className="platform-links mt-16 pt-10 border-t" style={{ borderColor: 'var(--text-dim)' }}>
           <span className="scene-label block mb-6">Where It Keeps Breathing</span>
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4">
             {[
               { name: 'Spotify', url: 'https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa' },
               { name: 'Apple Music', url: 'https://music.apple.com/us/artist/elison/1810625015' },

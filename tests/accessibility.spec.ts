@@ -36,3 +36,24 @@ test('navigation and gallery are keyboard reachable', async ({ page }) => {
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog')).toHaveCount(0);
 });
+
+test('homepage stays within the viewport on a mobile screen', async ({ browser }) => {
+  const context = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    isMobile: true,
+    hasTouch: true,
+  });
+  const page = await context.newPage();
+
+  await page.goto('/');
+
+  const metrics = await page.evaluate(() => ({
+    scrollWidth: document.documentElement.scrollWidth,
+    clientWidth: document.documentElement.clientWidth,
+  }));
+
+  expect(metrics.scrollWidth).toBe(metrics.clientWidth);
+  await expect(page.getByRole('button', { name: /open menu/i })).toBeVisible();
+
+  await context.close();
+});

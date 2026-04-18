@@ -77,7 +77,7 @@ const Connection = () => {
   ];
 
   return (
-    <section id="connect" ref={sectionRef} className="relative w-full min-h-screen flex items-center justify-center overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
+    <section id="connect" ref={sectionRef} className="mobile-screen relative w-full flex items-center justify-center overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
       {/* Background */}
       <div ref={imageRef} className="absolute inset-0 w-full h-[115%] -top-[7%]">
         <img src="/gallery-rooftop.jpg" alt="" className="w-full h-full object-cover" style={{ filter: 'brightness(0.35) saturate(0.8)' }} />
@@ -86,17 +86,17 @@ const Connection = () => {
       <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(184,134,11,0.08) 0%, transparent 60%)' }} />
 
       {/* Content */}
-      <div className="relative z-10 max-w-[1000px] mx-auto px-6 md:px-12 py-24 text-center">
-        <h2 className="connect-title font-oswald text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-[0.06em] mb-5" style={{ color: 'var(--text-primary)' }}>
+      <div className="safe-block relative z-10 max-w-[1000px] mx-auto px-5 sm:px-6 md:px-12 py-20 md:py-24 text-center">
+        <h2 className="connect-title font-oswald text-[34px] leading-[0.95] sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-[0.05em] md:tracking-[0.06em] mb-5" style={{ color: 'var(--text-primary)' }}>
           {title.split('').map((char, i) => (
             <span key={i} className="inline-block">{char === ' ' ? '\u00A0' : char}</span>
           ))}
         </h2>
-        <p className="connect-sub font-inter text-base md:text-lg mb-16 max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+        <p className="connect-sub font-inter text-sm sm:text-base md:text-lg mb-12 md:mb-16 max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
           If you found me here, you are early. Stay close.
         </p>
 
-        <div className="connect-cols grid md:grid-cols-3 gap-8 md:gap-10 mb-20">
+        <div className="connect-cols grid md:grid-cols-3 gap-8 md:gap-10 mb-14 md:mb-20">
           {/* Stream */}
           <div className="connect-col text-left md:text-center">
             <h3 className="font-oswald text-lg font-bold tracking-[0.1em] mb-3" style={{ color: 'var(--accent-gold)' }}>STREAM</h3>
@@ -146,11 +146,11 @@ const Connection = () => {
         </div>
 
         {/* Newsletter */}
-        <div className="connect-footer max-w-md mx-auto mb-16">
+        <div className="connect-footer max-w-md mx-auto mb-14 md:mb-16">
           <p className="font-inter text-[11px] uppercase tracking-[0.15em] mb-4" style={{ color: 'var(--text-tertiary)' }}>
             Get the next chapter before the world does
           </p>
-          <form onSubmit={handleSubscribe} className="flex">
+          <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 sm:gap-0">
             <label htmlFor="newsletter-email" className="sr-only">
               Email address for Elison updates
             </label>
@@ -165,7 +165,7 @@ const Connection = () => {
               style={{ borderColor: 'var(--text-dim)', color: 'var(--text-primary)' }}
               required
             />
-            <button type="submit" aria-label="Subscribe for updates from Elison" className="px-4 py-3 transition-colors hover:brightness-110" style={{ background: 'var(--accent-gold)' }}>
+            <button type="submit" aria-label="Subscribe for updates from Elison" className="px-4 py-3 sm:px-4 transition-colors hover:brightness-110 min-h-12 flex items-center justify-center" style={{ background: 'var(--accent-gold)' }}>
               <Send className="w-4 h-4 text-white" />
             </button>
           </form>

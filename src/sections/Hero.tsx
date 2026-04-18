@@ -96,7 +96,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section id="home" ref={sectionRef} className="relative w-full h-screen overflow-hidden" style={{ background: '#050505' }}>
+    <section id="home" ref={sectionRef} className="mobile-screen relative w-full overflow-hidden" style={{ background: '#050505' }}>
       <canvas ref={canvasRef} className="absolute inset-0 z-[3] pointer-events-none" aria-hidden="true" />
       <div ref={imageRef} className="absolute inset-0 z-[1]">
         <img src="/hero-elison.jpg" alt="Elison portrait in dramatic stage lighting" className="w-full h-full object-cover object-top" />
@@ -105,25 +105,25 @@ const Hero = () => {
       <div className="absolute inset-0 z-[2]" style={{ background: 'linear-gradient(to top, #050505 0%, transparent 30%)' }} />
       <div className="absolute inset-0 z-[2]" style={{ background: 'radial-gradient(ellipse 60% 55% at 30% 50%, transparent 0%, rgba(5,5,5,0.35) 100%)' }} />
 
-      <div className="hero-content relative z-[4] h-full flex flex-col justify-end pb-20 md:pb-28 lg:justify-center lg:pb-0 px-6 md:px-12 lg:px-20 max-w-[1400px] mx-auto">
-        <span className="hero-label font-inter text-[10px] font-medium uppercase tracking-[0.3em] mb-8" style={{ color: '#7a6a4a' }}>Elison Joel Morban · Latin R&B</span>
+      <div className="hero-content safe-block relative z-[4] min-h-[100svh] flex flex-col justify-end px-5 pb-14 pt-28 sm:px-6 sm:pb-16 md:min-h-[100svh] md:px-12 md:pb-28 lg:justify-center lg:pt-20 lg:pb-8 lg:px-20 max-w-[1400px] mx-auto">
+        <span className="hero-label font-inter text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.24em] sm:tracking-[0.3em] mb-6 sm:mb-8 max-w-[16rem]" style={{ color: '#7a6a4a' }}>Elison Joel Morban · Latin R&B</span>
 
-        <h1 className="font-oswald text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[105px] font-bold tracking-[0.06em] leading-[0.95]" style={{ perspective: '500px' }}>
+        <h1 className="font-oswald text-[42px] sm:text-6xl md:text-7xl lg:text-8xl xl:text-[105px] font-bold tracking-[0.04em] sm:tracking-[0.06em] leading-[0.92]" style={{ perspective: '500px' }}>
           <span className="hero-line-1 block">
-            <span className="hero-word inline-block mr-3 md:mr-4" style={{ color: '#e8e0d0' }}>LEFT</span>
-            <span className="hero-word inline-block mr-3 md:mr-4" style={{ color: '#e8e0d0' }}>OUT.</span>
+            <span className="hero-word inline-block mr-2.5 sm:mr-3 md:mr-4" style={{ color: '#e8e0d0' }}>LEFT</span>
+            <span className="hero-word inline-block mr-2.5 sm:mr-3 md:mr-4" style={{ color: '#e8e0d0' }}>OUT.</span>
           </span>
-          <span className="hero-line-2 block mt-1 md:mt-2">
-            <span className="hero-word inline-block mr-3 md:mr-4" style={{ color: '#b8860b' }}>STILL</span>
+          <span className="hero-line-2 block mt-0.5 sm:mt-1 md:mt-2">
+            <span className="hero-word inline-block mr-2.5 sm:mr-3 md:mr-4" style={{ color: '#b8860b' }}>STILL</span>
             <span className="hero-word inline-block" style={{ color: '#b8860b' }}>SINGING.</span>
           </span>
         </h1>
 
-        <p className="hero-sub font-inter text-sm md:text-base font-light tracking-wide mt-8 md:mt-10 max-w-md" style={{ color: '#7a7060' }}>
+        <p className="hero-sub font-inter text-[13px] sm:text-sm md:text-base font-light tracking-[0.02em] mt-6 sm:mt-8 md:mt-10 max-w-[18rem] sm:max-w-md" style={{ color: '#7a7060' }}>
           Dominican. Independent. Ten years in the dark, still building.
         </p>
 
-        <div className="hero-scroll-hint mt-auto md:mt-16 pt-12 md:pt-0 flex items-center gap-3" aria-hidden="true">
+        <div className="hero-scroll-hint hidden md:flex mt-auto md:mt-16 pt-12 md:pt-0 items-center gap-3" aria-hidden="true">
           <div className="w-px h-8" style={{ background: 'linear-gradient(to bottom, #b8860b, transparent)' }} />
           <span className="font-inter text-[9px] uppercase tracking-[0.25em]" style={{ color: '#4a4030' }}>Scroll</span>
         </div>
