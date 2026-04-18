@@ -1,73 +1,66 @@
-# React + TypeScript + Vite
+# Elison World Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Official website for Elison. The app is a Vite + React single-page site with prerendered HTML, GSAP motion, embedded music playback, and production checks for accessibility and crawlability.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Vite
+- React 19
+- TypeScript
+- Tailwind CSS
+- GSAP
+- Playwright + axe-core
+- Lighthouse
+- Vercel Analytics
 
-## React Compiler
+## Local development
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Production build
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
+npm run preview
 ```
+
+The build script prerenders the homepage after the normal Vite client build so crawlers receive the full story, music, gallery, and connect content in the shipped HTML.
+
+## Quality checks
+
+```bash
+npm run lint
+npm run audit:playwright
+npm run audit:lighthouse
+```
+
+## Content locations
+
+- App shell: `src/App.tsx`
+- Navigation: `src/components/Navigation.tsx`
+- Hero: `src/sections/Hero.tsx`
+- Story: `src/sections/Story.tsx`
+- Music: `src/sections/Music.tsx`
+- Gallery: `src/sections/Gallery.tsx`
+- Connect / newsletter: `src/sections/Connection.tsx`
+- SEO shell metadata: `index.html`
+- Crawl directives: `public/robots.txt`, `public/sitemap.xml`, `public/llms.txt`, `public/llms-full.txt`
+
+## Newsletter
+
+The subscribe form posts to Formspree at `https://formspree.io/f/xqewbelg`. There are no local environment variables required for the current setup.
+
+If you move the form to another provider later, update the endpoint constant in `src/sections/Connection.tsx`.
+
+## Deployment
+
+The project is deployed on Vercel at `https://elisonworld.com`.
+
+Expected production settings:
+
+- Framework preset: `Vite`
+- Build command: `npm run build`
+- Output directory: `dist`

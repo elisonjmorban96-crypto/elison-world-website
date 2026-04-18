@@ -58,3 +58,15 @@ test('homepage stays within the viewport on a mobile screen', async ({ browser }
 
   await context.close();
 });
+
+test('homepage keeps the hero readable when reduced motion is enabled', async ({ browser }) => {
+  const context = await browser.newContext({ reducedMotion: 'reduce' });
+  const page = await context.newPage();
+
+  await page.goto('/');
+
+  await expect(page.getByRole('heading', { level: 1, name: /left out\. still singing\./i })).toBeVisible();
+  await expect(page.getByText('Dominican. Independent. New music out now.')).toBeVisible();
+
+  await context.close();
+});

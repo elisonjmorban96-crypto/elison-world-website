@@ -1,0 +1,46 @@
+# Elison
+
+Elison is the stage project of Elison Joel Morban, a Dominican Latin R&B artist.
+
+This site is the canonical home for:
+- artist bio and current positioning
+- the La Banda / CNCO-adjacent backstory
+- released music
+- official social and streaming links
+- booking contact
+
+## Core facts
+
+- In 2015, Elison appeared on La Banda Season 1.
+- He performed in front of Ricky Martin, Laura Pausini, and Alejandro Sanz.
+- He made the Top 20 but did not make the Top 12.
+- A bandmate later won the show and joined CNCO.
+- Elison released "Decisions" in 2016.
+- After a long quiet stretch, he returned with "LA PRIMERA" in 2025.
+- The site positions that return as the current chapter of the artist story.
+
+## Canonical URLs
+
+- Website: https://elisonworld.com/
+- Story: https://elisonworld.com/#story
+- Music: https://elisonworld.com/#music
+- Gallery: https://elisonworld.com/#gallery
+- Connect: https://elisonworld.com/#connect
+
+## Official releases
+
+- Decisions (Remastered): https://music.apple.com/us/album/decisions-remastered-single/1811878413
+- LA PRIMERA: https://music.apple.com/us/album/la-primera-remastered-single/1812806221
+
+## Official profiles
+
+- Instagram: https://www.instagram.com/elison.wav
+- TikTok: https://www.tiktok.com/@elison.wav
+- X: https://www.x.com/elisonjoel
+- Apple Music artist profile: https://music.apple.com/us/artist/elison/1810625015
+- Spotify artist profile: https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa
+- YouTube: https://www.youtube.com/@elisonjoel
+
+## Contact
+
+- Booking: booking@elisonworld.com

@@ -12,6 +12,9 @@ const Hero = () => {
 
   useEffect(() => {
     if (prefersReducedMotion()) {
+      gsap.set(['.hero-label', '.hero-word', '.hero-sub', '.hero-scroll-hint', '.hero-content'], {
+        clearProps: 'all',
+      });
       return;
     }
 
@@ -20,48 +23,55 @@ const Hero = () => {
     const canvas = canvasRef.current;
     if (!section || !image || !canvas) return;
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    let particles: Array<{ x: number; y: number; size: number; speedY: number; speedX: number; opacity: number; phase: number }> = [];
-    let animId: number;
+    const enableParticles = window.innerWidth >= 768;
+    let animId: number | undefined;
+    let removeCanvasResize: (() => void) | undefined;
 
-    const initCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      particles = [];
-      const count = window.innerWidth < 768 ? 15 : 35;
-      for (let i = 0; i < count; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 1.2 + 0.2,
-          speedY: -Math.random() * 0.12 - 0.02,
-          speedX: (Math.random() - 0.5) * 0.06,
-          opacity: Math.random() * 0.25 + 0.04,
-          phase: Math.random() * Math.PI * 2,
+    if (enableParticles) {
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      let particles: Array<{ x: number; y: number; size: number; speedY: number; speedX: number; opacity: number; phase: number }> = [];
+
+      const initCanvas = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        particles = [];
+        for (let i = 0; i < 24; i++) {
+          particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 1.2 + 0.2,
+            speedY: -Math.random() * 0.12 - 0.02,
+            speedX: (Math.random() - 0.5) * 0.06,
+            opacity: Math.random() * 0.25 + 0.04,
+            phase: Math.random() * Math.PI * 2,
+          });
+        }
+      };
+
+      const animate = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p) => {
+          p.y += p.speedY; p.x += p.speedX; p.phase += 0.012;
+          if (p.y < -5) { p.y = canvas.height + 5; p.x = Math.random() * canvas.width; }
+          if (p.x < -5) p.x = canvas.width + 5;
+          if (p.x > canvas.width + 5) p.x = -5;
+          const flicker = Math.sin(p.phase) * 0.12 + 0.88;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(180, 140, 60, ${p.opacity * flicker})`;
+          ctx.fill();
         });
-      }
-    };
+        animId = requestAnimationFrame(animate);
+      };
 
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p) => {
-        p.y += p.speedY; p.x += p.speedX; p.phase += 0.012;
-        if (p.y < -5) { p.y = canvas.height + 5; p.x = Math.random() * canvas.width; }
-        if (p.x < -5) p.x = canvas.width + 5;
-        if (p.x > canvas.width + 5) p.x = -5;
-        const flicker = Math.sin(p.phase) * 0.12 + 0.88;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(180, 140, 60, ${p.opacity * flicker})`;
-        ctx.fill();
-      });
-      animId = requestAnimationFrame(animate);
-    };
-
-    initCanvas();
-    animate();
-    window.addEventListener('resize', initCanvas);
+      initCanvas();
+      animate();
+      window.addEventListener('resize', initCanvas);
+      removeCanvasResize = () => window.removeEventListener('resize', initCanvas);
+    } else {
+      canvas.style.display = 'none';
+    }
 
     // Opening sequence — slow, deliberate, like a film title card
     const tl = gsap.timeline({ delay: 0.5 });
@@ -92,14 +102,29 @@ const Hero = () => {
       },
     });
 
-    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', initCanvas); st.kill(); };
+    return () => {
+      if (animId) {
+        cancelAnimationFrame(animId);
+      }
+      removeCanvasResize?.();
+      st.kill();
+    };
   }, []);
 
   return (
     <section id="home" ref={sectionRef} className="mobile-screen relative w-full overflow-hidden" style={{ background: '#050505' }}>
       <canvas ref={canvasRef} className="absolute inset-0 z-[3] pointer-events-none" aria-hidden="true" />
       <div ref={imageRef} className="absolute inset-0 z-[1]">
-        <img src="/hero-elison.jpg" alt="Elison portrait in dramatic stage lighting" className="w-full h-full object-cover object-top" />
+        <img
+          src="/hero-elison.jpg"
+          alt="Elison portrait in dramatic stage lighting"
+          width={1344}
+          height={768}
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          className="w-full h-full object-cover object-top"
+        />
       </div>
       <div className="absolute inset-0 z-[2]" style={{ background: 'linear-gradient(to right, rgba(5,5,5,0.88) 0%, rgba(5,5,5,0.45) 50%, transparent 100%)' }} />
       <div className="absolute inset-0 z-[2]" style={{ background: 'linear-gradient(to top, #050505 0%, transparent 30%)' }} />
@@ -108,12 +133,16 @@ const Hero = () => {
       <div className="hero-content safe-block relative z-[4] min-h-[100svh] flex flex-col justify-end px-5 pb-14 pt-28 sm:px-6 sm:pb-16 md:min-h-[100svh] md:px-12 md:pb-28 lg:justify-center lg:pt-20 lg:pb-8 lg:px-20 max-w-[1400px] mx-auto">
         <span className="hero-label font-inter text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.24em] sm:tracking-[0.3em] mb-6 sm:mb-8 max-w-[16rem]" style={{ color: '#7a6a4a' }}>Elison Joel Morban · Latin R&B</span>
 
-        <h1 className="font-oswald text-[42px] sm:text-6xl md:text-7xl lg:text-8xl xl:text-[105px] font-bold tracking-[0.04em] sm:tracking-[0.06em] leading-[0.92]" style={{ perspective: '500px' }}>
-          <span className="hero-line-1 block">
+        <h1
+          aria-label="Left out. Still singing."
+          className="font-oswald text-[42px] sm:text-6xl md:text-7xl lg:text-8xl xl:text-[105px] font-bold tracking-[0.04em] sm:tracking-[0.06em] leading-[0.92]"
+          style={{ perspective: '500px' }}
+        >
+          <span className="hero-line-1 block" aria-hidden="true">
             <span className="hero-word inline-block mr-2.5 sm:mr-3 md:mr-4" style={{ color: '#e8e0d0' }}>LEFT</span>
             <span className="hero-word inline-block mr-2.5 sm:mr-3 md:mr-4" style={{ color: '#e8e0d0' }}>OUT.</span>
           </span>
-          <span className="hero-line-2 block mt-0.5 sm:mt-1 md:mt-2">
+          <span className="hero-line-2 block mt-0.5 sm:mt-1 md:mt-2" aria-hidden="true">
             <span className="hero-word inline-block mr-2.5 sm:mr-3 md:mr-4" style={{ color: '#b8860b' }}>STILL</span>
             <span className="hero-word inline-block" style={{ color: '#b8860b' }}>SINGING.</span>
           </span>

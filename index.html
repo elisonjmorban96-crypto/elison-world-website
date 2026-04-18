@@ -18,18 +18,36 @@
 
     <link rel="canonical" href="https://elisonworld.com/" />
     <link rel="sitemap" type="application/xml" href="https://elisonworld.com/sitemap.xml" />
+    <link rel="alternate" type="text/plain" href="https://elisonworld.com/llms.txt" title="LLMs.txt" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Oswald:wght@700&family=Playfair+Display:ital,wght@1,400&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Oswald:wght@700&family=Playfair+Display:ital,wght@1,400&display=swap"
+      />
+    </noscript>
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Elison" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content="Elison | Latin R&amp;B Artist | LA PRIMERA" />
     <meta
       property="og:description"
       content="A cinematic one-page story from La Banda to LA PRIMERA. Explore Elison's music, gallery, and direct artist links."
     />
     <meta property="og:url" content="https://elisonworld.com/" />
-    <meta property="og:image" content="https://elisonworld.com/hero-elison.jpg" />
+    <meta property="og:image" content="https://elisonworld.com/og-home.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Elison portrait in dramatic low-key lighting" />
 
     <meta name="twitter:card" content="summary_large_image" />
@@ -38,7 +56,8 @@
       name="twitter:description"
       content="Official website of Elison. Music, visuals, and the story behind LA PRIMERA."
     />
-    <meta name="twitter:image" content="https://elisonworld.com/hero-elison.jpg" />
+    <meta name="twitter:image" content="https://elisonworld.com/og-home.jpg" />
+    <meta name="twitter:image:alt" content="Elison portrait in dramatic low-key lighting" />
 
     <script type="application/ld+json">
       {
@@ -60,16 +79,69 @@
             "url": "https://elisonworld.com/",
             "image": "https://elisonworld.com/hero-elison.jpg",
             "description": "Dominican Latin R&B artist behind Decisions (Remastered) and LA PRIMERA.",
-            "email": "booking@elison-music.com",
+            "email": "booking@elisonworld.com",
             "jobTitle": "Singer-songwriter",
             "knowsAbout": ["Latin R&B", "Independent music", "Songwriting", "Performance"],
             "sameAs": [
               "https://www.instagram.com/elison.wav",
-              "https://www.tiktok.com/elison.wav",
+              "https://www.tiktok.com/@elison.wav",
               "https://www.x.com/elisonjoel",
               "https://music.apple.com/us/artist/elison/1810625015",
               "https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa",
               "https://www.youtube.com/@elisonjoel"
+            ]
+          },
+          {
+            "@type": "MusicGroup",
+            "@id": "https://elisonworld.com/#project",
+            "name": "Elison",
+            "url": "https://elisonworld.com/",
+            "image": "https://elisonworld.com/hero-elison.jpg",
+            "genre": ["Latin R&B", "R&B", "Latin Pop"],
+            "member": {
+              "@id": "https://elisonworld.com/#artist"
+            },
+            "sameAs": [
+              "https://www.instagram.com/elison.wav",
+              "https://www.tiktok.com/@elison.wav",
+              "https://www.x.com/elisonjoel",
+              "https://music.apple.com/us/artist/elison/1810625015",
+              "https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa",
+              "https://www.youtube.com/@elisonjoel"
+            ]
+          },
+          {
+            "@type": "MusicRecording",
+            "@id": "https://elisonworld.com/#track-decisions-remastered",
+            "name": "Decisions (Remastered)",
+            "url": "https://elisonworld.com/#music",
+            "image": "https://elisonworld.com/album-midnight.jpg",
+            "byArtist": {
+              "@id": "https://elisonworld.com/#project"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "OneTime Music Inc"
+            },
+            "sameAs": [
+              "https://music.apple.com/us/album/decisions-remastered-single/1811878413"
+            ]
+          },
+          {
+            "@type": "MusicRecording",
+            "@id": "https://elisonworld.com/#track-la-primera",
+            "name": "LA PRIMERA",
+            "url": "https://elisonworld.com/#music",
+            "image": "https://elisonworld.com/album-firstlight.jpg",
+            "byArtist": {
+              "@id": "https://elisonworld.com/#project"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "OneTime Music Inc"
+            },
+            "sameAs": [
+              "https://music.apple.com/us/album/la-primera-remastered-single/1812806221"
             ]
           },
           {
@@ -91,7 +163,7 @@
   </head>
   <body>
     <div id="root"></div>
-    <noscript>This site uses JavaScript to render Elison's story, music, gallery, and contact information.</noscript>
+    <noscript>This site uses JavaScript for motion and music embeds, but the core story, music, gallery, and contact content is available without it.</noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

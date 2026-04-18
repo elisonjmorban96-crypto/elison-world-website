@@ -7,14 +7,14 @@ import { prefersReducedMotion } from '../lib/motion';
 gsap.registerPlugin(ScrollTrigger);
 
 const galleryImages = [
-  { id: 1, src: '/elison-portrait-1.jpg', alt: 'Elison portrait with direct gaze', span: 'sm:col-span-2 sm:row-span-2' },
-  { id: 2, src: '/gallery-performance.jpg', alt: 'Elison performing on stage', span: 'sm:col-span-2' },
-  { id: 3, src: '/elison-portrait-2.jpg', alt: 'Elison portrait in warm light', span: '' },
-  { id: 4, src: '/gallery-studio.jpg', alt: 'Elison in the recording studio', span: '' },
-  { id: 5, src: '/gallery-closeup.jpg', alt: 'Close-up portrait of Elison', span: '' },
-  { id: 6, src: '/gallery-rooftop.jpg', alt: 'Elison on a rooftop at night', span: 'sm:col-span-2' },
-  { id: 7, src: '/gallery-intimate.jpg', alt: 'Elison with a guitar in an intimate setting', span: 'sm:row-span-2' },
-  { id: 8, src: '/gallery-street.jpg', alt: 'Elison walking at night in the city', span: 'sm:col-span-2' },
+  { id: 1, src: '/elison-portrait-1.webp', alt: 'Elison portrait with direct gaze', span: 'sm:col-span-2 sm:row-span-2', width: 1024, height: 1536 },
+  { id: 2, src: '/gallery-performance.jpg', alt: 'Elison performing on stage', span: 'sm:col-span-2', width: 1344, height: 768 },
+  { id: 3, src: '/elison-portrait-2.jpg', alt: 'Elison portrait in warm light', span: '', width: 1920, height: 1080 },
+  { id: 4, src: '/gallery-studio.jpg', alt: 'Elison in the recording studio', span: '', width: 1248, height: 832 },
+  { id: 5, src: '/gallery-closeup.jpg', alt: 'Close-up portrait of Elison', span: '', width: 1024, height: 1024 },
+  { id: 6, src: '/gallery-rooftop.jpg', alt: 'Elison on a rooftop at night', span: 'sm:col-span-2', width: 1344, height: 768 },
+  { id: 7, src: '/gallery-intimate.jpg', alt: 'Elison with a guitar in an intimate setting', span: 'sm:row-span-2', width: 864, height: 1184 },
+  { id: 8, src: '/gallery-street.jpg', alt: 'Elison walking at night in the city', span: 'sm:col-span-2', width: 1248, height: 832 },
 ];
 
 const Gallery = () => {
@@ -41,8 +41,16 @@ const Gallery = () => {
     });
   }, []);
 
-  const open = (idx: number) => { setCurrentIdx(idx); setLightboxOpen(true); document.body.style.overflow = 'hidden'; };
-  const close = () => { setLightboxOpen(false); document.body.style.overflow = ''; };
+  useEffect(() => {
+    document.body.style.overflow = lightboxOpen ? 'hidden' : '';
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [lightboxOpen]);
+
+  const open = (idx: number) => { setCurrentIdx(idx); setLightboxOpen(true); };
+  const close = () => { setLightboxOpen(false); };
   const next = () => setCurrentIdx((p) => (p + 1) % galleryImages.length);
   const prev = () => setCurrentIdx((p) => (p - 1 + galleryImages.length) % galleryImages.length);
 
@@ -72,11 +80,16 @@ const Gallery = () => {
               type="button"
               className={`gallery-item relative overflow-hidden cursor-pointer group ${img.span}`}
               onClick={() => open(idx)}
-              aria-label={`Open gallery image ${idx + 1}: ${img.alt}`}
+              aria-haspopup="dialog"
             >
+              <span className="sr-only">{`Open gallery image ${idx + 1}: ${img.alt}`}</span>
               <img
                 src={img.src}
                 alt=""
+                width={img.width}
+                height={img.height}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
                 style={{ filter: 'brightness(0.85)' }}
               />
@@ -110,7 +123,13 @@ const Gallery = () => {
             <ChevronRight className="w-7 h-7" />
           </button>
           <div className="max-w-[90vw] max-h-[85vh]" onClick={(e) => e.stopPropagation()}>
-            <img src={galleryImages[currentIdx].src} alt={galleryImages[currentIdx].alt} className="max-w-full max-h-[85vh] object-contain" />
+            <img
+              src={galleryImages[currentIdx].src}
+              alt={galleryImages[currentIdx].alt}
+              width={galleryImages[currentIdx].width}
+              height={galleryImages[currentIdx].height}
+              className="max-w-full max-h-[85vh] object-contain"
+            />
           </div>
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 font-inter text-[11px] tracking-wider" style={{ color: 'var(--text-tertiary)' }}>
             {currentIdx + 1} / {galleryImages.length} — {galleryImages[currentIdx].alt}

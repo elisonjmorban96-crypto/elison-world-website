@@ -49,7 +49,7 @@ try {
 
   await run('./node_modules/.bin/lighthouse', [
     siteUrl,
-    '--only-categories=accessibility,seo,best-practices',
+    '--only-categories=performance,accessibility,seo,best-practices',
     '--output=html',
     '--output=json',
     `--output-path=${reportPath}`,

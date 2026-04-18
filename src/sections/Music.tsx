@@ -107,6 +107,10 @@ const Music = () => {
                 <img
                   src={track.cover}
                   alt={track.title}
+                  width={1024}
+                  height={1024}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700"
                   style={{ transform: hoveredTrack === track.id ? 'scale(1.03)' : 'scale(1)' }}
                 />

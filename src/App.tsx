@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navigation from './components/Navigation';
@@ -14,6 +15,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const progressRef = useRef<HTMLDivElement>(null);
+  const [analyticsEnabled, setAnalyticsEnabled] = useState(false);
 
   useEffect(() => {
     if (prefersReducedMotion()) {
@@ -40,6 +42,15 @@ function App() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      const host = window.location.hostname;
+      setAnalyticsEnabled(host === 'elisonworld.com' || host.endsWith('.vercel.app'));
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
   return (
     <div className="relative" style={{ background: 'var(--bg-primary)' }}>
       <a href="#main-content" className="skip-link">
@@ -61,6 +72,7 @@ function App() {
         <Gallery />
         <Connection />
       </main>
+      {analyticsEnabled ? <Analytics /> : null}
     </div>
   );
 }

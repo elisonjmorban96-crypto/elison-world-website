@@ -49,7 +49,16 @@ const Story = () => {
           <div className="lg:col-span-2 lg:sticky lg:top-24 lg:self-start">
             <div ref={imageRef} className="relative">
               <div className="aspect-[3/4] overflow-hidden">
-                <img src="/about-elison.jpg" alt="Elison portrait in shadow" className="w-full h-full object-cover" style={{ filter: 'brightness(0.85)' }} />
+                <img
+                  src="/about-elison.jpg"
+                  alt="Elison portrait in shadow"
+                  width={864}
+                  height={1184}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover"
+                  style={{ filter: 'brightness(0.85)' }}
+                />
               </div>
               {/* Quote card overlapping the image edge */}
               <div className="relative mt-4 ml-auto max-w-[220px] p-4 border md:absolute md:mt-0 md:-bottom-4 md:-right-2 lg:bottom-6 lg:-right-6" style={{ background: 'rgba(8,8,8,0.92)', borderColor: 'rgba(184,134,11,0.15)' }}>
