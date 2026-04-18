@@ -15,6 +15,9 @@ Canonical: https://elisonworld.com/
 - Music: https://elisonworld.com/#music
 - Gallery: https://elisonworld.com/#gallery
 - Connect: https://elisonworld.com/#connect
+- LA PRIMERA release page: https://elisonworld.com/la-primera/
+- Decisions release page: https://elisonworld.com/decisions/
+- EPK: https://elisonworld.com/epk/
 
 ## Releases
 - Decisions (Remastered): https://music.apple.com/us/album/decisions-remastered-single/1811878413

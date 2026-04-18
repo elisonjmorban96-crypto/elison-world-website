@@ -3,53 +3,13 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ExternalLink, Music2, Apple, Youtube } from 'lucide-react';
 import { prefersReducedMotion } from '../lib/motion';
+import { releases } from '../content/site';
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface Track {
-  id: number;
-  title: string;
-  year: string;
-  meta: string;
-  reflection: string;
-  cover: string;
-  embedUrl: string;
-  links: { name: string; url: string; icon: React.ElementType }[];
-}
-
-const tracks: Track[] = [
-  {
-    id: 1,
-    title: 'Decisions (Remastered)',
-    year: '2016',
-    meta: '74 BPM · OneTime Music Inc',
-    reflection: 'My first release. It did not move the way I wanted, but it still mattered.',
-    cover: '/album-midnight.jpg',
-    embedUrl: 'https://embed.music.apple.com/us/album/decisions-remastered-single/1811878413',
-    links: [
-      { name: 'Spotify', url: 'https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa', icon: Music2 },
-      { name: 'Apple Music', url: 'https://music.apple.com/us/album/decisions-remastered-single/1811878413', icon: Apple },
-    ],
-  },
-  {
-    id: 2,
-    title: 'LA PRIMERA',
-    year: '2025',
-    meta: 'Latin R&B · OneTime Music Inc',
-    reflection: 'Ten years later, this sounds more like me. Less trying. More direct.',
-    cover: '/album-firstlight.jpg',
-    embedUrl: 'https://embed.music.apple.com/us/album/la-primera-remastered-single/1812806221',
-    links: [
-      { name: 'Spotify', url: 'https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa', icon: Music2 },
-      { name: 'Apple Music', url: 'https://music.apple.com/us/album/la-primera-remastered-single/1812806221', icon: Apple },
-      { name: 'YouTube', url: 'https://www.youtube.com/@elisonjoel', icon: Youtube },
-    ],
-  },
-];
-
 const Music = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const [hoveredTrack, setHoveredTrack] = useState<number | null>(null);
+  const [hoveredTrack, setHoveredTrack] = useState<string | null>(null);
 
   useEffect(() => {
     if (prefersReducedMotion()) {
@@ -95,11 +55,11 @@ const Music = () => {
         </p>
 
         <div className="track-cards grid md:grid-cols-2 gap-8 md:gap-12">
-          {tracks.map((track) => (
+          {releases.map((track) => (
             <div
-              key={track.id}
+              key={track.slug}
               className="track-card group"
-              onMouseEnter={() => setHoveredTrack(track.id)}
+              onMouseEnter={() => setHoveredTrack(track.slug)}
               onMouseLeave={() => setHoveredTrack(null)}
             >
               {/* Cover */}
@@ -112,7 +72,7 @@ const Music = () => {
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700"
-                  style={{ transform: hoveredTrack === track.id ? 'scale(1.03)' : 'scale(1)' }}
+                  style={{ transform: hoveredTrack === track.slug ? 'scale(1.03)' : 'scale(1)' }}
                 />
                 <div className="absolute top-4 left-4 px-3 py-1" style={{ background: 'var(--accent-gold)' }}>
                   <span className="font-inter text-[10px] font-semibold uppercase tracking-[0.1em] text-white">{track.year}</span>
@@ -144,7 +104,11 @@ const Music = () => {
 
               {/* Links */}
               <div className="flex flex-wrap gap-3">
-                {track.links.map((link) => (
+                {[
+                  { name: 'Spotify', url: track.spotifyUrl, icon: Music2 },
+                  { name: 'Apple Music', url: track.appleUrl, icon: Apple },
+                  ...(track.youtubeUrl ? [{ name: 'YouTube', url: track.youtubeUrl, icon: Youtube }] : []),
+                ].map((link) => (
                   <a
                     key={link.name}
                     href={link.url}
@@ -157,6 +121,13 @@ const Music = () => {
                     {link.name}
                   </a>
                 ))}
+                <a
+                  href={track.path}
+                  className="inline-flex items-center gap-2 px-4 py-2 border text-[10px] font-medium uppercase tracking-[0.12em] transition-all duration-300 hover:border-[var(--accent-gold)] hover:text-[var(--accent-gold)]"
+                  style={{ borderColor: 'var(--text-dim)', color: 'var(--text-tertiary)' }}
+                >
+                  Release Page
+                </a>
               </div>
             </div>
           ))}

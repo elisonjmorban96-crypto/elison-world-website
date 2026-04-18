@@ -3,21 +3,36 @@ import { Analytics } from '@vercel/analytics/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navigation from './components/Navigation';
+import SubpageNavigation from './components/SubpageNavigation';
 import Hero from './sections/Hero';
 import Story from './sections/Story';
 import Music from './sections/Music';
 import Gallery from './sections/Gallery';
 import Connection from './sections/Connection';
+import ReleasePage from './pages/ReleasePage';
+import EpkPage from './pages/EpkPage';
+import { releaseBySlug } from './content/site';
 import { prefersReducedMotion } from './lib/motion';
+import { normalizePathname } from './lib/routing';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function App() {
+interface AppProps {
+  initialPath?: string;
+}
+
+function App({ initialPath = '/' }: AppProps) {
   const progressRef = useRef<HTMLDivElement>(null);
   const [analyticsEnabled, setAnalyticsEnabled] = useState(false);
+  const route = normalizePathname(initialPath);
+  const isHomePage = route === '/';
 
   useEffect(() => {
+    if (!isHomePage) {
+      return;
+    }
+
     if (prefersReducedMotion()) {
       return;
     }
@@ -40,7 +55,7 @@ function App() {
     const handleResize = () => ScrollTrigger.refresh();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [isHomePage]);
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -57,21 +72,25 @@ function App() {
         Skip to content
       </a>
 
-      <Navigation />
+      {isHomePage ? <Navigation /> : <SubpageNavigation />}
 
-      {/* Scene progress line */}
-      <div ref={progressRef} className="scene-progress" aria-hidden="true" />
+      {isHomePage ? <div ref={progressRef} className="scene-progress" aria-hidden="true" /> : null}
 
       {/* Film grain overlay */}
       <div className="film-grain" aria-hidden="true" />
 
-      <main id="main-content" tabIndex={-1}>
-        <Hero />
-        <Story />
-        <Music />
-        <Gallery />
-        <Connection />
-      </main>
+      {route === '/' ? (
+        <main id="main-content" tabIndex={-1}>
+          <Hero />
+          <Story />
+          <Music />
+          <Gallery />
+          <Connection />
+        </main>
+      ) : null}
+      {route === '/la-primera/' ? <ReleasePage release={releaseBySlug['la-primera']} /> : null}
+      {route === '/decisions/' ? <ReleasePage release={releaseBySlug.decisions} /> : null}
+      {route === '/epk/' ? <EpkPage /> : null}
       {analyticsEnabled ? <Analytics /> : null}
     </div>
   );

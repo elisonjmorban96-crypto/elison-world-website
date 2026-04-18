@@ -1,6 +1,30 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
+const staticSubpages = [
+  {
+    path: '/la-primera/',
+    title: /LA PRIMERA \| Elison/,
+    heading: /LA PRIMERA/i,
+    canonical: 'https://elisonworld.com/la-primera/',
+    marker: 'Official Release Page',
+  },
+  {
+    path: '/decisions/',
+    title: /Decisions \(Remastered\) \| Elison/,
+    heading: /Decisions \(Remastered\)/i,
+    canonical: 'https://elisonworld.com/decisions/',
+    marker: 'Official Release Page',
+  },
+  {
+    path: '/epk/',
+    title: /EPK \| Elison/,
+    heading: /Elison EPK/i,
+    canonical: 'https://elisonworld.com/epk/',
+    marker: 'Official EPK',
+  },
+] as const;
+
 test('homepage has the expected landmarks and metadata', async ({ page }) => {
   await page.goto('/');
 
@@ -70,3 +94,28 @@ test('homepage keeps the hero readable when reduced motion is enabled', async ({
 
   await context.close();
 });
+
+for (const subpage of staticSubpages) {
+  test(`${subpage.path} has the expected metadata and primary content`, async ({ page }) => {
+    await page.goto(subpage.path);
+
+    await expect(page).toHaveTitle(subpage.title);
+    await expect(page.locator('main')).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: subpage.heading })).toBeVisible();
+    await expect(page.getByText(subpage.marker, { exact: true })).toBeVisible();
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', subpage.canonical);
+    await expect(page.locator('meta[name="description"]')).toHaveCount(1);
+  });
+
+  test(`${subpage.path} is readable without JavaScript`, async ({ browser }) => {
+    const context = await browser.newContext({ javaScriptEnabled: false });
+    const page = await context.newPage();
+
+    await page.goto(subpage.path, { waitUntil: 'domcontentloaded' });
+
+    await expect(page.getByRole('heading', { level: 1, name: subpage.heading })).toBeVisible();
+    await expect(page.getByText(subpage.marker, { exact: true })).toBeVisible();
+
+    await context.close();
+  });
+}

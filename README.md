@@ -41,11 +41,16 @@ npm run audit:lighthouse
 
 - App shell: `src/App.tsx`
 - Navigation: `src/components/Navigation.tsx`
+- Subpage navigation: `src/components/SubpageNavigation.tsx`
 - Hero: `src/sections/Hero.tsx`
 - Story: `src/sections/Story.tsx`
 - Music: `src/sections/Music.tsx`
 - Gallery: `src/sections/Gallery.tsx`
 - Connect / newsletter: `src/sections/Connection.tsx`
+- Release pages: `src/pages/ReleasePage.tsx`
+- EPK page: `src/pages/EpkPage.tsx`
+- Route metadata: `src/lib/metadata.ts`
+- Shared artist/release content: `src/content/site.ts`
 - SEO shell metadata: `index.html`
 - Crawl directives: `public/robots.txt`, `public/sitemap.xml`, `public/llms.txt`, `public/llms-full.txt`
 

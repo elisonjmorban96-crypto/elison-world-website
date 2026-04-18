@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Music2, Apple, Youtube, Instagram, Twitter, Send, Mail } from 'lucide-react';
+import { Music2, Apple, Youtube, Instagram, Twitter, Send, Mail, ExternalLink } from 'lucide-react';
 import { prefersReducedMotion } from '../lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -177,11 +177,18 @@ const Connection = () => {
             <p className="font-inter text-xs leading-relaxed mb-5" style={{ color: 'var(--text-tertiary)' }}>
               Bookings, press, collaborations, or a real note.
             </p>
-            <a href="mailto:booking@elisonworld.com"
-              className="inline-flex items-center gap-2 font-inter text-[11px] uppercase tracking-[0.12em] transition-colors duration-300 hover:text-[var(--accent-gold)]"
-              style={{ color: 'var(--text-secondary)' }}>
-              <Mail className="w-3.5 h-3.5" /> booking@elisonworld.com
-            </a>
+            <div className="flex flex-col gap-2">
+              <a href="mailto:booking@elisonworld.com"
+                className="inline-flex items-center gap-2 font-inter text-[11px] uppercase tracking-[0.12em] transition-colors duration-300 hover:text-[var(--accent-gold)]"
+                style={{ color: 'var(--text-secondary)' }}>
+                <Mail className="w-3.5 h-3.5" /> booking@elisonworld.com
+              </a>
+              <a href="/epk/"
+                className="inline-flex items-center gap-2 font-inter text-[11px] uppercase tracking-[0.12em] transition-colors duration-300 hover:text-[var(--accent-gold)]"
+                style={{ color: 'var(--text-secondary)' }}>
+                <ExternalLink className="w-3.5 h-3.5" /> EPK
+              </a>
+            </div>
           </div>
         </div>
 
