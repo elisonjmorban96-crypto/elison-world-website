@@ -1,0 +1,42 @@
+/* App-specific styles */
+
+/* Ensure smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* GPU acceleration for animated elements */
+.gpu-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+/* Custom focus styles */
+*:focus-visible {
+  outline: 1px solid var(--accent-gold);
+  outline-offset: 2px;
+}
+
+/* Prevent text selection on decorative elements */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Image loading state */
+img {
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+img[data-loading="true"] {
+  opacity: 0;
+}
+
+/* Mobile touch improvements */
+@media (hover: none) {
+  .hover\:scale-105:active {
+    transform: scale(1.05);
+  }
+}
