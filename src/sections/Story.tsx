@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { prefersReducedMotion } from '../lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,6 +10,10 @@ const Story = () => {
   const imageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) {
+      return;
+    }
+
     const section = sectionRef.current;
     const image = imageRef.current;
     if (!section || !image) return;
@@ -44,7 +49,7 @@ const Story = () => {
           <div className="lg:col-span-2 lg:sticky lg:top-24 lg:self-start">
             <div ref={imageRef} className="relative">
               <div className="aspect-[3/4] overflow-hidden">
-                <img src="/about-elison.jpg" alt="Elison" className="w-full h-full object-cover" style={{ filter: 'brightness(0.85)' }} />
+                <img src="/about-elison.jpg" alt="Elison portrait in shadow" className="w-full h-full object-cover" style={{ filter: 'brightness(0.85)' }} />
               </div>
               {/* Quote card overlapping the image edge */}
               <div className="absolute -bottom-4 -right-2 md:bottom-6 md:-right-6 max-w-[210px] p-4 border" style={{ background: 'rgba(8,8,8,0.92)', borderColor: 'rgba(184,134,11,0.15)' }}>
@@ -129,7 +134,9 @@ const Story = () => {
             </div>
 
             <button
+              type="button"
               onClick={() => document.querySelector('#music')?.scrollIntoView({ behavior: 'smooth' })}
+              aria-label="Jump to the music section"
               className="story-cta font-inter text-[10px] uppercase tracking-[0.25em] transition-colors duration-300 hover:text-[#d4a853]"
               style={{ color: '#4a4030' }}
             >

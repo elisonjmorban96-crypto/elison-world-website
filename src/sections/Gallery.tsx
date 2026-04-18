@@ -2,18 +2,19 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { prefersReducedMotion } from '../lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const galleryImages = [
-  { id: 1, src: '/elison-portrait-1.jpg', alt: 'The Gaze', span: 'col-span-2 row-span-2' },
-  { id: 2, src: '/gallery-performance.jpg', alt: 'On Stage', span: 'col-span-2' },
-  { id: 3, src: '/elison-portrait-2.jpg', alt: 'In the Light', span: '' },
-  { id: 4, src: '/gallery-studio.jpg', alt: 'The Studio', span: '' },
-  { id: 5, src: '/gallery-closeup.jpg', alt: 'Close Up', span: '' },
-  { id: 6, src: '/gallery-rooftop.jpg', alt: 'City Lights', span: 'col-span-2' },
-  { id: 7, src: '/gallery-intimate.jpg', alt: 'With the Guitar', span: 'row-span-2' },
-  { id: 8, src: '/gallery-street.jpg', alt: 'Night Walk', span: 'col-span-2' },
+  { id: 1, src: '/elison-portrait-1.jpg', alt: 'Elison portrait with direct gaze', span: 'col-span-2 row-span-2' },
+  { id: 2, src: '/gallery-performance.jpg', alt: 'Elison performing on stage', span: 'col-span-2' },
+  { id: 3, src: '/elison-portrait-2.jpg', alt: 'Elison portrait in warm light', span: '' },
+  { id: 4, src: '/gallery-studio.jpg', alt: 'Elison in the recording studio', span: '' },
+  { id: 5, src: '/gallery-closeup.jpg', alt: 'Close-up portrait of Elison', span: '' },
+  { id: 6, src: '/gallery-rooftop.jpg', alt: 'Elison on a rooftop at night', span: 'col-span-2' },
+  { id: 7, src: '/gallery-intimate.jpg', alt: 'Elison with a guitar in an intimate setting', span: 'row-span-2' },
+  { id: 8, src: '/gallery-street.jpg', alt: 'Elison walking at night in the city', span: 'col-span-2' },
 ];
 
 const Gallery = () => {
@@ -22,6 +23,10 @@ const Gallery = () => {
   const [currentIdx, setCurrentIdx] = useState(0);
 
   useEffect(() => {
+    if (prefersReducedMotion()) {
+      return;
+    }
+
     const section = sectionRef.current;
     if (!section) return;
 
@@ -62,14 +67,16 @@ const Gallery = () => {
 
         <div className="gallery-grid grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 auto-rows-[180px] md:auto-rows-[220px]">
           {galleryImages.map((img, idx) => (
-            <div
+            <button
               key={img.id}
+              type="button"
               className={`gallery-item relative overflow-hidden cursor-pointer group ${img.span}`}
               onClick={() => open(idx)}
+              aria-label={`Open gallery image ${idx + 1}: ${img.alt}`}
             >
               <img
                 src={img.src}
-                alt={img.alt}
+                alt=""
                 className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
                 style={{ filter: 'brightness(0.85)' }}
               />
@@ -79,20 +86,27 @@ const Gallery = () => {
                   <span className="font-inter text-[10px] uppercase tracking-wider" style={{ color: 'var(--accent-gold-light)' }}>{img.alt}</span>
                 </div>
               )}
-            </div>
+            </button>
           ))}
         </div>
       </div>
 
       {lightboxOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ background: 'rgba(5,5,5,0.96)', backdropFilter: 'blur(20px)' }} onClick={close}>
-          <button onClick={close} className="absolute top-6 right-6 p-2 transition-colors z-10" style={{ color: 'var(--text-tertiary)' }}>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          style={{ background: 'rgba(5,5,5,0.96)', backdropFilter: 'blur(20px)' }}
+          onClick={close}
+          role="dialog"
+          aria-modal="true"
+          aria-label={galleryImages[currentIdx].alt}
+        >
+          <button type="button" onClick={close} aria-label="Close gallery image" className="absolute top-6 right-6 p-2 transition-colors z-10" style={{ color: 'var(--text-tertiary)' }}>
             <X className="w-6 h-6" />
           </button>
-          <button onClick={(e) => { e.stopPropagation(); prev(); }} className="absolute left-4 md:left-6 p-3 rounded-full transition-all hover:bg-white/5" style={{ color: 'var(--text-tertiary)' }}>
+          <button type="button" onClick={(e) => { e.stopPropagation(); prev(); }} aria-label="Previous gallery image" className="absolute left-4 md:left-6 p-3 rounded-full transition-all hover:bg-white/5" style={{ color: 'var(--text-tertiary)' }}>
             <ChevronLeft className="w-7 h-7" />
           </button>
-          <button onClick={(e) => { e.stopPropagation(); next(); }} className="absolute right-4 md:right-6 p-3 rounded-full transition-all hover:bg-white/5" style={{ color: 'var(--text-tertiary)' }}>
+          <button type="button" onClick={(e) => { e.stopPropagation(); next(); }} aria-label="Next gallery image" className="absolute right-4 md:right-6 p-3 rounded-full transition-all hover:bg-white/5" style={{ color: 'var(--text-tertiary)' }}>
             <ChevronRight className="w-7 h-7" />
           </button>
           <div className="max-w-[90vw] max-h-[85vh]" onClick={(e) => e.stopPropagation()}>

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Music2, Apple, Youtube, Instagram, Twitter, Send, Mail } from 'lucide-react';
+import { prefersReducedMotion } from '../lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,6 +13,10 @@ const Connection = () => {
   const [subscribed, setSubscribed] = useState(false);
 
   useEffect(() => {
+    if (prefersReducedMotion()) {
+      return;
+    }
+
     const section = sectionRef.current;
     const image = imageRef.current;
     if (!section || !image) return;
@@ -146,21 +151,26 @@ const Connection = () => {
             Get the next chapter before the world does
           </p>
           <form onSubmit={handleSubscribe} className="flex">
+            <label htmlFor="newsletter-email" className="sr-only">
+              Email address for Elison updates
+            </label>
             <input
+              id="newsletter-email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
+              autoComplete="email"
               className="flex-1 px-4 py-3 bg-white/[0.03] border font-inter text-sm placeholder:text-white/20 focus:outline-none transition-colors"
               style={{ borderColor: 'var(--text-dim)', color: 'var(--text-primary)' }}
               required
             />
-            <button type="submit" className="px-4 py-3 transition-colors hover:brightness-110" style={{ background: 'var(--accent-gold)' }}>
+            <button type="submit" aria-label="Subscribe for updates from Elison" className="px-4 py-3 transition-colors hover:brightness-110" style={{ background: 'var(--accent-gold)' }}>
               <Send className="w-4 h-4 text-white" />
             </button>
           </form>
           {subscribed && (
-            <p className="mt-3 font-inter text-xs" style={{ color: 'var(--accent-gold)' }}>
+            <p className="mt-3 font-inter text-xs" style={{ color: 'var(--accent-gold)' }} aria-live="polite">
               You are in. I will find you when it moves.
             </p>
           )}

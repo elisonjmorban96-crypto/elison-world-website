@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { prefersReducedMotion } from '../lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,6 +11,10 @@ const Hero = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) {
+      return;
+    }
+
     const section = sectionRef.current;
     const image = imageRef.current;
     const canvas = canvasRef.current;
@@ -92,9 +97,9 @@ const Hero = () => {
 
   return (
     <section id="home" ref={sectionRef} className="relative w-full h-screen overflow-hidden" style={{ background: '#050505' }}>
-      <canvas ref={canvasRef} className="absolute inset-0 z-[3] pointer-events-none" />
+      <canvas ref={canvasRef} className="absolute inset-0 z-[3] pointer-events-none" aria-hidden="true" />
       <div ref={imageRef} className="absolute inset-0 z-[1]">
-        <img src="/hero-elison.jpg" alt="Elison" className="w-full h-full object-cover object-top" />
+        <img src="/hero-elison.jpg" alt="Elison portrait in dramatic stage lighting" className="w-full h-full object-cover object-top" />
       </div>
       <div className="absolute inset-0 z-[2]" style={{ background: 'linear-gradient(to right, rgba(5,5,5,0.88) 0%, rgba(5,5,5,0.45) 50%, transparent 100%)' }} />
       <div className="absolute inset-0 z-[2]" style={{ background: 'linear-gradient(to top, #050505 0%, transparent 30%)' }} />
@@ -118,7 +123,7 @@ const Hero = () => {
           Dominican. Independent. Ten years in the dark, still building.
         </p>
 
-        <div className="hero-scroll-hint mt-auto md:mt-16 pt-12 md:pt-0 flex items-center gap-3">
+        <div className="hero-scroll-hint mt-auto md:mt-16 pt-12 md:pt-0 flex items-center gap-3" aria-hidden="true">
           <div className="w-px h-8" style={{ background: 'linear-gradient(to bottom, #b8860b, transparent)' }} />
           <span className="font-inter text-[9px] uppercase tracking-[0.25em]" style={{ color: '#4a4030' }}>Scroll</span>
         </div>

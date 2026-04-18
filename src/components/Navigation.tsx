@@ -11,6 +11,22 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isMobileMenuOpen]);
+
   const navLinks = [
     { name: 'Story', href: '#story' },
     { name: 'Music', href: '#music' },
@@ -27,6 +43,7 @@ const Navigation = () => {
   return (
     <>
       <nav
+        aria-label="Primary"
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
           isScrolled
             ? 'h-16 bg-black/80 backdrop-blur-xl border-b border-[var(--accent-bronze)]/10'
@@ -58,9 +75,12 @@ const Navigation = () => {
           </div>
 
           <button
+            type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 text-[var(--text-secondary)]"
-            aria-label="Toggle menu"
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -72,9 +92,16 @@ const Navigation = () => {
         className={`fixed inset-0 z-40 md:hidden transition-all duration-500 ${
           isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
+        aria-hidden={!isMobileMenuOpen}
       >
-        <div className="absolute inset-0 bg-black/95 backdrop-blur-xl" onClick={() => setIsMobileMenuOpen(false)} />
-        <div className={`absolute right-0 top-0 h-full w-[80%] max-w-[360px] bg-[var(--bg-primary)] border-l border-[var(--accent-bronze)]/10 flex flex-col pt-24 px-8 transition-transform duration-500 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="absolute inset-0 bg-black/95 backdrop-blur-xl" onClick={() => setIsMobileMenuOpen(false)} aria-hidden="true" />
+        <div
+          id="mobile-menu"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation"
+          className={`absolute right-0 top-0 h-full w-[80%] max-w-[360px] bg-[var(--bg-primary)] border-l border-[var(--accent-bronze)]/10 flex flex-col pt-24 px-8 transition-transform duration-500 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        >
           {navLinks.map((link) => (
             <a
               key={link.name}

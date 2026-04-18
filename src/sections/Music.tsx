@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Play, ExternalLink, Music2, Apple, Youtube } from 'lucide-react';
+import { prefersReducedMotion } from '../lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -48,6 +49,10 @@ const Music = () => {
   const [hoveredTrack, setHoveredTrack] = useState<number | null>(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) {
+      return;
+    }
+
     const section = sectionRef.current;
     if (!section) return;
 
@@ -102,10 +107,17 @@ const Music = () => {
                   className="w-full h-full object-cover transition-transform duration-700"
                   style={{ transform: hoveredTrack === track.id ? 'scale(1.03)' : 'scale(1)' }}
                 />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-center justify-center">
-                  <button className="w-16 h-16 rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110" style={{ background: 'var(--accent-gold)' }}>
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-400 flex items-center justify-center">
+                  <a
+                    href={track.links[0].url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Play ${track.title} on ${track.links[0].name}`}
+                    className="w-16 h-16 rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110"
+                    style={{ background: 'var(--accent-gold)' }}
+                  >
                     <Play className="w-6 h-6 text-white ml-1" fill="white" />
-                  </button>
+                  </a>
                 </div>
                 <div className="absolute top-4 left-4 px-3 py-1" style={{ background: 'var(--accent-gold)' }}>
                   <span className="font-inter text-[10px] font-semibold uppercase tracking-[0.1em] text-white">{track.year}</span>

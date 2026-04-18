@@ -1,5 +1,34 @@
 /* App-specific styles */
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: #050505;
+  color: var(--text-primary);
+  border: 1px solid var(--accent-gold);
+  transform: translateY(-200%);
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
 /* Ensure smooth scroll */
 html {
   scroll-behavior: smooth;
@@ -14,8 +43,8 @@ html {
 
 /* Custom focus styles */
 *:focus-visible {
-  outline: 1px solid var(--accent-gold);
-  outline-offset: 2px;
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 3px;
 }
 
 /* Prevent text selection on decorative elements */
@@ -38,5 +67,20 @@ img[data-loading="true"] {
 @media (hover: none) {
   .hover\:scale-105:active {
     transform: scale(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
