@@ -197,7 +197,7 @@ const Discography = () => {
         {/* View All */}
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 mt-12 text-center">
           <a
-            href="https://open.spotify.com"
+            href="https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-8 py-4 border border-amber-800/40 text-amber-200/70 font-inter text-sm font-semibold uppercase tracking-[0.15em] hover:bg-amber-900/20 hover:border-amber-700/50 transition-all duration-300"

@@ -61,14 +61,14 @@ const Connection = () => {
 
   const streamLinks = [
     { name: 'Spotify', url: 'https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa', icon: Music2 },
-    { name: 'Apple Music', url: 'https://music.apple.com', icon: Apple },
-    { name: 'YouTube', url: 'https://www.youtube.com/@CNCOAustralia/search?query=Elison+Joel+Morban', icon: Youtube },
+    { name: 'Apple Music', url: 'https://music.apple.com/us/artist/elison/1810625015', icon: Apple },
+    { name: 'YouTube', url: 'https://www.youtube.com/@elisonjoel', icon: Youtube },
   ];
 
   const socialLinks = [
-    { name: 'Instagram', url: 'https://instagram.com', icon: Instagram },
-    { name: 'TikTok', url: 'https://tiktok.com', icon: Music2 },
-    { name: 'Twitter / X', url: 'https://twitter.com', icon: Twitter },
+    { name: 'Instagram', url: 'https://www.instagram.com/elison.wav', icon: Instagram },
+    { name: 'TikTok', url: 'https://www.tiktok.com/elison.wav', icon: Music2 },
+    { name: 'Twitter / X', url: 'https://www.x.com/elisonjoel', icon: Twitter },
   ];
 
   return (

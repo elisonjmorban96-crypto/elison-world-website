@@ -136,11 +136,11 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: Music2, href: 'https://spotify.com', label: 'Spotify', color: 'hover:text-[#1DB954]' },
-    { icon: Apple, href: 'https://music.apple.com', label: 'Apple Music', color: 'hover:text-[#FA57C1]' },
-    { icon: Youtube, href: 'https://youtube.com', label: 'YouTube', color: 'hover:text-[#FF0000]' },
-    { icon: Instagram, href: 'https://instagram.com', label: 'Instagram', color: 'hover:text-[#E4405F]' },
-    { icon: Twitter, href: 'https://twitter.com', label: 'Twitter', color: 'hover:text-[#1DA1F2]' },
+    { icon: Music2, href: 'https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa', label: 'Spotify', color: 'hover:text-[#1DB954]' },
+    { icon: Apple, href: 'https://music.apple.com/us/artist/elison/1810625015', label: 'Apple Music', color: 'hover:text-[#FA57C1]' },
+    { icon: Youtube, href: 'https://www.youtube.com/@elisonjoel', label: 'YouTube', color: 'hover:text-[#FF0000]' },
+    { icon: Instagram, href: 'https://www.instagram.com/elison.wav', label: 'Instagram', color: 'hover:text-[#E4405F]' },
+    { icon: Twitter, href: 'https://www.x.com/elisonjoel', label: 'Twitter', color: 'hover:text-[#1DA1F2]' },
   ];
 
   return (

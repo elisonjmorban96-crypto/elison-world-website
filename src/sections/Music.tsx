@@ -25,7 +25,7 @@ const tracks: Track[] = [
     cover: '/album-midnight.jpg',
     links: [
       { name: 'Spotify', url: 'https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa', icon: Music2 },
-      { name: 'Apple Music', url: 'https://music.apple.com', icon: Apple },
+      { name: 'Apple Music', url: 'https://music.apple.com/us/artist/elison/1810625015', icon: Apple },
     ],
   },
   {
@@ -37,8 +37,8 @@ const tracks: Track[] = [
     cover: '/album-firstlight.jpg',
     links: [
       { name: 'Spotify', url: 'https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa', icon: Music2 },
-      { name: 'Apple Music', url: 'https://music.apple.com', icon: Apple },
-      { name: 'YouTube', url: 'https://www.youtube.com/@CNCOAustralia/search?query=Elison+Joel+Morban', icon: Youtube },
+      { name: 'Apple Music', url: 'https://music.apple.com/us/artist/elison/1810625015', icon: Apple },
+      { name: 'YouTube', url: 'https://www.youtube.com/@elisonjoel', icon: Youtube },
     ],
   },
 ];
@@ -150,8 +150,8 @@ const Music = () => {
           <div className="flex flex-wrap gap-4">
             {[
               { name: 'Spotify', url: 'https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa' },
-              { name: 'Apple Music', url: 'https://music.apple.com' },
-              { name: 'YouTube', url: 'https://www.youtube.com/@CNCOAustralia/search?query=Elison+Joel+Morban' },
+              { name: 'Apple Music', url: 'https://music.apple.com/us/artist/elison/1810625015' },
+              { name: 'YouTube', url: 'https://www.youtube.com/@elisonjoel' },
               { name: 'SoundCloud', url: 'https://soundcloud.com/elisonjoelmorban' },
             ].map((p) => (
               <a
