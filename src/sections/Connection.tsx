@@ -62,7 +62,7 @@ const Connection = () => {
     if (email) { setSubscribed(true); setEmail(''); setTimeout(() => setSubscribed(false), 4000); }
   };
 
-  const title = 'STAY IN THE STORY';
+  const title = 'STAY CLOSE';
 
   const streamLinks = [
     { name: 'Spotify', url: 'https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa', icon: Music2 },
@@ -93,7 +93,7 @@ const Connection = () => {
           ))}
         </h2>
         <p className="connect-sub font-inter text-sm sm:text-base md:text-lg mb-12 md:mb-16 max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
-          If you found me here, you are early. Stay close.
+          If you found me here, you are early.
         </p>
 
         <div className="connect-cols grid md:grid-cols-3 gap-8 md:gap-10 mb-14 md:mb-20">
@@ -101,7 +101,7 @@ const Connection = () => {
           <div className="connect-col text-left md:text-center">
             <h3 className="font-oswald text-lg font-bold tracking-[0.1em] mb-3" style={{ color: 'var(--accent-gold)' }}>STREAM</h3>
             <p className="font-inter text-xs leading-relaxed mb-5" style={{ color: 'var(--text-tertiary)' }}>
-              Start with the songs. That is where I leave fingerprints.
+              Start with the songs.
             </p>
             <div className="flex flex-col gap-2">
               {streamLinks.map((link) => (
@@ -118,7 +118,7 @@ const Connection = () => {
           <div className="connect-col text-left md:text-center">
             <h3 className="font-oswald text-lg font-bold tracking-[0.1em] mb-3" style={{ color: 'var(--accent-gold)' }}>FOLLOW</h3>
             <p className="font-inter text-xs leading-relaxed mb-5" style={{ color: 'var(--text-tertiary)' }}>
-              If you want the next scene before the lights come up, stay near me.
+              For new music, clips, and updates.
             </p>
             <div className="flex flex-col gap-2">
               {socialLinks.map((link) => (
@@ -135,7 +135,7 @@ const Connection = () => {
           <div className="connect-col text-left md:text-center">
             <h3 className="font-oswald text-lg font-bold tracking-[0.1em] mb-3" style={{ color: 'var(--accent-gold)' }}>CONNECT</h3>
             <p className="font-inter text-xs leading-relaxed mb-5" style={{ color: 'var(--text-tertiary)' }}>
-              Bookings, press, collaborations, or a real note. Knock.
+              Bookings, press, collaborations, or a real note.
             </p>
             <a href="mailto:booking@elison-music.com"
               className="inline-flex items-center gap-2 font-inter text-[11px] uppercase tracking-[0.12em] transition-colors duration-300 hover:text-[var(--accent-gold)]"
@@ -148,7 +148,7 @@ const Connection = () => {
         {/* Newsletter */}
         <div className="connect-footer max-w-md mx-auto mb-14 md:mb-16">
           <p className="font-inter text-[11px] uppercase tracking-[0.15em] mb-4" style={{ color: 'var(--text-tertiary)' }}>
-            Get the next chapter before the world does
+            Get updates when new music lands
           </p>
           <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 sm:gap-0">
             <label htmlFor="newsletter-email" className="sr-only">
@@ -171,7 +171,7 @@ const Connection = () => {
           </form>
           {subscribed && (
             <p className="mt-3 font-inter text-xs" style={{ color: 'var(--accent-gold)' }} aria-live="polite">
-              You are in. I will find you when it moves.
+              You're on the list.
             </p>
           )}
         </div>

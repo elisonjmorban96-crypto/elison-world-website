@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Play, ExternalLink, Music2, Apple, Youtube } from 'lucide-react';
+import { ExternalLink, Music2, Apple, Youtube } from 'lucide-react';
 import { prefersReducedMotion } from '../lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,6 +13,7 @@ interface Track {
   meta: string;
   reflection: string;
   cover: string;
+  embedUrl: string;
   links: { name: string; url: string; icon: React.ElementType }[];
 }
 
@@ -22,11 +23,12 @@ const tracks: Track[] = [
     title: 'Decisions (Remastered)',
     year: '2016',
     meta: '74 BPM · OneTime Music Inc',
-    reflection: 'I put my voice on a record and waited for the world to answer. It didn\'t. So I learned the harder part: keep singing when nobody claps.',
+    reflection: 'My first release. It did not move the way I wanted, but it still mattered.',
     cover: '/album-midnight.jpg',
+    embedUrl: 'https://embed.music.apple.com/us/album/decisions-remastered-single/1811878413',
     links: [
       { name: 'Spotify', url: 'https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa', icon: Music2 },
-      { name: 'Apple Music', url: 'https://music.apple.com/us/artist/elison/1810625015', icon: Apple },
+      { name: 'Apple Music', url: 'https://music.apple.com/us/album/decisions-remastered-single/1811878413', icon: Apple },
     ],
   },
   {
@@ -34,11 +36,12 @@ const tracks: Track[] = [
     title: 'LA PRIMERA',
     year: '2025',
     meta: 'Latin R&B · OneTime Music Inc',
-    reflection: 'Ten years in the making. Not because I was lost. Because I was becoming. This is not a comeback. It is me coming back for myself.',
+    reflection: 'Ten years later, this sounds more like me. Less trying. More direct.',
     cover: '/album-firstlight.jpg',
+    embedUrl: 'https://embed.music.apple.com/us/album/la-primera-remastered-single/1812806221',
     links: [
       { name: 'Spotify', url: 'https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa', icon: Music2 },
-      { name: 'Apple Music', url: 'https://music.apple.com/us/artist/elison/1810625015', icon: Apple },
+      { name: 'Apple Music', url: 'https://music.apple.com/us/album/la-primera-remastered-single/1812806221', icon: Apple },
       { name: 'YouTube', url: 'https://www.youtube.com/@elisonjoel', icon: Youtube },
     ],
   },
@@ -83,12 +86,12 @@ const Music = () => {
       <div className="absolute top-0 right-0 hidden sm:block w-[400px] h-[400px] rounded-full blur-3xl" style={{ background: 'var(--accent-gold)', opacity: 0.04 }} />
 
       <div className="max-w-[1400px] mx-auto px-5 sm:px-6 md:px-12 lg:px-20">
-        <span className="scene-label block mb-4">What Survived</span>
+        <span className="scene-label block mb-4">Releases</span>
         <h2 className="music-header font-oswald text-4xl md:text-5xl lg:text-6xl font-bold tracking-[0.06em] mb-4" style={{ color: 'var(--text-primary)' }}>
           THE SOUND
         </h2>
         <p className="music-sub font-inter text-sm sm:text-base mb-12 md:mb-16 max-w-[24rem]" style={{ color: 'var(--text-secondary)' }}>
-          Two releases. Ten years apart. Same wound. Same fire.
+          Play both releases here.
         </p>
 
         <div className="track-cards grid md:grid-cols-2 gap-8 md:gap-12">
@@ -107,18 +110,6 @@ const Music = () => {
                   className="w-full h-full object-cover transition-transform duration-700"
                   style={{ transform: hoveredTrack === track.id ? 'scale(1.03)' : 'scale(1)' }}
                 />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-400 flex items-center justify-center">
-                  <a
-                    href={track.links[0].url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Play ${track.title} on ${track.links[0].name}`}
-                    className="w-16 h-16 rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110"
-                    style={{ background: 'var(--accent-gold)' }}
-                  >
-                    <Play className="w-6 h-6 text-white ml-1" fill="white" />
-                  </a>
-                </div>
                 <div className="absolute top-4 left-4 px-3 py-1" style={{ background: 'var(--accent-gold)' }}>
                   <span className="font-inter text-[10px] font-semibold uppercase tracking-[0.1em] text-white">{track.year}</span>
                 </div>
@@ -135,6 +126,17 @@ const Music = () => {
               <p className="pull-quote text-sm leading-relaxed mb-6" style={{ color: 'var(--text-secondary)' }}>
                 &ldquo;{track.reflection}&rdquo;
               </p>
+
+              <div className="mb-6 overflow-hidden rounded-xl border" style={{ borderColor: 'var(--text-dim)' }}>
+                <iframe
+                  title={`${track.title} Apple Music player`}
+                  src={track.embedUrl}
+                  loading="lazy"
+                  allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+                  sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+                  style={{ width: '100%', height: '175px', border: 0, background: 'transparent' }}
+                />
+              </div>
 
               {/* Links */}
               <div className="flex flex-wrap gap-3">
@@ -158,7 +160,7 @@ const Music = () => {
 
         {/* All platforms */}
         <div className="platform-links mt-16 pt-10 border-t" style={{ borderColor: 'var(--text-dim)' }}>
-          <span className="scene-label block mb-6">Where It Keeps Breathing</span>
+          <span className="scene-label block mb-6">More Places To Listen</span>
           <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4">
             {[
               { name: 'Spotify', url: 'https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa' },

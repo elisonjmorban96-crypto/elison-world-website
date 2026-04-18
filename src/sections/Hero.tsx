@@ -120,7 +120,7 @@ const Hero = () => {
         </h1>
 
         <p className="hero-sub font-inter text-[13px] sm:text-sm md:text-base font-light tracking-[0.02em] mt-6 sm:mt-8 md:mt-10 max-w-[18rem] sm:max-w-md" style={{ color: '#7a7060' }}>
-          Dominican. Independent. Ten years in the dark, still building.
+          Dominican. Independent. New music out now.
         </p>
 
         <div className="hero-scroll-hint hidden md:flex mt-auto md:mt-16 pt-12 md:pt-0 items-center gap-3" aria-hidden="true">

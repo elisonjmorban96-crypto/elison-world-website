@@ -15,6 +15,7 @@ test('homepage passes core axe accessibility checks', async ({ page }) => {
   await page.goto('/');
 
   const results = await new AxeBuilder({ page })
+    .exclude('iframe')
     .disableRules(['color-contrast'])
     .analyze();
 

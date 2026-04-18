@@ -69,9 +69,6 @@ const Story = () => {
                 I stood in front of Ricky Martin, Laura Pausini, and Alejandro Sanz.
               </p>
               <p className="font-inter text-base sm:text-lg md:text-xl leading-[1.7] mt-3 font-light" style={{ color: '#e8e0d0' }}>
-                I sang to a room that believed in me.
-              </p>
-              <p className="font-inter text-base sm:text-lg md:text-xl leading-[1.7] mt-3 font-light" style={{ color: '#b8a88a' }}>
                 Out of thousands, I made Top 20.
               </p>
               <p className="font-inter text-base sm:text-lg md:text-xl leading-[1.7] mt-3 font-light" style={{ color: '#e8e0d0' }}>
@@ -81,10 +78,10 @@ const Story = () => {
 
             <div className="story-pull mb-14">
               <p className="font-inter text-base md:text-lg leading-[1.7] font-light" style={{ color: '#7a7060' }}>
-                My bandmate won the show. Became one-fifth of CNCO. Went global.
+                My bandmate won the show, joined CNCO, and went global.
               </p>
               <p className="font-inter text-base md:text-lg leading-[1.7] mt-3 font-light" style={{ color: '#e8e0d0' }}>
-                I watched what almost mine looked like from too close.
+                I had to watch that from the outside.
               </p>
             </div>
 
@@ -100,13 +97,10 @@ const Story = () => {
                 I released "Decisions."
               </p>
               <p className="font-inter text-base md:text-lg leading-[1.7] mt-3 font-light" style={{ color: '#7a7060' }}>
-                Then the silence came.
+                Then things went quiet.
               </p>
               <p className="font-inter text-base md:text-lg leading-[1.7] mt-3 font-light" style={{ color: '#7a7060' }}>
-                Not the gentle kind.
-              </p>
-              <p className="font-inter text-base md:text-lg leading-[1.7] mt-3 font-light" style={{ color: '#e8e0d0' }}>
-                The kind that leans in and asks if you still mean it.
+                For a long time.
               </p>
             </div>
 
@@ -115,7 +109,7 @@ const Story = () => {
                 For nearly a decade, the industry forgot my name.
               </p>
               <p className="font-inter text-base sm:text-lg md:text-xl leading-[1.7] mt-3 font-light" style={{ color: '#e8e0d0' }}>
-                My voice did not forget me.
+                I kept working anyway.
               </p>
             </div>
 
@@ -129,7 +123,7 @@ const Story = () => {
 
             <div className="story-pull mb-16">
               <p className="font-inter text-lg sm:text-xl md:text-2xl leading-[1.6] font-light" style={{ color: '#e8e0d0' }}>
-                <em style={{ color: '#b8860b' }}>"LA PRIMERA"</em> drops. Ten years later. Still singing. Still between Miami and New York. Still making the sound the silence could not take from me.
+                <em style={{ color: '#b8860b' }}>"LA PRIMERA"</em> is the return. Ten years later. Still here. Still making music between Miami and New York.
               </p>
             </div>
 
@@ -140,7 +134,7 @@ const Story = () => {
               className="story-cta font-inter text-[10px] uppercase tracking-[0.25em] transition-colors duration-300 hover:text-[#d4a853]"
               style={{ color: '#4a4030' }}
             >
-              This is what staying sounds like →
+              Listen now →
             </button>
           </div>
         </div>
