@@ -70,7 +70,7 @@ const ExclusiveReleasePage = ({ release }: ExclusiveReleasePageProps) => {
               className="w-full h-full object-cover"
               poster={release.cover}
             >
-              <source src={release.videoSrc || undefined} type="video/mp4" />
+              {release.videoSrc && <source src={release.videoSrc} type="video/mp4" />}
             </video>
             <div 
               className="absolute inset-0" 
@@ -142,7 +142,7 @@ const ExclusiveReleasePage = ({ release }: ExclusiveReleasePageProps) => {
               >
                 {hasAudio && release.audioSrc ? (
                   <>
-                    <audio ref={audioRef} src={release.audioSrc || undefined} preload="metadata" />
+                    <audio ref={audioRef} src={release.audioSrc} preload="metadata" />
                     
                     <div className="flex items-center gap-4 mb-6">
                       <button

@@ -83,16 +83,18 @@ const Music = () => {
                 &ldquo;{track.reflection}&rdquo;
               </p>
 
-              <div className="mb-6 overflow-hidden rounded-xl border" style={{ borderColor: 'var(--text-dim)' }}>
-                <iframe
-                  title={`${track.title} Apple Music player`}
-                  src={track.embedUrl}
-                  loading="lazy"
-                  allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
-                  sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
-                  style={{ width: '100%', height: '175px', border: 0, background: 'transparent' }}
-                />
-              </div>
+              {track.embedUrl ? (
+                <div className="mb-6 overflow-hidden rounded-xl border" style={{ borderColor: 'var(--text-dim)' }}>
+                  <iframe
+                    title={`${track.title} Apple Music player`}
+                    src={track.embedUrl}
+                    loading="lazy"
+                    allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+                    sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+                    style={{ width: '100%', height: '175px', border: 0, background: 'transparent' }}
+                  />
+                </div>
+              ) : null}
 
               <div className="flex flex-wrap gap-3">
                 <a
