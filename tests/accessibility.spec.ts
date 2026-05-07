@@ -4,14 +4,14 @@ import AxeBuilder from '@axe-core/playwright';
 const staticSubpages = [
   {
     path: '/dejame-perderme/',
-    title: /Elison's World/,
+    title: /DÉJAME PERDERME \| Elison/,
     heading: /Déjame Perderme/i,
     canonical: 'https://elisonworld.com/dejame-perderme/',
     marker: 'Official Release Page',
   },
   {
     path: '/epk/',
-    title: /Elison's World/,
+    title: /About \| Elison/,
     heading: /Elison EPK/i,
     canonical: 'https://elisonworld.com/epk/',
     marker: 'Official EPK',
