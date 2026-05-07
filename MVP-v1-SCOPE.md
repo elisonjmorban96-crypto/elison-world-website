@@ -40,8 +40,8 @@
 ## POLISH CHECKLIST (Before v2)
 
 ### Audio
-- [ ] Preload first relic sound to reduce tap latency
-- [ ] Add mute/unmute persistence across sessions
+- [x] Preload first relic sound to reduce tap latency
+- [x] Add mute/unmute persistence across sessions
 - [ ] Test audio on low-end Android devices
 
 ### Visual
@@ -51,7 +51,7 @@
 
 ### Interaction
 - [ ] Add haptic feedback on relic tap (if supported)
-- [ ] Prevent double-tap zoom on mobile
+- [x] Prevent double-tap zoom on mobile
 - [ ] Test with screen reader (accessibility)
 
 ### Performance
@@ -63,6 +63,12 @@
 - [ ] Fix empty string src warning in build
 - [ ] Verify email capture works end-to-end
 - [ ] Test localStorage clear/reset flow
+
+### World Map (New)
+- [x] Add mystical map teaser after Room 001 completion
+- [x] Show 5 locations with locked/unlocked/completed states
+- [x] Gold paths, teal shadows, parchment styling
+- [x] Mobile-first responsive
 
 ---
 

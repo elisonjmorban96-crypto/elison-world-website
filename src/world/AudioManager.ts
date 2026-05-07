@@ -23,13 +23,22 @@ export class AudioManager {
       Object.entries(options.fragments).forEach(([id, src]) => {
         const audio = new Audio(src);
         audio.volume = 0.7;
+        audio.preload = 'auto';
         this.fragments.set(id, audio);
       });
+      // Preload first fragment for instant tap response
+      const firstFragment = Object.values(options.fragments)[0];
+      if (firstFragment) {
+        const preloadAudio = new Audio(firstFragment);
+        preloadAudio.preload = 'auto';
+        preloadAudio.load();
+      }
     }
 
     if (options.fullTrackSrc) {
       this.fullTrack = new Audio(options.fullTrackSrc);
       this.fullTrack.volume = 0.9;
+      this.fullTrack.preload = 'none'; // Lazy load until unlock
     }
   }
 
@@ -58,6 +67,11 @@ export class AudioManager {
   playFullTrack() {
     if (this.isMuted) return;
     if (this.fullTrack) {
+      // Lazy load on first play
+      if (this.fullTrack.preload === 'none') {
+        this.fullTrack.preload = 'auto';
+        this.fullTrack.load();
+      }
       this.fullTrack.play().catch(() => {});
     }
   }

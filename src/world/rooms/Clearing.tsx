@@ -356,6 +356,10 @@ const Clearing = ({ onOpenMap }: ClearingProps) => {
       discoverObject(id);
       playFragment(fragmentId);
       spawnParticles(50, 50, 15, '#D4A853');
+      // Haptic feedback on supported devices
+      if (navigator.vibrate) {
+        navigator.vibrate(50);
+      }
     }
   };
 
@@ -565,8 +569,24 @@ const Clearing = ({ onOpenMap }: ClearingProps) => {
         }}
       />
 
+      {/* ===== REDUCED MOTION SUPPORT ===== */}
+      <style>{`
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
+        }
+      `}</style>
+
       {/* ===== CONTENT ===== */}
       <div className="relative z-20 min-h-screen flex flex-col items-center justify-center p-4">
+        {/* Skip link for accessibility */}
+        <a href="#room-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#0A1628] focus:text-[#D4A853] focus:rounded">
+          Skip to room content
+        </a>
+
         {/* Minimal header */}
         <div className="absolute top-0 left-0 right-0 p-5 flex justify-between items-start">
           <div>
@@ -605,7 +625,7 @@ const Clearing = ({ onOpenMap }: ClearingProps) => {
         </div>
 
         {/* Interactive room */}
-        <div className="relative w-full max-w-lg aspect-square max-h-[55vh]">
+        <div id="room-content" className="relative w-full max-w-lg aspect-square max-h-[55vh]">
           
           {/* Broken Phoenix Feather */}
           <InteractiveObject
