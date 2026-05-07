@@ -7,11 +7,14 @@ import SubpageNavigation from './components/SubpageNavigation';
 import CinematicOverlay from './components/CinematicOverlay';
 import HeroSequence from './sections/HeroSequence';
 import Story from './sections/Story';
+import StoryChapters from './sections/StoryChapters';
 import Music from './sections/Music';
 import Gallery from './sections/Gallery';
+import JournalSection from './sections/JournalSection';
 import Connection from './sections/Connection';
 import EpkPage from './pages/EpkPage';
 import ExclusiveReleasePage from './pages/ExclusiveReleasePage';
+import LyricsPage from './pages/LyricsPage';
 import FragmentPage from './pages/FragmentPage';
 import WorldApp from './world/WorldApp';
 import { releaseBySlug } from './content/site';
@@ -90,13 +93,16 @@ function App({ initialPath = '/' }: AppProps) {
           <HeroSequence />
           <main id="main-content" tabIndex={-1} className="relative z-10" style={{ marginTop: '100vh' }}>
             <Story />
+            <StoryChapters />
             <Music />
             <Gallery />
+            <JournalSection />
             <Connection />
           </main>
         </>
       ) : null}
       {route === '/dejame-perderme/' ? <ExclusiveReleasePage release={releaseBySlug['dejame-perderme']} /> : null}
+      {route === '/lyrics/' ? <LyricsPage release={releaseBySlug['dejame-perderme']} /> : null}
       {route === '/fragment/' ? <FragmentPage /> : null}
       {route === '/game/' ? <WorldApp /> : null}
       {route === '/epk/' ? <EpkPage /> : null}
