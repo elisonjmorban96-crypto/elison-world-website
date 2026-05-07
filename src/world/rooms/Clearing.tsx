@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Music, Volume2, VolumeX } from 'lucide-react';
+import { Music, Volume2, VolumeX, Map } from 'lucide-react';
 import { useWorld } from '../WorldContext';
 import { useAudioManager } from '../AudioManager';
 import { useParticles } from '../useParticles';
@@ -318,11 +318,22 @@ const UnlockModal = ({ onClose }: { onClose: () => void }) => {
   );
 };
 
-const Clearing = () => {
+interface ClearingProps {
+  onOpenMap: () => void;
+}
+
+const Clearing = ({ onOpenMap }: ClearingProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { discoverObject, hasDiscovered, unlock } = useWorld();
   const [showUnlock, setShowUnlock] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    try {
+      return localStorage.getItem('elisonworld-muted') === 'true';
+    } catch {
+      return false;
+    }
+  });
 
   const { playFragment, startAmbient, setMuted } = useAudioManager({
     ambientSrc: '/audio/ambient-clearing.mp3',
@@ -354,8 +365,16 @@ const Clearing = () => {
   };
 
   const toggleMute = () => {
-    setIsMuted(!isMuted);
-    setMuted(!isMuted);
+    const next = !isMuted;
+    setIsMuted(next);
+    setMuted(next);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('elisonworld-muted', String(next));
+      } catch {
+        // ignore
+      }
+    }
   };
 
   const allDiscovered = ['feather', 'shell', 'mask', 'key'].every(id => hasDiscovered(id));
@@ -558,8 +577,18 @@ const Clearing = () => {
               ROOM 001: THE CLEARING
             </h1>
           </div>
-          <button 
-            onClick={toggleMute} 
+          {/* Map button */}
+          <button
+            onClick={onOpenMap}
+            className="p-2 rounded-full transition-colors hover:bg-white/5"
+            style={{ color: '#4A3A2A' }}
+            aria-label="Open world map"
+          >
+            <Map className="w-4 h-4" />
+          </button>
+          
+          <button
+            onClick={toggleMute}
             className="p-2 rounded-full transition-colors hover:bg-white/5"
             style={{ color: '#4A3A2A' }}
             aria-label="Toggle sound"
