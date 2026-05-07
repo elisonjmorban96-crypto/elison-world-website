@@ -5,6 +5,7 @@ const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'LA PRIMERA', href: '/la-primera/' },
   { name: 'Decisions', href: '/decisions/' },
+  { name: 'Your Fragment', href: '/fragment/' },
   { name: 'EPK', href: '/epk/' },
 ];
 

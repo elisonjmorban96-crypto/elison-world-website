@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { prefersReducedMotion } from '../lib/motion';
@@ -8,6 +8,8 @@ gsap.registerPlugin(ScrollTrigger);
 const Connection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+  const [tier, setTier] = useState<'inner' | 'outer'>('inner');
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     if (prefersReducedMotion()) {
@@ -43,6 +45,11 @@ const Connection = () => {
     return () => { st.kill(); };
   }, []);
 
+  const handleSubmit = (_e: React.FormEvent<HTMLFormElement>) => {
+    // Let Formspree handle the POST, then show confirmation
+    setTimeout(() => setSubmitted(true), 600);
+  };
+
   return (
     <section id="connect" ref={sectionRef} className="mobile-screen relative w-full flex items-center justify-center overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
       {/* Background */}
@@ -74,38 +81,85 @@ const Connection = () => {
 
         <div className="connect-footer max-w-md mx-auto mb-14 md:mb-16">
           <p className="font-inter text-[11px] uppercase tracking-[0.15em] mb-4" style={{ color: 'var(--text-tertiary)' }}>
-            Enter your email to join Elison's World. New music arrives here first.
+            Choose your circle. New music arrives here first.
           </p>
-          <form
-            action="https://formspree.io/f/xqewbelg"
-            method="POST"
-            className="flex flex-col sm:flex-row gap-3 sm:gap-0"
-          >
-            <input type="hidden" name="source" value="elisonworld.com" />
-            <label htmlFor="newsletter-email" className="sr-only">
-              Email address
-            </label>
-            <input
-              id="newsletter-email"
-              name="email"
-              type="email"
-              placeholder="your@email.com"
-              autoComplete="email"
-              className="flex-1 px-4 py-3 bg-white/[0.03] border font-inter text-sm placeholder:text-white/20 focus:outline-none transition-colors"
-              style={{ borderColor: 'var(--text-dim)', color: 'var(--text-primary)' }}
-              required
-            />
+
+          {/* Tier selector */}
+          <div className="flex justify-center gap-2 mb-5">
             <button
-              type="submit"
-              aria-label="Join Elison's World"
-              className="px-5 py-3 sm:px-5 transition-colors hover:brightness-110 min-h-12 flex items-center justify-center"
-              style={{ background: 'var(--accent-gold)' }}
+              type="button"
+              onClick={() => setTier('inner')}
+              className="px-4 py-2 text-[11px] uppercase tracking-[0.12em] transition-all border"
+              style={{
+                borderColor: tier === 'inner' ? 'var(--accent-gold)' : 'var(--text-dim)',
+                color: tier === 'inner' ? 'var(--accent-gold)' : 'var(--text-tertiary)',
+                background: tier === 'inner' ? 'rgba(184,134,11,0.08)' : 'transparent',
+              }}
             >
-              <span className="font-inter text-[11px] font-medium uppercase tracking-[0.12em] text-white">
-                Join
-              </span>
+              Inner Circle
             </button>
-          </form>
+            <button
+              type="button"
+              onClick={() => setTier('outer')}
+              className="px-4 py-2 text-[11px] uppercase tracking-[0.12em] transition-all border"
+              style={{
+                borderColor: tier === 'outer' ? 'var(--accent-gold)' : 'var(--text-dim)',
+                color: tier === 'outer' ? 'var(--accent-gold)' : 'var(--text-tertiary)',
+                background: tier === 'outer' ? 'rgba(184,134,11,0.08)' : 'transparent',
+              }}
+            >
+              Outer World
+            </button>
+          </div>
+
+          <p className="font-inter text-[11px] leading-relaxed mb-5" style={{ color: 'var(--text-tertiary)' }}>
+            {tier === 'inner'
+              ? 'Early access to every release, exclusive fragments, and direct replies from Elison.'
+              : 'Public updates, tour announcements, and major releases — no spam, ever.'}
+          </p>
+
+          {submitted ? (
+            <div className="py-4">
+              <p className="font-inter text-sm" style={{ color: 'var(--accent-gold)' }}>
+                {tier === 'inner'
+                  ? 'Welcome to the Inner Circle. Check your inbox for the first fragment.'
+                  : 'You are now part of the Outer World. Stay tuned.'}
+              </p>
+            </div>
+          ) : (
+            <form
+              action="https://formspree.io/f/xqewbelg"
+              method="POST"
+              onSubmit={handleSubmit}
+              className="flex flex-col sm:flex-row gap-3 sm:gap-0"
+            >
+              <input type="hidden" name="source" value="elisonworld.com" />
+              <input type="hidden" name="tier" value={tier} />
+              <label htmlFor="newsletter-email" className="sr-only">
+                Email address
+              </label>
+              <input
+                id="newsletter-email"
+                name="email"
+                type="email"
+                placeholder="your@email.com"
+                autoComplete="email"
+                className="flex-1 px-4 py-3 bg-white/[0.03] border font-inter text-sm placeholder:text-white/20 focus:outline-none transition-colors"
+                style={{ borderColor: 'var(--text-dim)', color: 'var(--text-primary)' }}
+                required
+              />
+              <button
+                type="submit"
+                aria-label="Join Elison's World"
+                className="px-5 py-3 sm:px-5 transition-colors hover:brightness-110 min-h-12 flex items-center justify-center"
+                style={{ background: 'var(--accent-gold)' }}
+              >
+                <span className="font-inter text-[11px] font-medium uppercase tracking-[0.12em] text-white">
+                  {tier === 'inner' ? 'Join Inner Circle' : 'Join Outer World'}
+                </span>
+              </button>
+            </form>
+          )}
         </div>
 
         {/* Footer */}

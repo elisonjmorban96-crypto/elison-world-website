@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { WorldProvider } from './WorldContext';
+import { CommunityUnlockProvider } from './CommunityUnlockContext';
 import Clearing from './rooms/Clearing';
 import WorldMap from './components/WorldMap';
 
@@ -8,8 +9,10 @@ const WorldApp = () => {
 
   return (
     <WorldProvider>
-      <Clearing onOpenMap={() => setShowMap(true)} />
-      {showMap && <WorldMap onClose={() => setShowMap(false)} />}
+      <CommunityUnlockProvider>
+        <Clearing onOpenMap={() => setShowMap(true)} />
+        {showMap && <WorldMap onClose={() => setShowMap(false)} />}
+      </CommunityUnlockProvider>
     </WorldProvider>
   );
 };

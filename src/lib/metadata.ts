@@ -190,32 +190,32 @@ const epkMetadata = (): PageMetadata => ({
   }),
 });
 
-const worldMetadata = (): PageMetadata => ({
-  title: "Elison's World | The Clearing",
-  description: "Enter Elison's World — a hidden music universe. Explore The Clearing, find fragments, and unlock exclusive music.",
-  keywords: "Elison's World, hidden music, puzzle, treasure hunt, Déjame Perderme, exclusive release, Afro Latin House",
-  canonical: absoluteUrl('/world/'),
-  ogTitle: "Elison's World | The Clearing",
-  ogDescription: 'A hidden music universe. Find the fragments. Unlock the song.',
-  ogImage: absoluteUrl('/og-world.jpg'),
-  ogImageAlt: "Elison's World — The Clearing",
-  twitterTitle: "Elison's World | The Clearing",
-  twitterDescription: 'A hidden music universe. Find the fragments. Unlock the song.',
-  twitterImage: absoluteUrl('/og-world.jpg'),
-  jsonLd: JSON.stringify({
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'WebPage',
-        '@id': `${siteUrl}/world/#webpage`,
-        url: `${siteUrl}/world/`,
-        name: "Elison's World | The Clearing",
-        description: "Enter Elison's World — a hidden music universe.",
-        inLanguage: 'en-US',
-      },
-    ],
-  }),
-});
+// const worldMetadata = (): PageMetadata => ({
+//   title: "Elison's World | The Clearing",
+//   description: "Enter Elison's World — a hidden music universe. Explore The Clearing, find fragments, and unlock exclusive music.",
+//   keywords: "Elison's World, hidden music, puzzle, treasure hunt, Déjame Perderme, exclusive release, Afro Latin House",
+//   canonical: absoluteUrl('/world/'),
+//   ogTitle: "Elison's World | The Clearing",
+//   ogDescription: 'A hidden music universe. Find the fragments. Unlock the song.',
+//   ogImage: absoluteUrl('/og-world.jpg'),
+//   ogImageAlt: "Elison's World — The Clearing",
+//   twitterTitle: "Elison's World | The Clearing",
+//   twitterDescription: 'A hidden music universe. Find the fragments. Unlock the song.',
+//   twitterImage: absoluteUrl('/og-world.jpg'),
+//   jsonLd: JSON.stringify({
+//     '@context': 'https://schema.org',
+//     '@graph': [
+//       {
+//         '@type': 'WebPage',
+//         '@id': `${siteUrl}/world/#webpage`,
+//         url: `${siteUrl}/world/`,
+//         name: "Elison's World | The Clearing",
+//         description: "Enter Elison's World — a hidden music universe.",
+//         inLanguage: 'en-US',
+//       },
+//     ],
+//   }),
+// });
 
 export const getPageMetadata = (pathname: string): PageMetadata => {
   const route = normalizePathname(pathname);
@@ -224,8 +224,33 @@ export const getPageMetadata = (pathname: string): PageMetadata => {
     return releaseMetadata(route);
   }
 
-  if (route === '/world/') {
-    return worldMetadata();
+  if (route === '/fragment/') {
+    return {
+      title: 'Your Fragment — Nothing Was Random | Elison',
+      description: 'Share your story. Tell us what moment made you who you are. Nothing was random. It was all connected.',
+      keywords: 'Elison, Your Fragment, story, connection, music, Elison World',
+      canonical: absoluteUrl('/fragment/'),
+      ogTitle: 'Your Fragment — Nothing Was Random | Elison',
+      ogDescription: 'Share your story. Tell us what moment made you who you are.',
+      ogImage: absoluteUrl('/og-fragment.jpg'),
+      ogImageAlt: 'Your Fragment — Nothing Was Random',
+      twitterTitle: 'Your Fragment — Nothing Was Random | Elison',
+      twitterDescription: 'Share your story. Tell us what moment made you who you are.',
+      twitterImage: absoluteUrl('/og-fragment.jpg'),
+      jsonLd: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'WebPage',
+            '@id': `${siteUrl}/fragment/#webpage`,
+            url: `${siteUrl}/fragment/`,
+            name: 'Your Fragment — Nothing Was Random | Elison',
+            description: 'Share your story. Tell us what moment made you who you are. Nothing was random. It was all connected.',
+            inLanguage: 'en-US',
+          },
+        ],
+      }),
+    };
   }
 
   if (route === '/epk/') {
