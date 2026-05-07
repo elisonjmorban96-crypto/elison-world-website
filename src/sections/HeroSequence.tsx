@@ -1,4 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+import ParticleField from '../components/ParticleField';
+import MoleculeCanvas from '../components/MoleculeCanvas';
+import LightRays from '../components/LightRays';
 import { ArrowDown } from 'lucide-react';
 
 interface Fragment {
@@ -108,6 +111,9 @@ export default function HeroSequence() {
       className="fixed inset-0 z-50 flex items-center justify-center"
       style={{ background: '#050505' }}
     >
+      {/* Particle Field */}
+      <ParticleField className="z-0" />
+
       {/* Fragments */}
       {phase === 'fragments' || phase === 'connecting' ? (
         <div className="absolute inset-0">
@@ -129,16 +135,21 @@ export default function HeroSequence() {
         </div>
       ) : null}
 
+      {/* Light Rays - appear during molecule phase */}
+      {(phase === 'molecule' || phase === 'text' || phase === 'cta') && (
+        <LightRays active={true} color="#b8860b" rayCount={16} />
+      )}
+
       {/* Molecule */}
       {phase === 'molecule' || phase === 'text' || phase === 'cta' ? (
         <div 
-          className="absolute inset-0 flex items-center justify-center transition-all duration-[2500ms] ease-out"
+          className="absolute inset-0 transition-all duration-[2500ms] ease-out"
           style={{
             opacity: moleculeOpacity,
             transform: `scale(${moleculeScale})`,
           }}
         >
-          <MoleculeSVG />
+          <MoleculeCanvas />
         </div>
       ) : null}
 
@@ -174,78 +185,5 @@ export default function HeroSequence() {
         </div>
       ) : null}
     </section>
-  );
-}
-
-function MoleculeSVG() {
-  return (
-    <svg 
-      width="200" 
-      height="200" 
-      viewBox="0 0 200 200" 
-      className="animate-pulse-slow"
-    >
-      <defs>
-        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#b8860b" stopOpacity="0.8" />
-          <stop offset="100%" stopColor="#daa520" stopOpacity="0.4" />
-        </linearGradient>
-      </defs>
-      
-      {/* Central hexagon */}
-      <polygon 
-        points="100,40 140,60 140,100 100,120 60,100 60,60" 
-        fill="none" 
-        stroke="url(#goldGradient)" 
-        strokeWidth="1"
-        opacity="0.6"
-      />
-      
-      {/* Connected hexagons */}
-      <polygon 
-        points="100,20 120,30 120,50 100,60 80,50 80,30" 
-        fill="none" 
-        stroke="rgba(184,134,11,0.3)" 
-        strokeWidth="0.5"
-      />
-      <polygon 
-        points="140,40 160,50 160,70 140,80 120,70 120,50" 
-        fill="none" 
-        stroke="rgba(184,134,11,0.3)" 
-        strokeWidth="0.5"
-      />
-      <polygon 
-        points="140,80 160,90 160,110 140,120 120,110 120,90" 
-        fill="none" 
-        stroke="rgba(184,134,11,0.3)" 
-        strokeWidth="0.5"
-      />
-      <polygon 
-        points="100,100 120,110 120,130 100,140 80,130 80,110" 
-        fill="none" 
-        stroke="rgba(184,134,11,0.3)" 
-        strokeWidth="0.5"
-      />
-      <polygon 
-        points="60,80 80,90 80,110 60,120 40,110 40,90" 
-        fill="none" 
-        stroke="rgba(184,134,11,0.3)" 
-        strokeWidth="0.5"
-      />
-      <polygon 
-        points="60,40 80,50 80,70 60,80 40,70 40,50" 
-        fill="none" 
-        stroke="rgba(184,134,11,0.3)" 
-        strokeWidth="0.5"
-      />
-      
-      {/* Connection lines */}
-      <line x1="100" y1="60" x2="100" y2="40" stroke="rgba(184,134,11,0.2)" strokeWidth="0.5" />
-      <line x1="120" y1="70" x2="140" y2="60" stroke="rgba(184,134,11,0.2)" strokeWidth="0.5" />
-      <line x1="120" y1="90" x2="140" y2="80" stroke="rgba(184,134,11,0.2)" strokeWidth="0.5" />
-      <line x1="100" y1="100" x2="100" y2="120" stroke="rgba(184,134,11,0.2)" strokeWidth="0.5" />
-      <line x1="80" y1="90" x2="60" y2="80" stroke="rgba(184,134,11,0.2)" strokeWidth="0.5" />
-      <line x1="80" y1="70" x2="60" y2="60" stroke="rgba(184,134,11,0.2)" strokeWidth="0.5" />
-    </svg>
   );
 }

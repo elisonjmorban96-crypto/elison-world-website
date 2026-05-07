@@ -4,6 +4,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navigation from './components/Navigation';
 import SubpageNavigation from './components/SubpageNavigation';
+import CinematicOverlay from './components/CinematicOverlay';
 import HeroSequence from './sections/HeroSequence';
 import Story from './sections/Story';
 import Music from './sections/Music';
@@ -79,6 +80,9 @@ function App({ initialPath = '/' }: AppProps) {
 
       {/* Film grain overlay */}
       <div className="film-grain" aria-hidden="true" />
+
+      {/* Cinematic overlay */}
+      <CinematicOverlay />
 
       {route === '/' ? (
         <>
