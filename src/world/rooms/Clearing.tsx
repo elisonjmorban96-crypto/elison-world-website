@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { Music, Volume2, VolumeX, Map } from 'lucide-react';
 import { useWorld } from '../WorldContext';
 import { useAudioManager } from '../AudioManager';
@@ -296,7 +296,7 @@ const UnlockModal = ({ onClose }: { onClose: () => void }) => {
                   key={i}
                   className="w-1 bg-[#E86A33] animate-pulse"
                   style={{ 
-                    height: `${20 + Math.random() * 30}%`,
+                    height: `${20 + (i * 7) % 30}%`,
                     animationDelay: `${delay}s`,
                     animationDuration: '0.8s',
                   }}
@@ -399,25 +399,34 @@ const Clearing = ({ onOpenMap }: ClearingProps) => {
 
       {/* ===== STARS ===== */}
       <div className="absolute inset-0">
-        {[...Array(40)].map((_, i) => {
-          const size = Math.random() * 2 + 0.5;
-          return (
+        {useMemo(() => {
+          const stars = [...Array(40)].map((_, i) => ({
+            id: i,
+            size: Math.random() * 2 + 0.5,
+            top: Math.random() * 55,
+            left: Math.random() * 100,
+            opacity: Math.random() * 0.5 + 0.1,
+            duration: Math.random() * 4 + 3,
+            delay: Math.random() * 8,
+            color: i % 3 === 0 ? '#D4A853' : i % 3 === 1 ? '#8AA0B0' : '#C0C8D0',
+          }));
+          return stars.map(star => (
             <div
-              key={i}
+              key={star.id}
               className="absolute rounded-full"
               style={{
-                width: size + 'px',
-                height: size + 'px',
-                background: i % 3 === 0 ? '#D4A853' : i % 3 === 1 ? '#8AA0B0' : '#C0C8D0',
-                top: Math.random() * 55 + '%',
-                left: Math.random() * 100 + '%',
-                opacity: Math.random() * 0.5 + 0.1,
-                animation: `twinkle ${Math.random() * 4 + 3}s ease-in-out infinite`,
-                animationDelay: `${Math.random() * 8}s`,
+                width: star.size + 'px',
+                height: star.size + 'px',
+                background: star.color,
+                top: star.top + '%',
+                left: star.left + '%',
+                opacity: star.opacity,
+                animation: `twinkle ${star.duration}s ease-in-out infinite`,
+                animationDelay: `${star.delay}s`,
               }}
             />
-          );
-        })}
+          ));
+        }, [])}
       </div>
 
       {/* ===== MOON ===== */}

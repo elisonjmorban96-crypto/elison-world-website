@@ -162,8 +162,9 @@ export const CommunityUnlockProvider = ({ children }: { children: ReactNode }) =
   );
 };
 
-export const useCommunityUnlock = () => {
+// eslint-disable-next-line react-refresh/only-export-components
+export function useCommunityUnlock() {
   const ctx = useContext(CommunityUnlockContext);
   if (!ctx) throw new Error('useCommunityUnlock must be used within CommunityUnlockProvider');
   return ctx;
-};
+}

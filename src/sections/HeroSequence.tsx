@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import ParticleField from '../components/ParticleField';
 import MoleculeCanvas from '../components/MoleculeCanvas';
 import LightRays from '../components/LightRays';
@@ -23,87 +23,129 @@ const fragments: Fragment[] = [
   { id: 6, text: 'a dream', x: 80, y: 80, opacity: 0, scale: 0.8, delay: 4.0 },
 ];
 
-export default function HeroSequence() {
-  const [phase, setPhase] = useState<'black' | 'fragments' | 'connecting' | 'molecule' | 'text' | 'cta'>('black');
-  const [fragmentStates, setFragmentStates] = useState<Fragment[]>(fragments);
-  const [moleculeOpacity, setMoleculeOpacity] = useState(0);
-  const [moleculeScale, setMoleculeScale] = useState(0.5);
-  const [textOpacity, setTextOpacity] = useState(0);
-  const [ctaOpacity, setCtaOpacity] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
+interface HeroState {
+  phase: 'black' | 'fragments' | 'connecting' | 'molecule' | 'text' | 'cta';
+  fragmentStates: Fragment[];
+  moleculeOpacity: number;
+  moleculeScale: number;
+  textOpacity: number;
+  ctaOpacity: number;
+}
 
-  useEffect(() => {
-    const timer = setTimeout(() => setPhase('fragments'), 500);
-    return () => clearTimeout(timer);
+export default function HeroSequence() {
+  const [state, setState] = useState<HeroState>({
+    phase: 'black',
+    fragmentStates: fragments,
+    moleculeOpacity: 0,
+    moleculeScale: 0.5,
+    textOpacity: 0,
+    ctaOpacity: 0,
+  });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  const clearAllTimers = useCallback(() => {
+    timersRef.current.forEach(clearTimeout);
+    timersRef.current = [];
   }, []);
 
   useEffect(() => {
-    if (phase !== 'fragments') return;
+    const timer = setTimeout(() => {
+      setState(prev => ({ ...prev, phase: 'fragments' }));
+    }, 500);
+    timersRef.current.push(timer);
+    return () => clearAllTimers();
+  }, [clearAllTimers]);
 
-    const timers: ReturnType<typeof setTimeout>[] = [];
+  useEffect(() => {
+    if (state.phase !== 'fragments') return;
+
     fragments.forEach((fragment, index) => {
       const timer = setTimeout(() => {
-        setFragmentStates(prev => prev.map((f, i) => 
-          i === index ? { ...f, opacity: 1, scale: 1 } : f
-        ));
+        setState(prev => ({
+          ...prev,
+          fragmentStates: prev.fragmentStates.map((f, i) => 
+            i === index ? { ...f, opacity: 1, scale: 1 } : f
+          ),
+        }));
         
         if (index === fragments.length - 1) {
-          setTimeout(() => setPhase('connecting'), 1200);
+          const t = setTimeout(() => {
+            setState(prev => ({ ...prev, phase: 'connecting' }));
+          }, 1200);
+          timersRef.current.push(t);
         }
       }, fragment.delay * 1000);
-      timers.push(timer);
+      timersRef.current.push(timer);
     });
 
-    return () => timers.forEach(clearTimeout);
-  }, [phase]);
+    return () => clearAllTimers();
+  }, [state.phase, clearAllTimers]);
 
   useEffect(() => {
-    if (phase !== 'connecting') return;
+    if (state.phase !== 'connecting') return;
 
-    // Fragments drift to center
-    setFragmentStates(prev => prev.map(f => ({
-      ...f,
-      x: 50,
-      y: 50,
-      opacity: 0,
-      scale: 0.5,
-    })));
+    setState(prev => ({
+      ...prev,
+      fragmentStates: prev.fragmentStates.map(f => ({
+        ...f,
+        x: 50,
+        y: 50,
+        opacity: 0,
+        scale: 0.5,
+      })),
+    }));
 
-    const timer = setTimeout(() => setPhase('molecule'), 2000);
-    return () => clearTimeout(timer);
-  }, [phase]);
+    const timer = setTimeout(() => {
+      setState(prev => ({ ...prev, phase: 'molecule' }));
+    }, 2000);
+    timersRef.current.push(timer);
 
-  useEffect(() => {
-    if (phase !== 'molecule') return;
-
-    setMoleculeOpacity(1);
-    setMoleculeScale(1);
-
-    const timer = setTimeout(() => setPhase('text'), 2500);
-    return () => clearTimeout(timer);
-  }, [phase]);
+    return () => clearAllTimers();
+  }, [state.phase, clearAllTimers]);
 
   useEffect(() => {
-    if (phase !== 'text') return;
+    if (state.phase !== 'molecule') return;
 
-    setTextOpacity(1);
+    setState(prev => ({
+      ...prev,
+      moleculeOpacity: 1,
+      moleculeScale: 1,
+    }));
 
-    const timer = setTimeout(() => setPhase('cta'), 3000);
-    return () => clearTimeout(timer);
-  }, [phase]);
+    const timer = setTimeout(() => {
+      setState(prev => ({ ...prev, phase: 'text' }));
+    }, 2500);
+    timersRef.current.push(timer);
+
+    return () => clearAllTimers();
+  }, [state.phase, clearAllTimers]);
 
   useEffect(() => {
-    if (phase !== 'cta') return;
+    if (state.phase !== 'text') return;
 
-    setCtaOpacity(1);
-  }, [phase]);
+    setState(prev => ({ ...prev, textOpacity: 1 }));
 
-  const handleEnter = () => {
+    const timer = setTimeout(() => {
+      setState(prev => ({ ...prev, phase: 'cta' }));
+    }, 3000);
+    timersRef.current.push(timer);
+
+    return () => clearAllTimers();
+  }, [state.phase, clearAllTimers]);
+
+  useEffect(() => {
+    if (state.phase !== 'cta') return;
+
+    setState(prev => ({ ...prev, ctaOpacity: 1 }));
+  }, [state.phase]);
+
+  const handleEnter = useCallback(() => {
     const element = document.getElementById('main-content');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-  };
+  }, []);
 
   return (
     <section 
@@ -115,9 +157,9 @@ export default function HeroSequence() {
       <ParticleField className="z-0" />
 
       {/* Fragments */}
-      {phase === 'fragments' || phase === 'connecting' ? (
+      {state.phase === 'fragments' || state.phase === 'connecting' ? (
         <div className="absolute inset-0">
-          {fragmentStates.map((fragment) => (
+          {state.fragmentStates.map((fragment) => (
             <div
               key={fragment.id}
               className="absolute font-inter text-sm tracking-[0.2em] uppercase transition-all duration-[2000ms] ease-out"
@@ -136,17 +178,17 @@ export default function HeroSequence() {
       ) : null}
 
       {/* Light Rays - appear during molecule phase */}
-      {(phase === 'molecule' || phase === 'text' || phase === 'cta') && (
+      {(state.phase === 'molecule' || state.phase === 'text' || state.phase === 'cta') && (
         <LightRays active={true} color="#b8860b" rayCount={16} />
       )}
 
       {/* Molecule */}
-      {phase === 'molecule' || phase === 'text' || phase === 'cta' ? (
+      {state.phase === 'molecule' || state.phase === 'text' || state.phase === 'cta' ? (
         <div 
           className="absolute inset-0 transition-all duration-[2500ms] ease-out"
           style={{
-            opacity: moleculeOpacity,
-            transform: `scale(${moleculeScale})`,
+            opacity: state.moleculeOpacity,
+            transform: `scale(${state.moleculeScale})`,
           }}
         >
           <MoleculeCanvas />
@@ -154,10 +196,10 @@ export default function HeroSequence() {
       ) : null}
 
       {/* Core Text */}
-      {phase === 'text' || phase === 'cta' ? (
+      {state.phase === 'text' || state.phase === 'cta' ? (
         <div 
           className="relative z-10 text-center px-6 transition-opacity duration-[2000ms]"
-          style={{ opacity: textOpacity }}
+          style={{ opacity: state.textOpacity }}
         >
           <h1 className="font-oswald text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-[0.08em] leading-[1.4] mb-4" style={{ color: 'var(--text-primary)' }}>
             Nothing was random.
@@ -169,21 +211,23 @@ export default function HeroSequence() {
       ) : null}
 
       {/* CTA */}
-      {phase === 'cta' ? (
+      {state.phase === 'cta' && (
         <div 
-          className="absolute bottom-12 left-0 right-0 text-center transition-opacity duration-[2000ms]"
-          style={{ opacity: ctaOpacity }}
+          className="absolute bottom-12 left-0 right-0 z-20 flex flex-col items-center gap-4 transition-opacity duration-[1500ms]"
+          style={{ opacity: state.ctaOpacity }}
         >
           <button
             onClick={handleEnter}
-            className="group inline-flex flex-col items-center gap-3 font-inter text-[11px] uppercase tracking-[0.2em] transition-all duration-500 hover:opacity-80"
-            style={{ color: 'var(--accent-gold)' }}
+            className="group flex flex-col items-center gap-2 cursor-pointer"
+            aria-label="Enter the world"
           >
-            <span>Enter Elison's World</span>
-            <ArrowDown className="w-4 h-4 animate-bounce" />
+            <span className="font-inter text-xs tracking-[0.2em] uppercase" style={{ color: 'var(--accent-gold)' }}>
+              Enter the World
+            </span>
+            <ArrowDown className="w-5 h-5 animate-bounce" style={{ color: 'var(--accent-gold)' }} />
           </button>
         </div>
-      ) : null}
+      )}
     </section>
   );
 }

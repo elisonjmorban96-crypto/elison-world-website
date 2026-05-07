@@ -61,7 +61,7 @@ function getHoneycombPositions(_centerRadius: number, ringRadius: number): THREE
   return positions;
 }
 
-function getConnections(_nodeCount: number): Connection[] {
+function getConnections(): Connection[] {
   const connections: Connection[] = [];
   // Center to inner ring
   for (let i = 1; i <= 6; i++) {
@@ -134,7 +134,7 @@ export default function MoleculeCanvas() {
     const hexRadius = 0.6;
     const ringRadius = 1.3;
     const positions = getHoneycombPositions(hexRadius, ringRadius);
-    const connections = getConnections(positions.length);
+    const connections = getConnections();
 
     // Node data
     const nodes: NodeData[] = positions.map((pos) => ({

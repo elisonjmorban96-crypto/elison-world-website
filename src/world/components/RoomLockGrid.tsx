@@ -19,6 +19,8 @@ const RoomLockCard = ({
   isUnlocked, 
   onEnter 
 }: RoomLockCardProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_id] = useState(_roomId);
   const [isHovered, setIsHovered] = useState(false);
 
   return (

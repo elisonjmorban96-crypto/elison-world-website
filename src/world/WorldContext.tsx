@@ -100,8 +100,9 @@ export const WorldProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useWorld = () => {
+// eslint-disable-next-line react-refresh/only-export-components
+export function useWorld() {
   const ctx = useContext(WorldContext);
   if (!ctx) throw new Error('useWorld must be used within WorldProvider');
   return ctx;
-};
+}

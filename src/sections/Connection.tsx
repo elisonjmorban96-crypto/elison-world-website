@@ -45,7 +45,9 @@ const Connection = () => {
     return () => { st.kill(); };
   }, []);
 
-  const handleSubmit = (_e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    e.preventDefault();
     // Let Formspree handle the POST, then show confirmation
     setTimeout(() => setSubmitted(true), 600);
   };
