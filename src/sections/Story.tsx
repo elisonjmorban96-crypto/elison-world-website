@@ -33,11 +33,6 @@ const Story = () => {
       });
     });
 
-    gsap.fromTo('.story-cta', { opacity: 0 }, {
-      opacity: 1, duration: 0.8,
-      scrollTrigger: { trigger: '.story-cta', start: 'top 88%', toggleActions: 'play none none none' },
-    });
-
     return () => { st.kill(); };
   }, []);
 
@@ -71,26 +66,23 @@ const Story = () => {
 
           {/* Story — right column */}
           <div className="lg:col-span-3 space-y-0 pt-4 lg:pt-12">
-            <span className="story-pull font-inter text-[10px] font-medium uppercase tracking-[0.3em] block mb-12" style={{ color: '#5a4a2a' }}>2015 - La Banda</span>
+            <span className="story-pull font-inter text-[10px] font-medium uppercase tracking-[0.3em] block mb-12" style={{ color: '#5a4a2a' }}>The pieces</span>
 
             <div className="story-pull mb-14">
               <p className="font-inter text-base sm:text-lg md:text-xl leading-[1.7] font-light" style={{ color: '#b8a88a' }}>
-                I stood in front of Ricky Martin, Laura Pausini, and Alejandro Sanz.
+                A song here. A heartbreak there.
               </p>
               <p className="font-inter text-base sm:text-lg md:text-xl leading-[1.7] mt-3 font-light" style={{ color: '#e8e0d0' }}>
-                Out of thousands, I made Top 20.
-              </p>
-              <p className="font-inter text-base sm:text-lg md:text-xl leading-[1.7] mt-3 font-light" style={{ color: '#e8e0d0' }}>
-                I did not make Top 12.
+                A prayer. A mistake. A dream. A loss.
               </p>
             </div>
 
             <div className="story-pull mb-14">
               <p className="font-inter text-base md:text-lg leading-[1.7] font-light" style={{ color: '#7a7060' }}>
-                My bandmate won the show, joined CNCO, and went global.
+                For years, none of it made sense.
               </p>
               <p className="font-inter text-base md:text-lg leading-[1.7] mt-3 font-light" style={{ color: '#e8e0d0' }}>
-                I had to watch that from the outside.
+                Each piece felt separate. Random. Broken.
               </p>
             </div>
 
@@ -99,26 +91,23 @@ const Story = () => {
               <div className="flex-1 h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(184,134,11,0.15), transparent)' }} />
             </div>
 
-            <span className="story-pull font-inter text-[10px] font-medium uppercase tracking-[0.3em] block mb-10" style={{ color: '#5a4a2a' }}>2016 — 2024</span>
+            <span className="story-pull font-inter text-[10px] font-medium uppercase tracking-[0.3em] block mb-10" style={{ color: '#5a4a2a' }}>The pattern</span>
 
             <div className="story-pull mb-14">
               <p className="font-inter text-base md:text-lg leading-[1.7] font-light" style={{ color: '#7a7060' }}>
-                I released "Decisions."
+                Then the melody he wrote after the heartbreak
               </p>
-              <p className="font-inter text-base md:text-lg leading-[1.7] mt-3 font-light" style={{ color: '#7a7060' }}>
-                Then things went quiet.
-              </p>
-              <p className="font-inter text-base md:text-lg leading-[1.7] mt-3 font-light" style={{ color: '#7a7060' }}>
-                For a long time.
+              <p className="font-inter text-base md:text-lg leading-[1.7] mt-3 font-light" style={{ color: '#e8e0d0' }}>
+                carried the same notes as the prayer whispered years before.
               </p>
             </div>
 
             <div className="story-pull mb-14">
               <p className="font-inter text-base sm:text-lg md:text-xl leading-[1.7] font-light" style={{ color: '#e8e0d0' }}>
-                For nearly a decade, the industry forgot my name.
+                The pain taught him what healing would later complete.
               </p>
               <p className="font-inter text-base sm:text-lg md:text-xl leading-[1.7] mt-3 font-light" style={{ color: '#e8e0d0' }}>
-                I kept working anyway.
+                The women became the colors. The cities became the rhythm.
               </p>
             </div>
 
@@ -128,23 +117,16 @@ const Story = () => {
               <div className="flex-1 h-px" style={{ background: 'linear-gradient(to right, rgba(184,134,11,0.2), transparent)' }} />
             </div>
 
-            <span className="story-pull font-inter text-[10px] font-medium uppercase tracking-[0.3em] block mb-10" style={{ color: '#b8860b' }}>2025</span>
+            <span className="story-pull font-inter text-[10px] font-medium uppercase tracking-[0.3em] block mb-10" style={{ color: '#b8860b' }}>The connection</span>
 
             <div className="story-pull mb-16">
               <p className="font-inter text-lg sm:text-xl md:text-2xl leading-[1.6] font-light" style={{ color: '#e8e0d0' }}>
-                <em style={{ color: '#b8860b' }}>"LA PRIMERA"</em> is the return. Ten years later. Still here. Still making music between Miami and New York.
+                <em style={{ color: '#b8860b' }}>Nothing was random.</em>
+              </p>
+              <p className="font-inter text-lg sm:text-xl md:text-2xl leading-[1.6] mt-4 font-light" style={{ color: '#e8e0d0' }}>
+                <em style={{ color: '#b8860b' }}>It was all connected.</em>
               </p>
             </div>
-
-            <button
-              type="button"
-              onClick={() => document.querySelector('#music')?.scrollIntoView({ behavior: 'smooth' })}
-              aria-label="Jump to the music section"
-              className="story-cta font-inter text-[10px] uppercase tracking-[0.25em] transition-colors duration-300 hover:text-[#d4a853]"
-              style={{ color: '#4a4030' }}
-            >
-              Listen now →
-            </button>
           </div>
         </div>
       </div>

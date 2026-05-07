@@ -28,10 +28,10 @@ const Navigation = () => {
   }, [isMobileMenuOpen]);
 
   const navLinks = [
-    { name: 'Story', href: '#story' },
-    { name: 'Music', href: '#music' },
-    { name: 'Gallery', href: '#gallery' },
-    { name: 'Connect', href: '#connect' },
+    { name: 'The Pieces', href: '#story' },
+    { name: 'The Sound', href: '#music' },
+    { name: 'Memory', href: '#gallery' },
+    { name: 'Stay Close', href: '#connect' },
   ];
 
   const scrollTo = (href: string) => {
@@ -57,7 +57,7 @@ const Navigation = () => {
             onClick={(e) => { e.preventDefault(); scrollTo('#home'); }}
             className="font-oswald text-xl font-bold tracking-[0.2em] text-[var(--text-primary)] hover:text-[var(--accent-gold)] transition-colors duration-300"
           >
-            ELISON
+            ELISON'S WORLD
           </a>
 
           <div className="hidden md:flex items-center gap-10">

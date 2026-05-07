@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ExternalLink, Music2, Apple, Youtube } from 'lucide-react';
 import { prefersReducedMotion } from '../lib/motion';
 import { releases } from '../content/site';
 
@@ -34,11 +33,6 @@ const Music = () => {
       x: 0, opacity: 1, duration: 0.8, stagger: 0.2, ease: 'power3.out',
       scrollTrigger: { trigger: '.track-cards', start: 'top 75%', toggleActions: 'play none none none' },
     });
-
-    gsap.fromTo('.platform-links', { y: 20, opacity: 0 }, {
-      y: 0, opacity: 1, duration: 0.6, ease: 'power3.out',
-      scrollTrigger: { trigger: '.platform-links', start: 'top 85%', toggleActions: 'play none none none' },
-    });
   }, []);
 
   return (
@@ -46,12 +40,12 @@ const Music = () => {
       <div className="absolute top-0 right-0 hidden sm:block w-[400px] h-[400px] rounded-full blur-3xl" style={{ background: 'var(--accent-gold)', opacity: 0.04 }} />
 
       <div className="max-w-[1400px] mx-auto px-5 sm:px-6 md:px-12 lg:px-20">
-        <span className="scene-label block mb-4">Releases</span>
+        <span className="scene-label block mb-4">Music</span>
         <h2 className="music-header font-oswald text-4xl md:text-5xl lg:text-6xl font-bold tracking-[0.06em] mb-4" style={{ color: 'var(--text-primary)' }}>
           THE SOUND
         </h2>
         <p className="music-sub font-inter text-sm sm:text-base mb-12 md:mb-16 max-w-[24rem]" style={{ color: 'var(--text-secondary)' }}>
-          Play both releases here.
+          Where the pieces became songs.
         </p>
 
         <div className="track-cards grid md:grid-cols-2 gap-8 md:gap-12">
@@ -102,60 +96,17 @@ const Music = () => {
                 />
               </div>
 
-              {/* Links */}
               <div className="flex flex-wrap gap-3">
-                {[
-                  { name: 'Spotify', url: track.spotifyUrl, icon: Music2 },
-                  { name: 'Apple Music', url: track.appleUrl, icon: Apple },
-                  ...(track.youtubeUrl ? [{ name: 'YouTube', url: track.youtubeUrl, icon: Youtube }] : []),
-                ].map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 border text-[10px] font-medium uppercase tracking-[0.12em] transition-all duration-300 hover:border-[var(--accent-gold)] hover:text-[var(--accent-gold)]"
-                    style={{ borderColor: 'var(--text-dim)', color: 'var(--text-tertiary)' }}
-                  >
-                    <link.icon className="w-3 h-3" />
-                    {link.name}
-                  </a>
-                ))}
                 <a
                   href={track.path}
                   className="inline-flex items-center gap-2 px-4 py-2 border text-[10px] font-medium uppercase tracking-[0.12em] transition-all duration-300 hover:border-[var(--accent-gold)] hover:text-[var(--accent-gold)]"
                   style={{ borderColor: 'var(--text-dim)', color: 'var(--text-tertiary)' }}
                 >
-                  Release Page
+                  Enter the Room
                 </a>
               </div>
             </div>
           ))}
-        </div>
-
-        {/* All platforms */}
-        <div className="platform-links mt-16 pt-10 border-t" style={{ borderColor: 'var(--text-dim)' }}>
-          <span className="scene-label block mb-6">More Places To Listen</span>
-          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4">
-            {[
-              { name: 'Spotify', url: 'https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa' },
-              { name: 'Apple Music', url: 'https://music.apple.com/us/artist/elison/1810625015' },
-              { name: 'YouTube', url: 'https://www.youtube.com/@elisonjoel' },
-              { name: 'SoundCloud', url: 'https://soundcloud.com/elisonjoelmorban' },
-            ].map((p) => (
-              <a
-                key={p.name}
-                href={p.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 font-inter text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 hover:text-[var(--accent-gold)]"
-                style={{ color: 'var(--text-tertiary)' }}
-              >
-                {p.name}
-                <ExternalLink className="w-3 h-3" />
-              </a>
-            ))}
-          </div>
         </div>
       </div>
     </section>
