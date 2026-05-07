@@ -66,8 +66,8 @@ const Gallery = () => {
   }, [lightboxOpen]);
 
   return (
-    <section id="gallery" ref={sectionRef} className="relative w-full py-20 md:py-32 lg:py-40 overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
-      <div className="max-w-[1400px] mx-auto px-5 sm:px-6 md:px-12 lg:px-20">
+    <section id="gallery" ref={sectionRef} className="relative w-full min-h-screen flex items-center py-20 md:py-32 overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
+      <div className="max-w-[1400px] mx-auto px-5 sm:px-6 md:px-12 lg:px-20 w-full">
         <span className="scene-label block mb-4">Memory</span>
         <h2 className="gallery-header font-oswald text-4xl md:text-5xl lg:text-6xl font-bold tracking-[0.06em] mb-12" style={{ color: 'var(--text-primary)' }}>
           FRAGMENTS

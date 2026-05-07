@@ -36,10 +36,10 @@ const Music = () => {
   }, []);
 
   return (
-    <section id="music" ref={sectionRef} className="relative w-full py-20 md:py-32 lg:py-40 overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
+    <section id="music" ref={sectionRef} className="relative w-full min-h-screen flex items-center py-20 md:py-32 overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
       <div className="absolute top-0 right-0 hidden sm:block w-[400px] h-[400px] rounded-full blur-3xl" style={{ background: 'var(--accent-gold)', opacity: 0.04 }} />
 
-      <div className="max-w-[1400px] mx-auto px-5 sm:px-6 md:px-12 lg:px-20">
+      <div className="max-w-[1400px] mx-auto px-5 sm:px-6 md:px-12 lg:px-20 w-full">
         <span className="scene-label block mb-4">Music</span>
         <h2 className="music-header font-oswald text-4xl md:text-5xl lg:text-6xl font-bold tracking-[0.06em] mb-4" style={{ color: 'var(--text-primary)' }}>
           THE SOUND
@@ -56,7 +56,6 @@ const Music = () => {
               onMouseEnter={() => setHoveredTrack(track.slug)}
               onMouseLeave={() => setHoveredTrack(null)}
             >
-              {/* Cover */}
               <div className="relative aspect-square overflow-hidden mb-6" style={{ background: 'var(--bg-secondary)' }}>
                 <img
                   src={track.cover}
@@ -73,7 +72,6 @@ const Music = () => {
                 </div>
               </div>
 
-              {/* Info */}
               <h3 className="font-oswald text-xl md:text-2xl font-bold tracking-[0.08em] mb-1" style={{ color: 'var(--text-primary)' }}>
                 {track.title}
               </h3>
