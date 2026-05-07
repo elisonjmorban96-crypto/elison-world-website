@@ -91,7 +91,7 @@ function App({ initialPath = '/' }: AppProps) {
       {route === '/' ? (
         <>
           <HeroSequence />
-          <main id="main-content" tabIndex={-1} className="relative z-10" style={{ marginTop: '100vh' }}>
+          <main id="main-content" tabIndex={-1} className="relative z-10">
             <Story />
             <Suspense fallback={<div className="min-h-screen" />}>
               <StoryChapters />

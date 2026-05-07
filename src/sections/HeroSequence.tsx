@@ -157,7 +157,7 @@ export default function HeroSequence() {
   return (
     <section 
       ref={containerRef}
-      className="fixed inset-0 z-50 flex items-center justify-center"
+      className="relative w-full min-h-screen flex items-center justify-center"
       style={{ background: '#050505' }}
     >
       {/* Particle Field */}
