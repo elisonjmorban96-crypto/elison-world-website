@@ -4,8 +4,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navigation from './components/Navigation';
 import SubpageNavigation from './components/SubpageNavigation';
-import Hero from './sections/Hero';
-import ExclusiveReleaseBanner from './sections/ExclusiveReleaseBanner';
+import HeroSequence from './sections/HeroSequence';
 import Story from './sections/Story';
 import Music from './sections/Music';
 import Gallery from './sections/Gallery';
@@ -82,14 +81,15 @@ function App({ initialPath = '/' }: AppProps) {
       <div className="film-grain" aria-hidden="true" />
 
       {route === '/' ? (
-        <main id="main-content" tabIndex={-1}>
-          <Hero />
-          <ExclusiveReleaseBanner />
-          <Story />
-          <Music />
-          <Gallery />
-          <Connection />
-        </main>
+        <>
+          <HeroSequence />
+          <main id="main-content" tabIndex={-1} className="relative z-10" style={{ marginTop: '100vh' }}>
+            <Story />
+            <Music />
+            <Gallery />
+            <Connection />
+          </main>
+        </>
       ) : null}
       {route === '/dejame-perderme/' ? <ExclusiveReleasePage release={releaseBySlug['dejame-perderme']} /> : null}
       {route === '/world/' ? <WorldApp /> : null}
