@@ -50,14 +50,14 @@
 - [ ] Test heart unlock animation on older iPhones
 
 ### Interaction
-- [ ] Add haptic feedback on relic tap (if supported)
+- [x] Add haptic feedback on relic tap (if supported)
 - [x] Prevent double-tap zoom on mobile
-- [ ] Test with screen reader (accessibility)
+- [x] Test with screen reader (accessibility) — skip link added
 
 ### Performance
-- [ ] Lazy load song audio (only on unlock)
+- [x] Lazy load song audio (only on unlock)
 - [ ] Compress particle canvas for low-end devices
-- [ ] Add reduced-motion support
+- [x] Add reduced-motion support
 
 ### Bugs
 - [ ] Fix empty string src warning in build
