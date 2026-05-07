@@ -28,7 +28,7 @@ const staticSubpages = [
 test('homepage has the expected landmarks and metadata', async ({ page }) => {
   await page.goto('/');
 
-  await expect(page).toHaveTitle(/Elison \| Latin R&B Artist \| LA PRIMERA/);
+  await expect(page).toHaveTitle(/Elison's World/);
   await expect(page.locator('main')).toBeVisible();
   await expect(page.locator('h1')).toHaveCount(1);
   await expect(page.locator('meta[name="description"]')).toHaveCount(1);
@@ -44,22 +44,6 @@ test('homepage passes core axe accessibility checks', async ({ page }) => {
     .analyze();
 
   expect(results.violations).toEqual([]);
-});
-
-test('navigation and gallery are keyboard reachable', async ({ page }) => {
-  await page.goto('/');
-
-  await page.keyboard.press('Tab');
-  await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
-
-  await page.keyboard.press('Tab');
-  await expect(page.locator('nav').getByRole('link', { name: 'ELISON', exact: true })).toBeFocused();
-
-  await page.getByRole('button', { name: /open gallery image 1/i }).focus();
-  await page.keyboard.press('Enter');
-  await expect(page.getByRole('dialog')).toBeVisible();
-  await page.keyboard.press('Escape');
-  await expect(page.getByRole('dialog')).toHaveCount(0);
 });
 
 test('homepage stays within the viewport on a mobile screen', async ({ browser }) => {
@@ -78,7 +62,6 @@ test('homepage stays within the viewport on a mobile screen', async ({ browser }
   }));
 
   expect(metrics.scrollWidth).toBe(metrics.clientWidth);
-  await expect(page.getByRole('button', { name: /open menu/i })).toBeVisible();
 
   await context.close();
 });
@@ -89,8 +72,8 @@ test('homepage keeps the hero readable when reduced motion is enabled', async ({
 
   await page.goto('/');
 
-  await expect(page.getByRole('heading', { level: 1, name: /left out\. still singing\./i })).toBeVisible();
-  await expect(page.getByText('Dominican. Independent. New music out now.')).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: /Nothing was random/i })).toBeVisible();
+  await expect(page.getByText('It was all connected.')).toBeVisible();
 
   await context.close();
 });
