@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ExternalLink, Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { ExternalLink, Play, Pause, Volume2, VolumeX, Twitter, Link2 } from 'lucide-react';
 import PageFooter from '../components/PageFooter';
 import type { Release } from '../content/site';
 
@@ -239,6 +239,35 @@ const ExclusiveReleasePage = ({ release }: ExclusiveReleasePageProps) => {
                   Open EPK
                   <ExternalLink className="w-3 h-3" />
                 </a>
+
+                {/* Share */}
+                <div className="mt-8 pt-6 border-t flex items-center gap-4" style={{ borderColor: 'var(--text-dim)' }}>
+                  <span className="font-inter text-[10px] uppercase tracking-[0.2em]" style={{ color: 'var(--text-tertiary)' }}>
+                    Share
+                  </span>
+                  <button
+                    onClick={() => {
+                      const url = encodeURIComponent(window.location.href);
+                      const text = encodeURIComponent(`Listen to ${release.title} by Elison`);
+                      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+                    }}
+                    className="p-2 transition-colors duration-300 hover:text-[var(--accent-gold)]"
+                    style={{ color: 'var(--text-tertiary)' }}
+                    aria-label="Share on Twitter"
+                  >
+                    <Twitter className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(window.location.href);
+                    }}
+                    className="p-2 transition-colors duration-300 hover:text-[var(--accent-gold)]"
+                    style={{ color: 'var(--text-tertiary)' }}
+                    aria-label="Copy link"
+                  >
+                    <Link2 className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>

@@ -190,33 +190,6 @@ const epkMetadata = (): PageMetadata => ({
   }),
 });
 
-// const worldMetadata = (): PageMetadata => ({
-//   title: "Elison's World | The Clearing",
-//   description: "Enter Elison's World — a hidden music universe. Explore The Clearing, find fragments, and unlock exclusive music.",
-//   keywords: "Elison's World, hidden music, puzzle, treasure hunt, Déjame Perderme, exclusive release, Afro Latin House",
-//   canonical: absoluteUrl('/world/'),
-//   ogTitle: "Elison's World | The Clearing",
-//   ogDescription: 'A hidden music universe. Find the fragments. Unlock the song.',
-//   ogImage: absoluteUrl('/og-world.jpg'),
-//   ogImageAlt: "Elison's World — The Clearing",
-//   twitterTitle: "Elison's World | The Clearing",
-//   twitterDescription: 'A hidden music universe. Find the fragments. Unlock the song.',
-//   twitterImage: absoluteUrl('/og-world.jpg'),
-//   jsonLd: JSON.stringify({
-//     '@context': 'https://schema.org',
-//     '@graph': [
-//       {
-//         '@type': 'WebPage',
-//         '@id': `${siteUrl}/world/#webpage`,
-//         url: `${siteUrl}/world/`,
-//         name: "Elison's World | The Clearing",
-//         description: "Enter Elison's World — a hidden music universe.",
-//         inLanguage: 'en-US',
-//       },
-//     ],
-//   }),
-// });
-
 export const getPageMetadata = (pathname: string): PageMetadata => {
   const route = normalizePathname(pathname);
 
@@ -255,6 +228,35 @@ export const getPageMetadata = (pathname: string): PageMetadata => {
 
   if (route === '/epk/') {
     return epkMetadata();
+  }
+
+  if (route === '/lyrics/') {
+    return {
+      title: 'Lyrics — Déjame Perderme | Elison',
+      description: 'Read the lyrics to Déjame Perderme by Elison. A song about getting lost in freedom and finding yourself again.',
+      keywords: 'Elison, Déjame Perderme, lyrics, Afro Latin House, Latin R&B, song meaning',
+      canonical: absoluteUrl('/lyrics/'),
+      ogTitle: 'Lyrics — Déjame Perderme | Elison',
+      ogDescription: 'Read the lyrics to Déjame Perderme. A song about getting lost in freedom and finding yourself again.',
+      ogImage: absoluteUrl('/og-dejame-perderme.jpg'),
+      ogImageAlt: 'Déjame Perderme cover art',
+      twitterTitle: 'Lyrics — Déjame Perderme | Elison',
+      twitterDescription: 'Read the lyrics to Déjame Perderme.',
+      twitterImage: absoluteUrl('/og-dejame-perderme.jpg'),
+      jsonLd: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'WebPage',
+            '@id': `${siteUrl}/lyrics/#webpage`,
+            url: `${siteUrl}/lyrics/`,
+            name: 'Lyrics — Déjame Perderme | Elison',
+            description: 'Read the lyrics to Déjame Perderme by Elison.',
+            inLanguage: 'en-US',
+          },
+        ],
+      }),
+    };
   }
 
   return homeMetadata();
