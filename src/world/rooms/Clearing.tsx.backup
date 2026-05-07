@@ -1,0 +1,780 @@
+import { useEffect, useRef, useState } from 'react';
+import { Music, Volume2, VolumeX } from 'lucide-react';
+import { useWorld } from '../WorldContext';
+import { useAudioManager } from '../AudioManager';
+import { useParticles } from '../useParticles';
+import PostcardSignup from './PostcardSignup';
+
+interface InteractiveObjectProps {
+  id: string;
+  x: string;
+  y: string;
+  revealedContent: {
+    lyric?: string;
+    message?: string;
+    soundName: string;
+  };
+  fragmentId: string;
+  onInteract: (id: string, fragmentId: string) => void;
+  children: React.ReactNode;
+}
+
+const InteractiveObject = ({ 
+  id, x, y, revealedContent, fragmentId, onInteract, children 
+}: InteractiveObjectProps) => {
+  const { hasDiscovered } = useWorld();
+  const [isHovered, setIsHovered] = useState(false);
+  const [showReveal, setShowReveal] = useState(false);
+  const isDiscovered = hasDiscovered(id);
+
+  const handleClick = () => {
+    if (!isDiscovered) {
+      onInteract(id, fragmentId);
+      setShowReveal(true);
+      setTimeout(() => setShowReveal(false), 4000);
+    } else {
+      setShowReveal(true);
+      setTimeout(() => setShowReveal(false), 3000);
+    }
+  };
+
+  return (
+    <div
+      className="absolute transform -translate-x-1/2 -translate-y-1/2"
+      style={{ left: x, top: y, zIndex: 20 }}
+    >
+      {/* Revealed content bubble */}
+      {showReveal && (
+        <div 
+          className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-52 p-3 rounded-lg text-center animate-in fade-in slide-in-from-bottom-2 duration-500"
+          style={{ 
+            background: 'rgba(8, 16, 16, 0.95)', 
+            border: '1px solid rgba(212, 168, 83, 0.25)',
+            backdropFilter: 'blur(10px)',
+            zIndex: 50,
+          }}
+        >
+          {revealedContent.lyric && (
+            <p className="font-inter text-xs italic leading-relaxed mb-1" style={{ color: '#D4A853' }}>
+              "{revealedContent.lyric}"
+            </p>
+          )}
+          {revealedContent.message && (
+            <p className="font-inter text-[10px] uppercase tracking-wider" style={{ color: '#6A5A4A' }}>
+              {revealedContent.message}
+            </p>
+          )}
+          <div className="mt-2 flex items-center justify-center gap-1">
+            <Music className="w-3 h-3" style={{ color: '#4A3A2A' }} />
+            <span className="font-inter text-[9px]" style={{ color: '#4A3A2A' }}>
+              {revealedContent.soundName}
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* Object container */}
+      <button
+        onClick={handleClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="relative w-20 h-20 md:w-24 md:h-24 flex items-center justify-center transition-all duration-700"
+        style={{
+          transform: isHovered ? 'scale(1.15) translateY(-6px)' : 'scale(1)',
+          filter: isDiscovered 
+            ? 'drop-shadow(0 0 25px rgba(212, 168, 83, 0.6))' 
+            : 'drop-shadow(0 0 12px rgba(212, 168, 83, 0.2))',
+          cursor: 'pointer',
+        }}
+        aria-label={`Discover ${id}`}
+      >
+        {/* Idle float animation */}
+        <div 
+          className="absolute inset-0 animate-float"
+          style={{ animationDelay: `${Math.random() * 3}s`, animationDuration: '5s' }}
+        >
+          {children}
+        </div>
+
+        {/* Discovered glow ring */}
+        {isDiscovered && (
+          <div 
+            className="absolute inset-0 rounded-full animate-pulse-slow"
+            style={{ 
+              background: 'radial-gradient(circle, rgba(212, 168, 83, 0.25) 0%, transparent 70%)',
+            }}
+          />
+        )}
+
+        {/* Hover ring */}
+        {isHovered && (
+          <div 
+            className="absolute -inset-3 rounded-full border transition-opacity duration-300"
+            style={{ borderColor: 'rgba(212, 168, 83, 0.2)' }}
+          />
+        )}
+      </button>
+
+      {/* Label */}
+      <div 
+        className="absolute top-full left-1/2 -translate-x-1/2 mt-3 whitespace-nowrap transition-opacity duration-300"
+        style={{ opacity: isHovered || isDiscovered ? 1 : 0.5 }}
+      >
+        <span className="font-inter text-[9px] uppercase tracking-[0.2em]" style={{ color: isDiscovered ? '#D4A853' : '#4A3A2A' }}>
+          {isDiscovered ? 'Found' : 'Hidden'}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+const UnlockHeart = ({ onUnlock }: { onUnlock: () => void }) => {
+  const { progress } = useWorld();
+  const [isHovered, setIsHovered] = useState(false);
+  const discoveredCount = progress.discoveredObjects.size;
+  const totalObjects = 4;
+  const canUnlock = discoveredCount >= totalObjects;
+
+  return (
+    <div 
+      className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"
+      style={{ zIndex: 15 }}
+    >
+      <button
+        onClick={() => canUnlock && onUnlock()}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        disabled={!canUnlock}
+        className="relative w-32 h-32 md:w-40 md:h-40 flex items-center justify-center transition-all duration-1000"
+        style={{
+          transform: isHovered && canUnlock ? 'scale(1.08)' : 'scale(1)',
+          cursor: canUnlock ? 'pointer' : 'default',
+        }}
+      >
+        {/* Outer glow */}
+        <div 
+          className="absolute inset-0 rounded-full transition-all duration-1000"
+          style={{
+            background: canUnlock 
+              ? 'radial-gradient(circle, rgba(232, 106, 51, 0.35) 0%, rgba(212, 168, 83, 0.15) 40%, transparent 70%)'
+              : 'radial-gradient(circle, rgba(60, 50, 40, 0.3) 0%, transparent 60%)',
+            animation: canUnlock ? 'pulse-glow 2.5s ease-in-out infinite' : 'none',
+          }}
+        />
+
+        {/* Heart SVG */}
+        <div 
+          className="relative w-20 h-20 md:w-24 md:h-24 transition-all duration-700"
+          style={{
+            filter: canUnlock 
+              ? 'drop-shadow(0 0 25px rgba(232, 106, 51, 0.7))' 
+              : 'drop-shadow(0 0 8px rgba(60, 50, 40, 0.4))',
+          }}
+        >
+          <svg viewBox="0 0 100 100" className="w-full h-full">
+            <defs>
+              <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor={canUnlock ? '#E86A33' : '#4A3535'} />
+                <stop offset="100%" stopColor={canUnlock ? '#D4A853' : '#2A1A1A'} />
+              </linearGradient>
+              <filter id="heartGlow">
+                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            {/* Main heart */}
+            <path 
+              d="M50 88 C50 88 18 62 18 40 C18 26 28 16 40 16 C46 16 50 20 50 20 C50 20 54 16 60 16 C72 16 82 26 82 40 C82 62 50 88 50 88Z" 
+              fill="url(#heartGrad)"
+              opacity={canUnlock ? 0.95 : 0.5}
+            />
+            {/* Crack lines */}
+            <path 
+              d="M50 22 L48 32 L52 38 L48 48 L50 58" 
+              stroke={canUnlock ? '#FFD700' : '#1A0A0A'} 
+              strokeWidth="1.5" 
+              fill="none"
+              opacity={canUnlock ? 0.9 : 0.5}
+              strokeLinecap="round"
+            />
+            <path 
+              d="M35 35 L42 40 L38 48" 
+              stroke={canUnlock ? '#E86A33' : '#1A0A0A'} 
+              strokeWidth="1" 
+              fill="none"
+              opacity={canUnlock ? 0.7 : 0.3}
+              strokeLinecap="round"
+            />
+            {/* Lock when locked */}
+            {!canUnlock && (
+              <g transform="translate(38, 38)">
+                <rect x="0" y="8" width="24" height="18" rx="3" fill="#1A0A0A" opacity="0.85"/>
+                <path d="M4 8 L4 4 C4 0 20 0 20 4 L20 8" stroke="#1A0A0A" strokeWidth="2.5" fill="none"/>
+                <circle cx="12" cy="17" r="2.5" fill="#0A0A0A"/>
+              </g>
+            )}
+            {/* Glow ring when unlocked */}
+            {canUnlock && (
+              <circle cx="50" cy="50" r="42" fill="none" stroke="#E86A33" strokeWidth="0.5" opacity="0.4">
+                <animate attributeName="r" values="42;48;42" dur="3s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.4;0.15;0.4" dur="3s" repeatCount="indefinite" />
+              </circle>
+            )}
+          </svg>
+        </div>
+
+        {/* Status text */}
+        <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap">
+          <span 
+            className="font-inter text-[10px] uppercase tracking-[0.2em] transition-colors duration-500"
+            style={{ color: canUnlock ? '#E86A33' : '#4A3A2A' }}
+          >
+            {canUnlock ? 'Touch to Unlock' : `${discoveredCount} / ${totalObjects}`}
+          </span>
+        </div>
+      </button>
+    </div>
+  );
+};
+
+const UnlockModal = ({ onClose }: { onClose: () => void }) => {
+  const { playFullTrack } = useAudioManager({
+    fullTrackSrc: '/audio/dejame-perderme.mp3',
+  });
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowContent(true), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handlePlay = () => {
+    playFullTrack();
+    setIsPlaying(true);
+  };
+
+  return (
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ background: 'rgba(5, 10, 10, 0.98)' }}
+    >
+      <div className="max-w-md w-full text-center">
+        {/* Phoenix reveal animation */}
+        <div 
+          className="relative w-40 h-40 mx-auto mb-8 transition-all duration-1000"
+          style={{
+            opacity: showContent ? 1 : 0,
+            transform: showContent ? 'scale(1) translateY(0)' : 'scale(0.8) translateY(20px)',
+          }}
+        >
+          <div 
+            className="absolute inset-0 rounded-full animate-pulse-slow"
+            style={{ background: 'radial-gradient(circle, rgba(232, 106, 51, 0.25) 0%, transparent 70%)' }}
+          />
+          <svg viewBox="0 0 100 100" className="w-full h-full">
+            <defs>
+              <linearGradient id="phoenixGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#E86A33" />
+                <stop offset="40%" stopColor="#D4A853" />
+                <stop offset="100%" stopColor="#FFD700" />
+              </linearGradient>
+            </defs>
+            {/* Stylized phoenix */}
+            <path 
+              d="M50 92 C30 72 18 52 22 38 C25 28 32 22 38 24 C40 25 41 28 40 32 C43 26 48 22 52 26 C55 29 54 33 52 36 C57 30 62 28 65 32 C68 35 66 40 63 42 C68 45 70 50 66 56 C63 60 58 60 56 58 C58 64 56 70 53 74 C50 78 50 85 50 92Z"
+              fill="url(#phoenixGrad)"
+              opacity="0.9"
+            />
+            {/* Wing details */}
+            <path d="M40 32 Q32 24 28 28 Q34 30 38 34" fill="#E86A33" opacity="0.5"/>
+            <path d="M52 36 Q62 28 66 32 Q60 34 56 38" fill="#E86A33" opacity="0.5"/>
+            {/* Flame wisps */}
+            <path d="M30 45 Q25 40 28 35" stroke="#E86A33" strokeWidth="1" fill="none" opacity="0.4"/>
+            <path d="M70 48 Q75 42 72 37" stroke="#D4A853" strokeWidth="1" fill="none" opacity="0.4"/>
+          </svg>
+        </div>
+
+        <div 
+          className="space-y-6 transition-all duration-700 delay-300"
+          style={{
+            opacity: showContent ? 1 : 0,
+            transform: showContent ? 'translateY(0)' : 'translateY(15px)',
+          }}
+        >
+          <div>
+            <p className="font-inter text-[10px] uppercase tracking-[0.3em] mb-3" style={{ color: '#5A4A3A' }}>
+              The Clearing Unlocks
+            </p>
+            <h2 
+              className="font-oswald text-4xl md:text-5xl tracking-[0.08em] mb-3"
+              style={{ color: '#E8E0D0' }}
+            >
+              DÉJAME PERDERME
+            </h2>
+            <p className="font-inter text-sm leading-[1.8]" style={{ color: '#8A7A6A' }}>
+              The first sound from Elison's World. You found all the relics. The song is yours.
+            </p>
+          </div>
+
+          {/* Audio player */}
+          <div 
+            className="rounded-xl border p-6 mx-auto max-w-sm"
+            style={{ 
+              borderColor: 'rgba(232, 106, 51, 0.2)', 
+              background: 'linear-gradient(135deg, rgba(232, 106, 51, 0.06) 0%, rgba(212, 168, 83, 0.04) 100%)' 
+            }}
+          >
+            {isPlaying ? (
+              <div className="space-y-3">
+                <div className="flex items-center justify-center gap-1 h-8">
+                  {[0, 0.2, 0.4, 0.1, 0.3].map((delay, i) => (
+                    <div 
+                      key={i}
+                      className="w-1 bg-[#E86A33] animate-pulse"
+                      style={{ 
+                        height: `${20 + Math.random() * 30}%`,
+                        animationDelay: `${delay}s`,
+                        animationDuration: '0.8s',
+                      }}
+                    />
+                  ))}
+                </div>
+                <p className="font-inter text-xs" style={{ color: '#6A5A4A' }}>
+                  Now playing...
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <button
+                  onClick={handlePlay}
+                  className="w-full px-6 py-3 font-inter text-[11px] uppercase tracking-[0.12em] transition-all hover:brightness-110 flex items-center justify-center gap-2"
+                  style={{ background: '#E86A33', color: 'white' }}
+                >
+                  <Music className="w-4 h-4" />
+                  Play Déjame Perderme
+                </button>
+              </div>
+            )}
+          </div>
+
+          <button 
+            onClick={onClose}
+            className="font-inter text-[11px] uppercase tracking-[0.12em] hover:text-[#D4A853] transition-colors"
+            style={{ color: '#5A4A3A' }}
+          >
+            Keep Exploring
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Clearing = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { discoverObject, hasDiscovered, unlock } = useWorld();
+  const [showUnlock, setShowUnlock] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+
+  const { playFragment, startAmbient, setMuted } = useAudioManager({
+    ambientSrc: '/audio/ambient-clearing.mp3',
+    fragments: {
+      feather: '/audio/fragment-vocal.mp3',
+      shell: '/audio/fragment-bass.mp3',
+      mask: '/audio/fragment-percussion.mp3',
+      key: '/audio/fragment-synth.mp3',
+    },
+  });
+
+  const { spawnParticles } = useParticles(canvasRef, true);
+
+  useEffect(() => {
+    startAmbient();
+  }, [startAmbient]);
+
+  const handleObjectClick = (id: string, fragmentId: string) => {
+    if (!hasDiscovered(id)) {
+      discoverObject(id);
+      playFragment(fragmentId);
+      spawnParticles(50, 50, 15, '#D4A853');
+    }
+  };
+
+  const handleUnlock = () => {
+    unlock();
+    setShowUnlock(true);
+  };
+
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
+    setMuted(!isMuted);
+  };
+
+  return (
+    <div className="relative w-full min-h-screen overflow-hidden" style={{ background: '#060D0D' }}>
+      {/* Deep space layer */}
+      <div className="absolute inset-0" style={{
+        background: 'linear-gradient(180deg, #0A1628 0%, #0F2A3A 40%, #0A3A3A 70%, #061414 100%)'
+      }} />
+      
+      {/* Stars - tiny dots */}
+      <div className="absolute inset-0 opacity-40">
+        {[...Array(30)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              width: Math.random() * 2 + 1 + 'px',
+              height: Math.random() * 2 + 1 + 'px',
+              background: '#D4A853',
+              top: Math.random() * 60 + '%',
+              left: Math.random() * 100 + '%',
+              opacity: Math.random() * 0.6 + 0.2,
+              animation: `twinkle ${Math.random() * 3 + 2}s ease-in-out infinite`,
+              animationDelay: `${Math.random() * 5}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Moon glow */}
+      <div 
+        className="absolute top-8 right-12 w-16 h-16 md:w-20 md:h-20 rounded-full opacity-20"
+        style={{
+          background: 'radial-gradient(circle, rgba(212, 168, 83, 0.4) 0%, rgba(212, 168, 83, 0.1) 50%, transparent 70%)',
+          filter: 'blur(2px)',
+        }}
+      />
+
+      {/* Warm horizon - sunset remnants */}
+      <div className="absolute bottom-0 left-0 right-0 h-2/3" style={{
+        background: 'radial-gradient(ellipse at 50% 100%, rgba(232, 106, 51, 0.12) 0%, rgba(212, 168, 83, 0.06) 25%, transparent 55%)'
+      }} />
+
+      {/* Ocean/teal mist from jungle */}
+      <div className="absolute bottom-0 left-0 right-0 h-1/2" style={{
+        background: 'radial-gradient(ellipse at 20% 100%, rgba(10, 100, 100, 0.08) 0%, transparent 40%)'
+      }} />
+      <div className="absolute bottom-0 left-0 right-0 h-1/3" style={{
+        background: 'radial-gradient(ellipse at 80% 100%, rgba(10, 80, 90, 0.06) 0%, transparent 35%)'
+      }} />
+
+      {/* Fog layers */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 opacity-20" style={{
+        background: 'linear-gradient(to top, rgba(180, 170, 150, 0.04), transparent)'
+      }} />
+      <div className="absolute bottom-0 left-0 right-0 h-24 opacity-15" style={{
+        background: 'linear-gradient(to top, rgba(200, 190, 170, 0.03), transparent)'
+      }} />
+
+      {/* Palm silhouettes */}
+      <div className="absolute bottom-0 left-0 w-40 h-80 opacity-12" style={{
+        background: 'linear-gradient(60deg, transparent 30%, #080808 30%, #080808 33%, transparent 33%, transparent 40%, #080808 40%, #080808 42%, transparent 42%)',
+        transform: 'skewX(-8deg)',
+        transformOrigin: 'bottom left',
+      }} />
+      <div className="absolute bottom-0 right-0 w-48 h-96 opacity-10" style={{
+        background: 'linear-gradient(-55deg, transparent 25%, #080808 25%, #080808 28%, transparent 28%, transparent 38%, #080808 38%, #080808 40%, transparent 40%)',
+        transform: 'skewX(6deg)',
+        transformOrigin: 'bottom right',
+      }} />
+      <div className="absolute bottom-0 left-1/4 w-32 h-64 opacity-8" style={{
+        background: 'linear-gradient(70deg, transparent 35%, #080808 35%, #080808 37%, transparent 37%)',
+        transformOrigin: 'bottom left',
+      }} />
+
+      {/* Distant doorway / path hint */}
+      <div 
+        className="absolute bottom-16 left-1/2 -translate-x-1/2 opacity-8"
+        style={{
+          width: '120px',
+          height: '80px',
+          background: 'linear-gradient(to top, rgba(212, 168, 83, 0.15), transparent)',
+          clipPath: 'polygon(20% 100%, 0% 40%, 50% 0%, 100% 40%, 80% 100%)',
+        }}
+      />
+
+      {/* Firefly particles */}
+      <canvas ref={canvasRef} className="absolute inset-0 z-10 pointer-events-none" />
+
+      {/* Content */}
+      <div className="relative z-20 min-h-screen flex flex-col items-center justify-center p-4">
+        {/* Minimal header */}
+        <div className="absolute top-0 left-0 right-0 p-5 flex justify-between items-start">
+          <div>
+            <p className="font-inter text-[9px] uppercase tracking-[0.3em] mb-1" style={{ color: '#4A3A2A' }}>
+              Elison's World
+            </p>
+            <h1 className="font-oswald text-sm tracking-[0.15em]" style={{ color: '#6A5A4A' }}>
+              ROOM 001: THE CLEARING
+            </h1>
+          </div>
+          <button 
+            onClick={toggleMute} 
+            className="p-2 rounded-full transition-colors hover:bg-white/5"
+            style={{ color: '#4A3A2A' }}
+            aria-label="Toggle sound"
+          >
+            {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+          </button>
+        </div>
+
+        {/* Room subtitle */}
+        <div className="text-center mb-6 mt-24">
+          <p className="font-inter text-xs max-w-xs mx-auto leading-relaxed italic" style={{ color: '#5A4A3A' }}>
+            "Something is hidden here. Tap the relics. Listen closely."
+          </p>
+        </div>
+
+        {/* Interactive room */}
+        <div className="relative w-full max-w-lg aspect-square max-h-[55vh]">
+          
+          {/* Broken Phoenix Feather */}
+          <InteractiveObject
+            id="feather"
+            x="28%"
+            y="22%"
+            revealedContent={{
+              lyric: 'She don\'t need a map...',
+              soundName: 'Chorus Vocal',
+            }}
+            fragmentId="feather"
+            onInteract={handleObjectClick}
+          >
+            <svg viewBox="0 0 80 80" className="w-full h-full">
+              <defs>
+                <linearGradient id="featherGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#E8D5A3" />
+                  <stop offset="50%" stopColor="#C4A052" />
+                  <stop offset="100%" stopColor="#8B6914" />
+                </linearGradient>
+              </defs>
+              {/* Main feather body */}
+              <path 
+                d="M40 70 C40 70 20 55 20 38 C20 25 28 15 38 12 C42 11 44 14 44 18 C48 12 54 10 58 14 C62 18 60 24 56 28 C62 22 68 24 70 30 C72 36 68 42 62 44 C68 48 70 54 64 60 C58 66 48 68 40 70Z"
+                fill="url(#featherGrad)"
+                opacity="0.9"
+              />
+              {/* Feather barb details */}
+              <path d="M38 20 L32 28 L36 32 L30 40" stroke="#6B5014" strokeWidth="0.5" fill="none" opacity="0.4"/>
+              <path d="M48 18 L54 26 L50 30 L56 38" stroke="#6B5014" strokeWidth="0.5" fill="none" opacity="0.4"/>
+              {/* Crack */}
+              <path d="M42 25 L40 35 L44 42 L40 52" stroke="#2A1A0A" strokeWidth="1.2" fill="none" opacity="0.6" strokeLinecap="round"/>
+              <path d="M38 45 L34 50" stroke="#2A1A0A" strokeWidth="0.8" fill="none" opacity="0.4"/>
+              {/* Glow tip */}
+              <ellipse cx="38" cy="14" rx="4" ry="3" fill="#FFD700" opacity="0.5">
+                <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2s" repeatCount="indefinite" />
+              </ellipse>
+            </svg>
+          </InteractiveObject>
+
+          {/* Glowing Shell */}
+          <InteractiveObject
+            id="shell"
+            x="74%"
+            y="26%"
+            revealedContent={{
+              lyric: 'She makes love feel like home...',
+              soundName: 'Sub-bass + Dembow',
+            }}
+            fragmentId="shell"
+            onInteract={handleObjectClick}
+          >
+            <svg viewBox="0 0 80 80" className="w-full h-full">
+              <defs>
+                <radialGradient id="shellGrad" cx="40%" cy="40%">
+                  <stop offset="0%" stopColor="#00E5E5" stopOpacity="0.6"/>
+                  <stop offset="50%" stopColor="#00AAAA" stopOpacity="0.3"/>
+                  <stop offset="100%" stopColor="#006666" stopOpacity="0.1"/>
+                </radialGradient>
+              </defs>
+              {/* Shell spiral */}
+              <path 
+                d="M40 68 C24 68 14 56 14 42 C14 28 24 18 36 16 C40 15 42 18 42 22 C46 16 52 14 56 18 C60 22 58 28 54 32 C60 26 66 28 68 34 C70 40 66 46 60 48 C66 52 68 58 62 64 C56 70 46 68 40 68Z"
+                fill="url(#shellGrad)"
+                opacity="0.85"
+              />
+              {/* Spiral line */}
+              <path 
+                d="M40 60 C30 60 22 52 22 42 C22 32 30 24 38 22 C40 21 42 23 42 26 C44 22 48 20 50 24 C52 26 50 30 48 32 C52 28 56 30 58 34"
+                stroke="#00CCCC"
+                strokeWidth="1"
+                fill="none"
+                opacity="0.5"
+                strokeLinecap="round"
+              />
+              {/* Inner glow */}
+              <circle cx="36" cy="38" r="10" fill="#00CCCC" opacity="0.15">
+                <animate attributeName="r" values="10;13;10" dur="3s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.15;0.25;0.15" dur="3s" repeatCount="indefinite" />
+              </circle>
+              {/* Shell texture dots */}
+              <circle cx="28" cy="36" r="1" fill="#00AAAA" opacity="0.3"/>
+              <circle cx="32" cy="44" r="0.8" fill="#00AAAA" opacity="0.3"/>
+              <circle cx="48" cy="34" r="1" fill="#00AAAA" opacity="0.3"/>
+            </svg>
+          </InteractiveObject>
+
+          {/* Gold Mask */}
+          <InteractiveObject
+            id="mask"
+            x="22%"
+            y="72%"
+            revealedContent={{
+              lyric: 'No sé qué tiene pero se siente real...',
+              soundName: 'Verse 1',
+            }}
+            fragmentId="mask"
+            onInteract={handleObjectClick}
+          >
+            <svg viewBox="0 0 80 80" className="w-full h-full">
+              <defs>
+                <linearGradient id="maskGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#D4A853" />
+                  <stop offset="40%" stopColor="#B8941F" />
+                  <stop offset="100%" stopColor="#7A5A14" />
+                </linearGradient>
+              </defs>
+              {/* Mask face */}
+              <path 
+                d="M20 28 C20 22 30 16 38 18 C40 19 40 21 40 23 C42 19 46 17 50 19 C56 21 60 26 60 32 C62 40 58 52 52 60 C46 68 34 68 28 60 C22 52 18 40 20 28Z"
+                fill="url(#maskGrad)"
+                opacity="0.88"
+              />
+              {/* Eye holes - dark and mysterious */}
+              <ellipse cx="32" cy="36" rx="5" ry="4" fill="#1A0F0A" opacity="0.7"/>
+              <ellipse cx="48" cy="36" rx="5" ry="4" fill="#1A0F0A" opacity="0.7"/>
+              {/* Eye glow */}
+              <circle cx="32" cy="36" r="2" fill="#D4A853" opacity="0.3">
+                <animate attributeName="opacity" values="0.2;0.5;0.2" dur="4s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="48" cy="36" r="2" fill="#D4A853" opacity="0.3">
+                <animate attributeName="opacity" values="0.2;0.5;0.2" dur="4s" repeatCount="indefinite" />
+              </circle>
+              {/* Nose ridge */}
+              <path d="M40 40 L38 48 L42 48" stroke="#8B6914" strokeWidth="1" fill="none" opacity="0.5"/>
+              {/* Mouth - slight smile */}
+              <path d="M34 54 Q40 58 46 54" stroke="#8B6914" strokeWidth="1" fill="none" opacity="0.4" strokeLinecap="round"/>
+              {/* Forehead ornament */}
+              <path d="M38 22 L40 16 L42 22" fill="#D4A853" opacity="0.6"/>
+              <circle cx="40" cy="15" r="2" fill="#FFD700" opacity="0.4">
+                <animate attributeName="opacity" values="0.3;0.6;0.3" dur="2.5s" repeatCount="indefinite" />
+              </circle>
+              {/* Cheek markings */}
+              <path d="M26 42 L24 46" stroke="#8B6914" strokeWidth="0.8" opacity="0.3"/>
+              <path d="M54 42 L56 46" stroke="#8B6914" strokeWidth="0.8" opacity="0.3"/>
+            </svg>
+          </InteractiveObject>
+
+          {/* Floating Key */}
+          <InteractiveObject
+            id="key"
+            x="78%"
+            y="68%"
+            revealedContent={{
+              lyric: 'Let me get lost where she goes...',
+              soundName: 'Bridge',
+            }}
+            fragmentId="key"
+            onInteract={handleObjectClick}
+          >
+            <svg viewBox="0 0 80 80" className="w-full h-full">
+              <defs>
+                <linearGradient id="keyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#C4A0C4" />
+                  <stop offset="100%" stopColor="#7A5A7A" />
+                </linearGradient>
+              </defs>
+              {/* Key glow aura */}
+              <circle cx="40" cy="40" r="28" fill="#B88AC0" opacity="0.08">
+                <animate attributeName="r" values="28;34;28" dur="4s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.08;0.15;0.08" dur="4s" repeatCount="indefinite" />
+              </circle>
+              {/* Key body - rotated */}
+              <g transform="rotate(-35 40 40)">
+                {/* Bow (top circle) */}
+                <circle cx="40" cy="22" r="10" fill="none" stroke="url(#keyGrad)" strokeWidth="2.5"/>
+                <circle cx="40" cy="22" r="4" fill="#B88AC0" opacity="0.3"/>
+                {/* Shaft */}
+                <rect x="37" y="32" width="6" height="28" rx="2" fill="url(#keyGrad)" opacity="0.9"/>
+                {/* Bitting (teeth) */}
+                <rect x="43" y="42" width="8" height="4" rx="1" fill="url(#keyGrad)" opacity="0.8"/>
+                <rect x="43" y="50" width="6" height="4" rx="1" fill="url(#keyGrad)" opacity="0.8"/>
+                <rect x="43" y="58" width="10" height="4" rx="1" fill="url(#keyGrad)" opacity="0.8"/>
+              </g>
+              {/* Sparkle accents */}
+              <circle cx="28" cy="30" r="1" fill="#D4A0D4" opacity="0.5">
+                <animate attributeName="opacity" values="0;0.8;0" dur="3s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="55" cy="48" r="0.8" fill="#D4A0D4" opacity="0.5">
+                <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite" />
+              </circle>
+            </svg>
+          </InteractiveObject>
+
+          {/* Central Cracked Heart */}
+          <UnlockHeart onUnlock={handleUnlock} />
+        </div>
+
+        {/* Progress dots */}
+        <div className="mt-10 flex gap-3">
+          {['feather', 'shell', 'mask', 'key'].map((id) => (
+            <div
+              key={id}
+              className="w-2 h-2 rounded-full transition-all duration-700"
+              style={{
+                background: hasDiscovered(id) ? '#D4A853' : '#1A1A1A',
+                boxShadow: hasDiscovered(id) ? '0 0 10px rgba(212, 168, 83, 0.5)' : 'none',
+                transform: hasDiscovered(id) ? 'scale(1.3)' : 'scale(1)',
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Postcards signup */}
+        <div className="mt-12 w-full max-w-sm">
+          <PostcardSignup />
+        </div>
+      </div>
+
+      {/* Unlock modal */}
+      {showUnlock && <UnlockModal onClose={() => setShowUnlock(false)} />}
+
+      {/* CSS animations */}
+      <style>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          33% { transform: translateY(-10px) rotate(1deg); }
+          66% { transform: translateY(-6px) rotate(-1deg); }
+        }
+        @keyframes pulse-glow {
+          0%, 100% { opacity: 0.7; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.03); }
+        }
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.4; }
+          50% { opacity: 0.8; }
+        }
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 0.8; }
+        }
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+        .animate-pulse-glow {
+          animation: pulse-glow 2.5s ease-in-out infinite;
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 3s ease-in-out infinite;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default Clearing;

@@ -195,7 +195,7 @@ const Connection = () => {
         {/* Newsletter */}
         <div className="connect-footer max-w-md mx-auto mb-14 md:mb-16">
           <p className="font-inter text-[11px] uppercase tracking-[0.15em] mb-4" style={{ color: 'var(--text-tertiary)' }}>
-            Get updates when new music lands
+            Join Elison's World to hear new music first, before it reaches the rest of the world.
           </p>
           <form
             action={NEWSLETTER_ENDPOINT}

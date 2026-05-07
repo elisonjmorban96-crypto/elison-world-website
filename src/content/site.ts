@@ -8,8 +8,8 @@ export interface LinkItem {
 }
 
 export interface Release {
-  slug: 'decisions' | 'la-primera';
-  path: '/decisions/' | '/la-primera/';
+  slug: 'decisions' | 'la-primera' | 'dejame-perderme';
+  path: '/decisions/' | '/la-primera/' | '/dejame-perderme/';
   title: string;
   shortTitle: string;
   year: string;
@@ -24,12 +24,17 @@ export interface Release {
   description: string;
   summary: string;
   credits: string[];
+  isExclusive?: boolean;
+  exclusiveTagline?: string;
+  audioSrc?: string;
+  videoSrc?: string;
 }
 
 export const artistName = 'Elison Joel Morban';
 export const artistStageName = 'Elison';
 export const siteUrl = 'https://elisonworld.com';
 export const bookingEmail = 'booking@elisonworld.com';
+export const worldName = "Elison's World";
 
 export const streamLinks: LinkItem[] = [
   { name: 'Spotify', url: 'https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa', icon: Music2 },
@@ -94,6 +99,33 @@ export const releases: Release[] = [
       'Label: OneTime Music Inc',
       'Official Apple Music release linked from this page',
     ],
+  },
+  {
+    slug: 'dejame-perderme',
+    path: '/dejame-perderme/',
+    title: 'DÉJAME PERDERME',
+    shortTitle: 'Déjame Perderme',
+    year: '2026',
+    meta: "Afro Latin House · Elison's World Exclusive",
+    reflection: 'I was working, watching someone live freely, and it made me want to start again.',
+    cover: '/dejame-perderme-cover.jpg',
+    embedUrl: '',
+    appleUrl: '',
+    spotifyUrl: '',
+    ogImage: '/og-dejame-perderme.jpg',
+    description: "Hear Déjame Perderme by Elison first on Elison's World. A new independent Afro Latin House chapter begins here.",
+    summary: "The first sound from Elison's World. A song about getting lost in someone's freedom and finding yourself again through rhythm, love, and inspiration.",
+    credits: [
+      'Artist: Elison',
+      'Release: Déjame Perderme',
+      "Label: Elison's World / OneTime Music Inc",
+      'Genre: Afro Latin House',
+      "First exclusive release on Elison's World",
+    ],
+    isExclusive: true,
+    exclusiveTagline: 'Available here first. Before the rest of the world.',
+    audioSrc: '/audio/dejame-perderme.mp3',
+    videoSrc: '/video/dejame-perderme-loop.mp4',
   },
 ];
 

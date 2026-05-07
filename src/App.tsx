@@ -5,12 +5,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navigation from './components/Navigation';
 import SubpageNavigation from './components/SubpageNavigation';
 import Hero from './sections/Hero';
+import ExclusiveReleaseBanner from './sections/ExclusiveReleaseBanner';
 import Story from './sections/Story';
 import Music from './sections/Music';
 import Gallery from './sections/Gallery';
 import Connection from './sections/Connection';
 import ReleasePage from './pages/ReleasePage';
 import EpkPage from './pages/EpkPage';
+import ExclusiveReleasePage from './pages/ExclusiveReleasePage';
+import WorldApp from './world/WorldApp';
 import { releaseBySlug } from './content/site';
 import { prefersReducedMotion } from './lib/motion';
 import { normalizePathname } from './lib/routing';
@@ -82,6 +85,7 @@ function App({ initialPath = '/' }: AppProps) {
       {route === '/' ? (
         <main id="main-content" tabIndex={-1}>
           <Hero />
+          <ExclusiveReleaseBanner />
           <Story />
           <Music />
           <Gallery />
@@ -90,6 +94,8 @@ function App({ initialPath = '/' }: AppProps) {
       ) : null}
       {route === '/la-primera/' ? <ReleasePage release={releaseBySlug['la-primera']} /> : null}
       {route === '/decisions/' ? <ReleasePage release={releaseBySlug.decisions} /> : null}
+      {route === '/dejame-perderme/' ? <ExclusiveReleasePage release={releaseBySlug['dejame-perderme']} /> : null}
+      {route === '/world/' ? <WorldApp /> : null}
       {route === '/epk/' ? <EpkPage /> : null}
       {analyticsEnabled ? <Analytics /> : null}
     </div>

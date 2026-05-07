@@ -96,6 +96,16 @@ const homeMetadata = (): PageMetadata => ({
         sameAs: [releaseBySlug['la-primera'].appleUrl],
       },
       {
+        '@type': 'MusicRecording',
+        '@id': `${siteUrl}/#track-dejame-perderme`,
+        name: 'DÉJAME PERDERME',
+        url: `${siteUrl}/dejame-perderme/`,
+        image: absoluteUrl('/dejame-perderme-cover.jpg'),
+        byArtist: { '@id': `${siteUrl}/#project` },
+        publisher: { '@type': 'Organization', name: "Elison's World / OneTime Music Inc" },
+        description: "First exclusive release on Elison's World. Afro Latin House.",
+      },
+      {
         '@type': 'WebPage',
         '@id': `${siteUrl}/#webpage`,
         url: `${siteUrl}/`,
@@ -109,7 +119,9 @@ const homeMetadata = (): PageMetadata => ({
 });
 
 const releaseMetadata = (path: AppPath) => {
-  const release = path === '/decisions/' ? releaseBySlug.decisions : releaseBySlug['la-primera'];
+  const release = path === '/decisions/' ? releaseBySlug.decisions : 
+                  path === '/la-primera/' ? releaseBySlug['la-primera'] : 
+                  releaseBySlug['dejame-perderme'];
   const pageUrl = absoluteUrl(path);
 
   return {
@@ -152,7 +164,7 @@ const releaseMetadata = (path: AppPath) => {
             '@type': 'Organization',
             name: 'OneTime Music Inc',
           },
-          sameAs: [release.appleUrl, release.spotifyUrl, ...(release.youtubeUrl ? [release.youtubeUrl] : [])],
+          sameAs: [release.appleUrl, release.spotifyUrl, ...(release.youtubeUrl ? [release.youtubeUrl] : [])].filter(Boolean),
         },
         {
           '@type': 'BreadcrumbList',
@@ -207,11 +219,42 @@ const epkMetadata = (): PageMetadata => ({
   }),
 });
 
+const worldMetadata = (): PageMetadata => ({
+  title: "Elison's World | The Clearing",
+  description: "Enter Elison's World — a hidden music universe. Explore The Clearing, find fragments, and unlock exclusive music.",
+  keywords: "Elison's World, hidden music, puzzle, treasure hunt, Déjame Perderme, exclusive release, Afro Latin House",
+  canonical: absoluteUrl('/world/'),
+  ogTitle: "Elison's World | The Clearing",
+  ogDescription: 'A hidden music universe. Find the fragments. Unlock the song.',
+  ogImage: absoluteUrl('/og-world.jpg'),
+  ogImageAlt: "Elison's World — The Clearing",
+  twitterTitle: "Elison's World | The Clearing",
+  twitterDescription: 'A hidden music universe. Find the fragments. Unlock the song.',
+  twitterImage: absoluteUrl('/og-world.jpg'),
+  jsonLd: JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${siteUrl}/world/#webpage`,
+        url: `${siteUrl}/world/`,
+        name: "Elison's World | The Clearing",
+        description: "Enter Elison's World — a hidden music universe.",
+        inLanguage: 'en-US',
+      },
+    ],
+  }),
+});
+
 export const getPageMetadata = (pathname: string): PageMetadata => {
   const route = normalizePathname(pathname);
 
-  if (route === '/la-primera/' || route === '/decisions/') {
+  if (route === '/la-primera/' || route === '/decisions/' || route === '/dejame-perderme/') {
     return releaseMetadata(route);
+  }
+
+  if (route === '/world/') {
+    return worldMetadata();
   }
 
   if (route === '/epk/') {

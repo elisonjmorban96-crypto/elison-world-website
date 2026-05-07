@@ -6,7 +6,7 @@ const rootDir = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 const distDir = path.join(rootDir, 'dist');
 const indexPath = path.join(distDir, 'index.html');
 const serverEntryPath = path.join(distDir, 'server', 'entry-server.js');
-const routes = ['/', '/la-primera/', '/decisions/', '/epk/'];
+const routes = ['/', '/la-primera/', '/decisions/', '/dejame-perderme/', '/world/', '/epk/'];
 
 const { render } = await import(pathToFileURL(serverEntryPath).href);
 const template = await fs.readFile(indexPath, 'utf8');
