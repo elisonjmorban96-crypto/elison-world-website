@@ -58,7 +58,7 @@ const ExclusiveReleasePage = ({ release }: ExclusiveReleasePageProps) => {
       {/* Hero Section with Video Background */}
       <section className="relative overflow-hidden min-h-[60vh] md:min-h-[70vh] flex items-center">
         {/* Video Background */}
-        {hasVideo && (
+        {hasVideo && release.videoSrc ? (
           <div className="absolute inset-0 z-[1]">
             <video
               ref={videoRef}
@@ -70,9 +70,7 @@ const ExclusiveReleasePage = ({ release }: ExclusiveReleasePageProps) => {
               className="w-full h-full object-cover"
               poster={release.cover}
             >
-              {release.videoSrc && (
-                <source src={release.videoSrc} type="video/mp4" />
-              )}
+              <source src={release.videoSrc || undefined} type="video/mp4" />
             </video>
             <div 
               className="absolute inset-0" 
@@ -81,7 +79,7 @@ const ExclusiveReleasePage = ({ release }: ExclusiveReleasePageProps) => {
               }} 
             />
           </div>
-        )}
+        ) : null}
 
         {/* Fallback gradient if no video */}
         {!hasVideo && (
@@ -142,11 +140,9 @@ const ExclusiveReleasePage = ({ release }: ExclusiveReleasePageProps) => {
                 className="rounded-xl border p-6 md:p-8" 
                 style={{ borderColor: 'var(--text-dim)', background: 'rgba(8,8,8,0.6)' }}
               >
-                {hasAudio ? (
+                {hasAudio && release.audioSrc ? (
                   <>
-                {hasAudio && release.audioSrc && (
-                  <audio ref={audioRef} src={release.audioSrc} preload="metadata" />
-                )}
+                    <audio ref={audioRef} src={release.audioSrc || undefined} preload="metadata" />
                     
                     <div className="flex items-center gap-4 mb-6">
                       <button
@@ -194,7 +190,8 @@ const ExclusiveReleasePage = ({ release }: ExclusiveReleasePageProps) => {
                       />
                     </div>
                   </>
-                ) : (
+                ) : null}
+                {!hasAudio && (
                   <div className="text-center py-8">
                     <div 
                       className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center"
