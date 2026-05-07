@@ -141,10 +141,17 @@ export default function HeroSequence() {
   }, [state.phase]);
 
   const handleEnter = useCallback(() => {
-    const element = document.getElementById('main-content');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    // Force scroll past the fixed hero
+    document.body.style.overflow = 'auto';
+    window.scrollTo({ top: window.innerHeight + 100, behavior: 'smooth' });
+    
+    // Fallback: scroll to main content
+    setTimeout(() => {
+      const mainContent = document.getElementById('main-content');
+      if (mainContent) {
+        mainContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   }, []);
 
   return (
@@ -226,6 +233,9 @@ export default function HeroSequence() {
             </span>
             <ArrowDown className="w-5 h-5 animate-bounce" style={{ color: 'var(--accent-gold)' }} />
           </button>
+          <span className="font-inter text-[10px] tracking-[0.15em] uppercase mt-2" style={{ color: 'var(--text-tertiary)' }}>
+            Scroll to explore
+          </span>
         </div>
       )}
     </section>
