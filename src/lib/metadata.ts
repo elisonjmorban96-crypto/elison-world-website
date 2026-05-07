@@ -59,7 +59,7 @@ const homeMetadata = (): PageMetadata => ({
         alternateName: 'Elison',
         url: `${siteUrl}/`,
         image: absoluteUrl('/hero-elison.jpg'),
-        description: 'Dominican Latin R&B artist behind Decisions (Remastered) and LA PRIMERA.',
+        description: 'Dominican Latin R&B artist behind Déjame Perderme.',
         email: bookingEmail,
         jobTitle: 'Singer-songwriter',
         knowsAbout: ['Latin R&B', 'Independent music', 'Songwriting', 'Performance'],
@@ -71,29 +71,9 @@ const homeMetadata = (): PageMetadata => ({
         name: 'Elison',
         url: `${siteUrl}/`,
         image: absoluteUrl('/hero-elison.jpg'),
-        genre: ['Latin R&B', 'R&B', 'Latin Pop'],
+        genre: ['Latin R&B', 'Afro Latin House', 'Latin Pop'],
         member: { '@id': `${siteUrl}/#artist` },
         sameAs: sharedProfiles,
-      },
-      {
-        '@type': 'MusicRecording',
-        '@id': `${siteUrl}/#track-decisions-remastered`,
-        name: 'Decisions (Remastered)',
-        url: `${siteUrl}/decisions/`,
-        image: absoluteUrl('/album-midnight.jpg'),
-        byArtist: { '@id': `${siteUrl}/#project` },
-        publisher: { '@type': 'Organization', name: 'OneTime Music Inc' },
-        sameAs: [releaseBySlug.decisions.appleUrl],
-      },
-      {
-        '@type': 'MusicRecording',
-        '@id': `${siteUrl}/#track-la-primera`,
-        name: 'LA PRIMERA',
-        url: `${siteUrl}/la-primera/`,
-        image: absoluteUrl('/album-firstlight.jpg'),
-        byArtist: { '@id': `${siteUrl}/#project` },
-        publisher: { '@type': 'Organization', name: 'OneTime Music Inc' },
-        sameAs: [releaseBySlug['la-primera'].appleUrl],
       },
       {
         '@type': 'MusicRecording',
@@ -119,9 +99,7 @@ const homeMetadata = (): PageMetadata => ({
 });
 
 const releaseMetadata = (path: AppPath) => {
-  const release = path === '/decisions/' ? releaseBySlug.decisions : 
-                  path === '/la-primera/' ? releaseBySlug['la-primera'] : 
-                  releaseBySlug['dejame-perderme'];
+  const release = releaseBySlug['dejame-perderme'];
   const pageUrl = absoluteUrl(path);
 
   return {
@@ -249,7 +227,7 @@ const worldMetadata = (): PageMetadata => ({
 export const getPageMetadata = (pathname: string): PageMetadata => {
   const route = normalizePathname(pathname);
 
-  if (route === '/la-primera/' || route === '/decisions/' || route === '/dejame-perderme/') {
+  if (route === '/dejame-perderme/') {
     return releaseMetadata(route);
   }
 

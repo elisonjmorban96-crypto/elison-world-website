@@ -8,8 +8,8 @@ export interface LinkItem {
 }
 
 export interface Release {
-  slug: 'decisions' | 'la-primera' | 'dejame-perderme';
-  path: '/decisions/' | '/la-primera/' | '/dejame-perderme/';
+  slug: 'dejame-perderme';
+  path: '/dejame-perderme/';
   title: string;
   shortTitle: string;
   year: string;
@@ -55,51 +55,6 @@ export const contactLinks: LinkItem[] = [
 ];
 
 export const releases: Release[] = [
-  {
-    slug: 'decisions',
-    path: '/decisions/',
-    title: 'Decisions (Remastered)',
-    shortTitle: 'Decisions',
-    year: '2016',
-    meta: '74 BPM · OneTime Music Inc',
-    reflection: 'My first release. It did not move the way I wanted, but it still mattered.',
-    cover: '/album-midnight.jpg',
-    embedUrl: 'https://embed.music.apple.com/us/album/decisions-remastered-single/1811878413',
-    appleUrl: 'https://music.apple.com/us/album/decisions-remastered-single/1811878413',
-    spotifyUrl: 'https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa',
-    ogImage: '/og-decisions.jpg',
-    description: 'Official release page for Decisions (Remastered) by Elison, with the track story, player, and direct streaming links.',
-    summary: 'The first release. The part of the story that came out before the long quiet stretch.',
-    credits: [
-      'Artist: Elison',
-      'Release: Decisions (Remastered)',
-      'Label: OneTime Music Inc',
-      'Official Apple Music release linked from this page',
-    ],
-  },
-  {
-    slug: 'la-primera',
-    path: '/la-primera/',
-    title: 'LA PRIMERA',
-    shortTitle: 'LA PRIMERA',
-    year: '2025',
-    meta: 'Latin R&B · OneTime Music Inc',
-    reflection: 'Ten years later, this sounds more like me. Less trying. More direct.',
-    cover: '/album-firstlight.jpg',
-    embedUrl: 'https://embed.music.apple.com/us/album/la-primera-remastered-single/1812806221',
-    appleUrl: 'https://music.apple.com/us/album/la-primera-remastered-single/1812806221',
-    spotifyUrl: 'https://open.spotify.com/artist/59g2fpjNdXZQzgQjiaHkRa',
-    youtubeUrl: 'https://www.youtube.com/@elisonjoel',
-    ogImage: '/og-la-primera.jpg',
-    description: 'Official release page for LA PRIMERA by Elison, with the single story, credits, and direct streaming links.',
-    summary: 'The return. Ten years after the first release, this is the track that marks the new chapter.',
-    credits: [
-      'Artist: Elison',
-      'Release: LA PRIMERA',
-      'Label: OneTime Music Inc',
-      'Official Apple Music release linked from this page',
-    ],
-  },
   {
     slug: 'dejame-perderme',
     path: '/dejame-perderme/',

@@ -10,7 +10,6 @@ import Story from './sections/Story';
 import Music from './sections/Music';
 import Gallery from './sections/Gallery';
 import Connection from './sections/Connection';
-import ReleasePage from './pages/ReleasePage';
 import EpkPage from './pages/EpkPage';
 import ExclusiveReleasePage from './pages/ExclusiveReleasePage';
 import WorldApp from './world/WorldApp';
@@ -92,8 +91,6 @@ function App({ initialPath = '/' }: AppProps) {
           <Connection />
         </main>
       ) : null}
-      {route === '/la-primera/' ? <ReleasePage release={releaseBySlug['la-primera']} /> : null}
-      {route === '/decisions/' ? <ReleasePage release={releaseBySlug.decisions} /> : null}
       {route === '/dejame-perderme/' ? <ExclusiveReleasePage release={releaseBySlug['dejame-perderme']} /> : null}
       {route === '/world/' ? <WorldApp /> : null}
       {route === '/epk/' ? <EpkPage /> : null}
