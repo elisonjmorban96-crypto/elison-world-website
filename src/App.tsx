@@ -13,6 +13,7 @@ import Connection from './sections/Connection';
 import EpkPage from './pages/EpkPage';
 import ExclusiveReleasePage from './pages/ExclusiveReleasePage';
 import FragmentPage from './pages/FragmentPage';
+import WorldApp from './world/WorldApp';
 import { releaseBySlug } from './content/site';
 import { prefersReducedMotion } from './lib/motion';
 import { normalizePathname } from './lib/routing';
@@ -97,6 +98,7 @@ function App({ initialPath = '/' }: AppProps) {
       ) : null}
       {route === '/dejame-perderme/' ? <ExclusiveReleasePage release={releaseBySlug['dejame-perderme']} /> : null}
       {route === '/fragment/' ? <FragmentPage /> : null}
+      {route === '/game/' ? <WorldApp /> : null}
       {route === '/epk/' ? <EpkPage /> : null}
       {analyticsEnabled ? <Analytics /> : null}
     </div>
