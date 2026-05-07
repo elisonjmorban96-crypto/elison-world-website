@@ -52,7 +52,7 @@ export default function HeroSequence() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setState(prev => ({ ...prev, phase: 'fragments' }));
-    }, 500);
+    }, 300);
     timersRef.current.push(timer);
     return () => clearAllTimers();
   }, [clearAllTimers]);
@@ -98,7 +98,7 @@ export default function HeroSequence() {
 
     const timer = setTimeout(() => {
       setState(prev => ({ ...prev, phase: 'molecule' }));
-    }, 2000);
+    }, 1500);
     timersRef.current.push(timer);
 
     return () => clearAllTimers();
@@ -115,7 +115,7 @@ export default function HeroSequence() {
 
     const timer = setTimeout(() => {
       setState(prev => ({ ...prev, phase: 'text' }));
-    }, 2500);
+    }, 2000);
     timersRef.current.push(timer);
 
     return () => clearAllTimers();
@@ -128,7 +128,7 @@ export default function HeroSequence() {
 
     const timer = setTimeout(() => {
       setState(prev => ({ ...prev, phase: 'cta' }));
-    }, 3000);
+    }, 2500);
     timersRef.current.push(timer);
 
     return () => clearAllTimers();

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -7,14 +7,14 @@ import SubpageNavigation from './components/SubpageNavigation';
 import CinematicOverlay from './components/CinematicOverlay';
 import HeroSequence from './sections/HeroSequence';
 import Story from './sections/Story';
-import StoryChapters from './sections/StoryChapters';
-import Music from './sections/Music';
-import Gallery from './sections/Gallery';
-import JournalSection from './sections/JournalSection';
-import Connection from './sections/Connection';
+const StoryChapters = lazy(() => import('./sections/StoryChapters'));
+const Music = lazy(() => import('./sections/Music'));
+const Gallery = lazy(() => import('./sections/Gallery'));
+const JournalSection = lazy(() => import('./sections/JournalSection'));
+const Connection = lazy(() => import('./sections/Connection'));
 import EpkPage from './pages/EpkPage';
 import ExclusiveReleasePage from './pages/ExclusiveReleasePage';
-import LyricsPage from './pages/LyricsPage';
+const LyricsPage = lazy(() => import('./pages/LyricsPage'));
 import FragmentPage from './pages/FragmentPage';
 import WorldApp from './world/WorldApp';
 import { releaseBySlug } from './content/site';
@@ -93,16 +93,22 @@ function App({ initialPath = '/' }: AppProps) {
           <HeroSequence />
           <main id="main-content" tabIndex={-1} className="relative z-10" style={{ marginTop: '100vh' }}>
             <Story />
-            <StoryChapters />
-            <Music />
-            <Gallery />
-            <JournalSection />
-            <Connection />
+            <Suspense fallback={<div className="min-h-screen" />}>
+              <StoryChapters />
+              <Music />
+              <Gallery />
+              <JournalSection />
+              <Connection />
+            </Suspense>
           </main>
         </>
       ) : null}
       {route === '/dejame-perderme/' ? <ExclusiveReleasePage release={releaseBySlug['dejame-perderme']} /> : null}
-      {route === '/lyrics/' ? <LyricsPage release={releaseBySlug['dejame-perderme']} /> : null}
+      {route === '/lyrics/' ? (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center"></div>}>
+          <LyricsPage release={releaseBySlug['dejame-perderme']} />
+        </Suspense>
+      ) : null}
       {route === '/fragment/' ? <FragmentPage /> : null}
       {route === '/game/' ? <WorldApp /> : null}
       {route === '/epk/' ? <EpkPage /> : null}

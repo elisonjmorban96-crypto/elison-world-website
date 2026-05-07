@@ -102,11 +102,11 @@ const StoryChapters = () => {
                 </span>
               </div>
 
-              <h3 className="font-oswald text-3xl sm:text-4xl md:text-5xl tracking-[0.08em] mb-8" style={{ color: 'var(--text-primary)' }}>
+              <h3 className="font-oswald text-2xl sm:text-3xl md:text-5xl tracking-[0.08em] mb-4 md:mb-8" style={{ color: 'var(--text-primary)' }}>
                 {chapter.title}
               </h3>
 
-              <div className="space-y-4 mb-10">
+              <div className="space-y-3 md:space-y-4 mb-6 md:mb-10">
                 {chapter.verses.map((verse, vIdx) => (
                   <p
                     key={vIdx}
