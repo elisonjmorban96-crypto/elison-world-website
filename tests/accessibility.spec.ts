@@ -7,7 +7,7 @@ const staticSubpages = [
     title: /DÉJAME PERDERME \| Elison/,
     heading: /Déjame Perderme/i,
     canonical: 'https://elisonworld.com/dejame-perderme/',
-    marker: 'Official Release Page',
+    marker: "Elison's World Exclusive",
   },
   {
     path: '/epk/',
