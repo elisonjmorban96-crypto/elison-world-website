@@ -1,6 +1,6 @@
-export type AppPath = '/' | '/la-primera/' | '/decisions/' | '/dejame-perderme/' | '/fragment/' | '/epk/' | '/game/' | '/world/';
+export type AppPath = '/' | '/la-primera/' | '/decisions/' | '/dejame-perderme/' | '/fragment/' | '/epk/' | '/game/';
 
-export const staticPaths: AppPath[] = ['/', '/la-primera/', '/decisions/', '/dejame-perderme/', '/fragment/', '/epk/', '/game/', '/world/'];
+export const staticPaths: AppPath[] = ['/', '/la-primera/', '/decisions/', '/dejame-perderme/', '/fragment/', '/epk/', '/game/'];
 
 export const normalizePathname = (pathname: string): AppPath => {
   if (pathname === '/la-primera' || pathname === '/la-primera/') {
@@ -25,10 +25,6 @@ export const normalizePathname = (pathname: string): AppPath => {
 
   if (pathname === '/game' || pathname === '/game/') {
     return '/game/';
-  }
-
-  if (pathname === '/world' || pathname === '/world/') {
-    return '/world/';
   }
 
   return '/';
