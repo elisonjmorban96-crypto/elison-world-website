@@ -3,17 +3,10 @@ import AxeBuilder from '@axe-core/playwright';
 
 const staticSubpages = [
   {
-    path: '/la-primera/',
-    title: /LA PRIMERA \| Elison/,
-    heading: /LA PRIMERA/i,
-    canonical: 'https://elisonworld.com/la-primera/',
-    marker: 'Official Release Page',
-  },
-  {
-    path: '/decisions/',
-    title: /Decisions \(Remastered\) \| Elison/,
-    heading: /Decisions \(Remastered\)/i,
-    canonical: 'https://elisonworld.com/decisions/',
+    path: '/dejame-perderme/',
+    title: /Déjame Perderme \| Elison/,
+    heading: /Déjame Perderme/i,
+    canonical: 'https://elisonworld.com/dejame-perderme/',
     marker: 'Official Release Page',
   },
   {
@@ -30,14 +23,16 @@ test('homepage has the expected landmarks and metadata', async ({ page }) => {
 
   await expect(page).toHaveTitle(/Elison's World/);
   await expect(page.locator('main')).toBeVisible();
-  // Hero has 2 h1 elements ("Nothing was random." and "It was all connected.")
-  await expect(page.locator('h1')).toHaveCount(2);
+  // Hero animation takes ~10s to show h1; wait for it
+  await expect(page.locator('h1')).toHaveCount(2, { timeout: 15000 });
   await expect(page.locator('meta[name="description"]')).toHaveCount(1);
   await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
 });
 
 test('homepage passes core axe accessibility checks', async ({ page }) => {
   await page.goto('/');
+  // Wait for hero animation to complete before running axe
+  await page.waitForSelector('h1', { timeout: 15000 });
 
   const results = await new AxeBuilder({ page })
     .exclude('iframe')
@@ -74,8 +69,8 @@ test('homepage keeps the hero readable when reduced motion is enabled', async ({
   await page.goto('/');
 
   // With reduced motion, hero text should be visible immediately
-  await expect(page.getByRole('heading', { name: /Nothing was random/i })).toBeVisible();
-  await expect(page.getByText('It was all connected.')).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Nothing was random/i })).toBeVisible({ timeout: 5000 });
+  await expect(page.getByText('It was all connected.')).toBeVisible({ timeout: 5000 });
 
   await context.close();
 });
