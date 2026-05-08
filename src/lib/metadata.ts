@@ -36,11 +36,11 @@ const homeMetadata = (): PageMetadata => ({
   canonical: absoluteUrl('/'),
   ogTitle: "Elison's World",
   ogDescription: 'Nothing was random. It was all connected. Enter the inner world of Elison.',
-  ogImage: absoluteUrl('/og-dejame-perderme.png'),
+  ogImage: absoluteUrl('/og-home.jpg'),
   ogImageAlt: 'Elison portrait in dramatic low-key lighting',
   twitterTitle: "Elison's World",
   twitterDescription: 'Nothing was random. It was all connected.',
-  twitterImage: absoluteUrl('/og-dejame-perderme.png'),
+  twitterImage: absoluteUrl('/og-home.jpg'),
   jsonLd: JSON.stringify({
     '@context': 'https://schema.org',
     '@graph': [
