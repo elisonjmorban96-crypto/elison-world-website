@@ -171,7 +171,7 @@ const CommunityHub = () => {
               </div>
               <iframe
                 ref={iframeRef}
-                src="https://discord.com/widget?id=1475970217736933386&theme=dark"
+                src="https://discord.com/widget?id=1502104667566375123&theme=dark"
                 width="100%"
                 height="450"
                 title="Discord The Clearing"

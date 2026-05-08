@@ -2,7 +2,8 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import ParticleField from '../components/ParticleField';
 import MoleculeCanvas from '../components/MoleculeCanvas';
 import LightRays from '../components/LightRays';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, Volume2, VolumeX } from 'lucide-react';
+import { useSound } from '../lib/sound';
 
 interface Fragment {
   id: number;
@@ -41,13 +42,22 @@ export default function HeroSequence() {
     textOpacity: 0,
     ctaOpacity: 0,
   });
+  const [soundEnabled, setSoundEnabled] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const { startAmbient, stopAmbient, playFragmentReveal } = useSound();
 
   const clearAllTimers = useCallback(() => {
     timersRef.current.forEach(clearTimeout);
     timersRef.current = [];
   }, []);
+
+  // Sound effects for phase changes
+  useEffect(() => {
+    if (state.phase === 'fragments' && soundEnabled) {
+      playFragmentReveal();
+    }
+  }, [state.phase, soundEnabled, playFragmentReveal]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -145,6 +155,9 @@ export default function HeroSequence() {
     document.body.style.overflow = 'auto';
     window.scrollTo({ top: window.innerHeight + 100, behavior: 'smooth' });
     
+    // Stop ambient sound when leaving hero
+    stopAmbient();
+    
     // Fallback: scroll to main content
     setTimeout(() => {
       const mainContent = document.getElementById('main-content');
@@ -152,7 +165,7 @@ export default function HeroSequence() {
         mainContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }, 100);
-  }, []);
+  }, [stopAmbient]);
 
   return (
     <section 
@@ -235,6 +248,31 @@ export default function HeroSequence() {
           </button>
           <span className="font-inter text-[10px] tracking-[0.15em] uppercase mt-2" style={{ color: 'var(--text-tertiary)' }}>
             Scroll to explore
+          </span>
+          
+          {/* Sound Toggle */}
+          <button
+            onClick={() => {
+              if (soundEnabled) {
+                stopAmbient();
+                setSoundEnabled(false);
+              } else {
+                startAmbient();
+                setSoundEnabled(true);
+              }
+            }}
+            className="mt-4 p-2 rounded-full transition-colors duration-300 hover:bg-white/5"
+            style={{ color: 'var(--text-tertiary)' }}
+            aria-label={soundEnabled ? 'Mute sound' : 'Enable sound'}
+          >
+            {soundEnabled ? (
+              <Volume2 className="w-4 h-4" />
+            ) : (
+              <VolumeX className="w-4 h-4" />
+            )}
+          </button>
+          <span className="font-inter text-[9px] tracking-[0.1em] uppercase" style={{ color: 'var(--text-tertiary)' }}>
+            {soundEnabled ? 'Sound on' : 'Sound off'}
           </span>
         </div>
       )}
