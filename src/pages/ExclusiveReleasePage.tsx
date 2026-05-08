@@ -24,26 +24,13 @@ const ExclusiveReleasePage = ({ release }: ExclusiveReleasePageProps) => {
 
     const handleCanPlay = () => setAudioLoaded(true);
     const handleError = () => setAudioError(true);
-    const handleStalled = () => {
-      // Retry loading once if stalled
-      setTimeout(() => {
-        if (audio.readyState < 3) {
-          audio.load();
-        }
-      }, 1000);
-    };
 
     audio.addEventListener('canplaythrough', handleCanPlay);
     audio.addEventListener('error', handleError);
-    audio.addEventListener('stalled', handleStalled);
-
-    // Force load
-    audio.load();
 
     return () => {
       audio.removeEventListener('canplaythrough', handleCanPlay);
       audio.removeEventListener('error', handleError);
-      audio.removeEventListener('stalled', handleStalled);
     };
   }, []);
 
@@ -51,37 +38,11 @@ const ExclusiveReleasePage = ({ release }: ExclusiveReleasePageProps) => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    // Ensure audio context is resumed (browser autoplay policy)
-    const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
-    if (AudioContext) {
-      const ctx = new AudioContext();
-      if (ctx.state === 'suspended') {
-        ctx.resume();
-      }
-    }
-
     if (isPlaying) {
       audio.pause();
       setIsPlaying(false);
     } else {
-      // Reset if ended
-      if (audio.ended) {
-        audio.currentTime = 0;
-      }
-      
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => setIsPlaying(true))
-          .catch((err) => {
-            console.error('Audio play failed:', err);
-            setAudioError(true);
-            // Retry once after user interaction
-            setTimeout(() => {
-              audio.play().catch(() => {});
-            }, 100);
-          });
-      }
+      audio.play().then(() => setIsPlaying(true)).catch(() => setAudioError(true));
     }
   };
 
