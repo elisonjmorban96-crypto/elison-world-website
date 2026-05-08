@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ExternalLink } from 'lucide-react';
 import { prefersReducedMotion } from '../lib/motion';
 import { releases } from '../content/site';
 
@@ -52,7 +53,7 @@ const Music = () => {
           {releases.map((track) => (
             <div
               key={track.slug}
-              className={`track-card group ${track.isLegacy ? 'opacity-80' : ''}`}
+              className="track-card group"
               onMouseEnter={() => setHoveredTrack(track.slug)}
               onMouseLeave={() => setHoveredTrack(null)}
             >
@@ -67,18 +68,9 @@ const Music = () => {
                   className="w-full h-full object-cover transition-transform duration-700"
                   style={{ transform: hoveredTrack === track.slug ? 'scale(1.03)' : 'scale(1)' }}
                 />
-                <div className="absolute top-4 left-4 px-3 py-1" style={{ background: track.isExclusive ? 'var(--accent-gold)' : 'var(--text-dim)' }}>
-                  <span className="font-inter text-[10px] font-semibold uppercase tracking-[0.1em] text-white">
-                    {track.isExclusive ? 'Exclusive' : track.year}
-                  </span>
+                <div className="absolute top-4 left-4 px-3 py-1" style={{ background: 'var(--accent-gold)' }}>
+                  <span className="font-inter text-[10px] font-semibold uppercase tracking-[0.1em] text-white">{track.year}</span>
                 </div>
-                {track.isLegacy && (
-                  <div className="absolute bottom-4 right-4 px-2 py-1" style={{ background: 'rgba(5,5,5,0.8)', border: '1px solid var(--text-dim)' }}>
-                    <span className="font-inter text-[9px] uppercase tracking-[0.15em]" style={{ color: 'var(--text-tertiary)' }}>
-                      Archive
-                    </span>
-                  </div>
-                )}
               </div>
 
               <h3 className="font-oswald text-xl md:text-2xl font-bold tracking-[0.08em] mb-1" style={{ color: 'var(--text-primary)' }}>
@@ -92,25 +84,6 @@ const Music = () => {
                 &ldquo;{track.reflection}&rdquo;
               </p>
 
-              {track.legacyNote && (
-                <p className="font-inter text-[11px] italic mb-4" style={{ color: 'var(--text-tertiary)' }}>
-                  {track.legacyNote}
-                </p>
-              )}
-
-              {track.embedUrl ? (
-                <div className="mb-6 overflow-hidden rounded-xl border" style={{ borderColor: 'var(--text-dim)' }}>
-                  <iframe
-                    title={`${track.title} Apple Music player`}
-                    src={track.embedUrl}
-                    loading="lazy"
-                    allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
-                    sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
-                    style={{ width: '100%', height: '175px', border: 0, background: 'transparent' }}
-                  />
-                </div>
-              ) : null}
-
               <div className="flex flex-wrap gap-3">
                 <a
                   href={track.path}
@@ -118,6 +91,7 @@ const Music = () => {
                   style={{ borderColor: 'var(--text-dim)', color: 'var(--text-tertiary)' }}
                 >
                   Enter the Room
+                  <ExternalLink className="w-3 h-3" />
                 </a>
               </div>
             </div>
