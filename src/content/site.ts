@@ -80,7 +80,7 @@ export const releases: Release[] = [
     isExclusive: true,
     exclusiveTagline: 'Available here first. Before the rest of the world.',
     audioSrc: '/audio/dejame-perderme.mp3',
-    videoSrc: '/video/dejame-perderme-loop.mp4',
+    videoSrc: undefined,
   },
 ];
 
