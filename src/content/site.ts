@@ -63,7 +63,7 @@ export const releases: Release[] = [
     year: '2026',
     meta: "Afro Latin House · Elison's World Exclusive",
     reflection: 'I was working, watching someone live freely, and it made me want to start again.',
-    cover: '/dejame-perderme-cover.jpg',
+    cover: '/dejame-perderme-cover.png',
     embedUrl: '',
     appleUrl: '',
     spotifyUrl: '',
