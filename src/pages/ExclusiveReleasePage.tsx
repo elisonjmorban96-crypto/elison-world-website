@@ -32,7 +32,7 @@ const ExclusiveReleasePage = ({ release }: ExclusiveReleasePageProps) => {
       audio.removeEventListener('canplaythrough', handleCanPlay);
       audio.removeEventListener('error', handleError);
     };
-  }, []);
+  }, [hasAudio]);
 
   const togglePlay = () => {
     const audio = audioRef.current;

@@ -173,8 +173,9 @@ export const useSound = () => {
   }, []);
 
   useEffect(() => {
+    const currentManager = manager.current;
     return () => {
-      manager.current?.stopAmbient();
+      currentManager?.stopAmbient();
     };
   }, []);
 

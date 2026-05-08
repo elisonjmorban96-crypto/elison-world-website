@@ -112,7 +112,7 @@ export const useAudioManager = (options: AudioManagerOptions) => {
     return () => {
       managerRef.current?.destroy();
     };
-  }, []);
+  }, [options]);
 
   const playFragment = useCallback((id: string) => {
     managerRef.current?.playFragment(id);
