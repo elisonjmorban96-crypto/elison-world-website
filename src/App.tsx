@@ -11,6 +11,7 @@ const StoryChapters = lazy(() => import('./sections/StoryChapters'));
 const Music = lazy(() => import('./sections/Music'));
 const Gallery = lazy(() => import('./sections/Gallery'));
 const JournalSection = lazy(() => import('./sections/JournalSection'));
+const CommunityHub = lazy(() => import('./sections/CommunityHub'));
 const Connection = lazy(() => import('./sections/Connection'));
 import EpkPage from './pages/EpkPage';
 import ExclusiveReleasePage from './pages/ExclusiveReleasePage';
@@ -98,6 +99,7 @@ function App({ initialPath = '/' }: AppProps) {
               <Music />
               <Gallery />
               <JournalSection />
+              <CommunityHub />
               <Connection />
             </Suspense>
           </main>

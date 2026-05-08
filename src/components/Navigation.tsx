@@ -31,6 +31,7 @@ const Navigation = () => {
     { name: 'The Pieces', href: '#story' },
     { name: 'The Sound', href: '#music' },
     { name: 'Memory', href: '#gallery' },
+    { name: 'The Clearing', href: '#community' },
     { name: 'Stay Close', href: '#connect' },
   ];
 
