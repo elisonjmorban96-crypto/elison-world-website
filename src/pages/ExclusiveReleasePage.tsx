@@ -200,10 +200,10 @@ const ExclusiveReleasePage = ({ release }: ExclusiveReleasePageProps) => {
                       <Play className="w-8 h-8" style={{ color: 'var(--accent-gold)' }} />
                     </div>
                     <p className="font-oswald text-lg tracking-[0.05em] mb-2" style={{ color: 'var(--text-primary)' }}>
-                      Private release loading soon
+                      Coming Soon
                     </p>
                     <p className="font-inter text-sm" style={{ color: 'var(--text-tertiary)' }}>
-                      Join Elison's World to hear it first.
+                      This track will be available exclusively on Elison's World.
                     </p>
                   </div>
                 )}
