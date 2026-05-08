@@ -105,7 +105,7 @@ const releaseMetadata = (path: AppPath) => {
   return {
     title: `${release.title} | Elison`,
     description: release.description,
-    keywords: `${release.title}, Elison, Elison Joel Morban, Latin R&B, OneTime Music Inc, official release page`,
+    keywords: `${release.title}, Elison, Elison Joel Morban, Latin R&B, independent artist, official release page`,
     canonical: pageUrl,
     ogTitle: `${release.title} | Elison`,
     ogDescription: release.summary,
@@ -140,7 +140,7 @@ const releaseMetadata = (path: AppPath) => {
           },
           publisher: {
             '@type': 'Organization',
-            name: 'OneTime Music Inc',
+            name: 'Independent',
           },
           sameAs: [release.appleUrl, release.spotifyUrl, ...(release.youtubeUrl ? [release.youtubeUrl] : [])].filter(Boolean),
         },

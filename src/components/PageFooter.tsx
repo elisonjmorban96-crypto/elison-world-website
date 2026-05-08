@@ -48,7 +48,7 @@ const PageFooter = () => {
         </div>
 
         <p className="font-inter text-[10px] tracking-wider mt-10" style={{ color: 'var(--text-dim)' }}>
-          © {new Date().getFullYear()} Elison Joel Morban · OneTime Music Inc
+          © {new Date().getFullYear()} Elison Joel Morban
         </p>
       </div>
     </footer>

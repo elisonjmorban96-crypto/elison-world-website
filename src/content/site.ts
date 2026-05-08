@@ -73,7 +73,7 @@ export const releases: Release[] = [
     credits: [
       'Artist: Elison',
       'Release: Déjame Perderme',
-      "Label: Elison's World / OneTime Music Inc",
+      'Label: Independent',
       'Genre: Afro Latin House',
       "First exclusive release on Elison's World",
     ],
