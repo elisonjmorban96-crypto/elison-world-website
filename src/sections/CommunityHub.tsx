@@ -160,7 +160,7 @@ const CommunityHub = () => {
                   </span>
                 </div>
                 <a 
-                  href="https://discord.gg/clawd"
+                  href="https://discord.gg/QDg6cVWwa"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-inter text-[10px] uppercase tracking-[0.15em] transition-colors hover:text-[var(--accent-gold)]"
