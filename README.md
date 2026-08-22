@@ -1,6 +1,19 @@
-# Elison World Website
+# Elison's World
 
-Official website for Elison. The app is a Vite + React single-page site with prerendered HTML, GSAP motion, embedded music playback, and production checks for accessibility and crawlability.
+**Experimental artist website template built with Elison as the first case study.**
+
+Elison's World explores how an artist's music, visuals, story, releases, press materials, and fan connection can live inside one immersive web experience. I used my own artist identity as the first subject so the project could function as both a real site and a reusable creative/technical template for other artists.
+
+**Live site:** https://elisonworld.com
+
+## What this project explores
+
+- Artist storytelling through interactive web design
+- Music and release discovery inside a single experience
+- Motion and visual direction using GSAP
+- Search/crawl-friendly prerendering for a React SPA
+- Accessibility and performance checks before production
+- Reusable content architecture for artist sites and EPKs
 
 ## Stack
 
@@ -12,6 +25,19 @@ Official website for Elison. The app is a Vite + React single-page site with pre
 - Playwright + axe-core
 - Lighthouse
 - Vercel Analytics
+
+## Product structure
+
+The site is organized around the core surfaces an artist needs online:
+
+- Hero / artist identity
+- Story
+- Music and releases
+- Gallery
+- Fan connection / newsletter
+- Release-specific pages
+- EPK
+- SEO and crawl metadata
 
 ## Local development
 
@@ -27,7 +53,7 @@ npm run build
 npm run preview
 ```
 
-The build script prerenders the homepage after the normal Vite client build so crawlers receive the full story, music, gallery, and connect content in the shipped HTML.
+The build process prerenders the homepage after the normal Vite client build so crawlers receive the story, music, gallery, and connection content in the shipped HTML.
 
 ## Quality checks
 
@@ -37,11 +63,10 @@ npm run audit:playwright
 npm run audit:lighthouse
 ```
 
-## Content locations
+## Key content locations
 
 - App shell: `src/App.tsx`
 - Navigation: `src/components/Navigation.tsx`
-- Subpage navigation: `src/components/SubpageNavigation.tsx`
 - Hero: `src/sections/Hero.tsx`
 - Story: `src/sections/Story.tsx`
 - Music: `src/sections/Music.tsx`
@@ -51,21 +76,13 @@ npm run audit:lighthouse
 - EPK page: `src/pages/EpkPage.tsx`
 - Route metadata: `src/lib/metadata.ts`
 - Shared artist/release content: `src/content/site.ts`
-- SEO shell metadata: `index.html`
-- Crawl directives: `public/robots.txt`, `public/sitemap.xml`, `public/llms.txt`, `public/llms-full.txt`
 
 ## Newsletter
 
-The subscribe form posts to Formspree at `https://formspree.io/f/xqewbelg`. There are no local environment variables required for the current setup.
-
-If you move the form to another provider later, update the endpoint constant in `src/sections/Connection.tsx`.
+The subscribe form currently posts to Formspree. If the provider changes, update the endpoint in `src/sections/Connection.tsx`.
 
 ## Deployment
 
-The project is deployed on Vercel at `https://elisonworld.com`.
+Deployed on Vercel at https://elisonworld.com.
 
-Expected production settings:
-
-- Framework preset: `Vite`
-- Build command: `npm run build`
-- Output directory: `dist`
+This project is part portfolio piece, part working artist site, and part experiment in what a more expressive artist website template can be.
