@@ -1,5 +1,7 @@
 # Elison's World
 
+[![CI](https://github.com/emorban/elison-world-website/actions/workflows/ci.yml/badge.svg)](https://github.com/emorban/elison-world-website/actions/workflows/ci.yml)
+
 **Experimental artist website template built with Elison as the first case study.**
 
 Elison's World explores how an artist's music, visuals, story, releases, press materials, and fan connection can live inside one immersive web experience. I used my own artist identity as the first subject so the project could function as both a real site and a reusable creative/technical template for other artists.
