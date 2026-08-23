@@ -11,6 +11,7 @@ Elison's World explores how an artist's music, visuals, story, releases, press m
 - Artist storytelling through interactive web design
 - Music and release discovery inside a single experience
 - Motion and visual direction using GSAP
+- Three.js-backed visual experiments
 - Search/crawl-friendly prerendering for a React SPA
 - Accessibility and performance checks before production
 - Reusable content architecture for artist sites and EPKs
@@ -22,6 +23,7 @@ Elison's World explores how an artist's music, visuals, story, releases, press m
 - TypeScript
 - Tailwind CSS
 - GSAP
+- Three.js
 - Playwright + axe-core
 - Lighthouse
 - Vercel Analytics
@@ -39,6 +41,17 @@ The site is organized around the core surfaces an artist needs online:
 - EPK
 - SEO and crawl metadata
 
+## Engineering decisions
+
+### Prerender a highly visual React experience
+The project keeps a client-side, motion-heavy experience while adding an SSR/prerender step so crawlers and non-JavaScript consumers receive meaningful shipped HTML instead of an empty app shell.
+
+### Treat accessibility as part of the build
+The repository includes Playwright + axe checks and Lighthouse auditing rather than treating accessibility and performance as a final visual-QA step.
+
+### Centralize artist content
+Shared artist and release data lives in a reusable content layer so pages do not each invent their own source of truth.
+
 ## Local development
 
 ```bash
@@ -53,7 +66,7 @@ npm run build
 npm run preview
 ```
 
-The build process prerenders the homepage after the normal Vite client build so crawlers receive the story, music, gallery, and connection content in the shipped HTML.
+The build process compiles TypeScript, creates the Vite client build, produces an SSR build, and prerenders the homepage so key content is present in the final HTML.
 
 ## Quality checks
 
@@ -76,6 +89,14 @@ npm run audit:lighthouse
 - EPK page: `src/pages/EpkPage.tsx`
 - Route metadata: `src/lib/metadata.ts`
 - Shared artist/release content: `src/content/site.ts`
+
+## What I owned
+
+I treated this as both a creative-direction problem and a product-engineering problem: defining the experience, information architecture, reusable content model, motion direction, implementation requirements, quality gates, and production behavior; directing and reviewing implementation; and iterating the shipped experience against the live site.
+
+## Portfolio context
+
+This project shows a different side of my systems work than **[DevHouse AI](https://github.com/emorban/devhouse-ai)**. DevHouse focuses on AI, workflows, integrations, and operational reliability; Elison's World focuses on interaction design, storytelling, frontend architecture, accessibility, and shipping a highly visual product without abandoning technical quality.
 
 ## Newsletter
 
