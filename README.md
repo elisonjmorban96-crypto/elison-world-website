@@ -2,11 +2,15 @@
 
 [![CI](https://github.com/emorban/elison-world-website/actions/workflows/ci.yml/badge.svg)](https://github.com/emorban/elison-world-website/actions/workflows/ci.yml)
 
-**Experimental artist website template built with Elison as the first case study.**
+**Status: live creative-tech product + reusable artist-site experiment.**
 
-Elison's World explores how an artist's music, visuals, story, releases, press materials, and fan connection can live inside one immersive web experience. I used my own artist identity as the first subject so the project could function as both a real site and a reusable creative/technical template for other artists.
+Elison's World explores how an artist's music, visuals, story, releases, press materials, and fan connection can live inside one immersive web experience. I used my own artist identity as the first subject so the project could function as both a real shipped site and a reusable creative/technical template for other artists.
 
 **Live site:** https://elisonworld.com
+
+## For hiring teams
+
+This project is the clearest proof in my portfolio that I can move beyond backend/workflow systems and ship a polished user-facing product. The strongest signals are the React/TypeScript architecture, prerendering strategy, motion system, accessibility checks, CI, and the way creative direction is translated into technical requirements.
 
 ## What this project explores
 
